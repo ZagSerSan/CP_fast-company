@@ -2,27 +2,14 @@ import React, { useState } from 'react'
 import api from '../api'
 import 'bootstrap/dist/css/bootstrap.css';
 
-const professions = {
-  doctor: { _id: "67rdca3eeb7f6fgeed471818", name: "Доктор" },
-  waiter: { _id: "67rdca3eeb7f6fgeed471820", name: "Официант" },
-  physics: { _id: "67rdca3eeb7f6fgeed471814", name: "Физик" },
-  engineer: { _id: "67rdca3eeb7f6fgeed471822", name: "Инженер" },
-  actor: { _id: "67rdca3eeb7f6fgeed471824", name: "Актер" },
-  cook: { _id: "67rdca3eeb7f6fgeed471829", name: "Повар" }
-}
-const qualities = {
-  tedious: { _id: "67rdca3eeb7f6fgeed471198", name: "Нудила", color: "primary" },
-  strange: { _id: "67rdca3eeb7f6fgeed471100", name: "Странный", color: "secondary" },
-  buller: { _id: "67rdca3eeb7f6fgeed4711012", name: "Троль", color: "success" },
-  alcoholic: { _id: "67rdca3eeb7f6fgeed471101", name: "Алкоголик", color: "danger" },
-  handsome: { _id: "67rdca3eeb7f6fgeed471102", name: "Красавчик", color: "info" },
-  uncertain: { _id: "67rdca3eeb7f6fgeed471103", name: "Неуверенный", color: "dark" },
-}
-
 const Users = () => {
+
   const [users, setUsers] = useState(api.users.fetchAll())
-  // const handleDelete = () => {
-  // }
+
+  const handleDelete = (id) => {
+    setUsers(prevState => prevState.filter(item => item !== id))
+  }
+
   const handlePhrase = () => {
     return (
       users.map(user =>
@@ -41,13 +28,19 @@ const Users = () => {
         <td key={user.profession.name}>{user.profession.name}</td>
         <td key={user.completedMeetings}>{user.completedMeetings}</td>
         <td key={user.rate}>{user.rate + '/5'}</td>
-        <td><button className='btn btn-danger'>delete</button></td>
+        <td><button onClick={()=>handleDelete(user)} className='btn btn-danger'>delete</button></td>
       </tr>
       )
     )
   }
 
-  return <table className="table">
+  if (users.length === 0) {
+    return <h1 style={{fontSize: '24px'}} className='badge bg-danger m-1'>никто не тусанет с тобой сегодня</h1>
+  }
+
+  return <> 
+    <h1 style={{fontSize: '24px'}} className='badge bg-primary m-1'>{users.length} человек тусанет с тобой сегодня</h1>
+    <table className="table">
       <thead>
         <tr>
           <th scope="col">Имя</th>
@@ -62,7 +55,7 @@ const Users = () => {
         {handlePhrase()}
       </tbody>
     </table>
-  
+  </>
 }
 
 export default Users
