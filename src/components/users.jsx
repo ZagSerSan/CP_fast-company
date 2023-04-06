@@ -13,6 +13,7 @@ const Users = () => {
   const handlePhrase = () => {
     return (
       users.map(user =>
+      
       <tr key={user._id}>
         <td key={user.name}>{user.name}</td>
         <td key={user.qualities}>
@@ -35,7 +36,12 @@ const Users = () => {
   }
 
   if (users.length === 0) {
-    return <h1 style={{fontSize: '24px'}} className='badge bg-danger m-1'>никто не тусанет с тобой сегодня</h1>
+    return <h1
+      style={{fontSize: '24px'}}
+      className='badge bg-danger m-1'
+      >
+        Hикто не тусанет с тобой сегодня
+    </h1>
   }
 
   return <> 
