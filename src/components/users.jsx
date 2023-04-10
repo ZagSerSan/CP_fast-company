@@ -7,7 +7,7 @@ const Users = () => {
   const [users, setUsers] = useState(api.users.fetchAll())
 
   const handleDelete = (id) => {
-    setUsers(prevState => prevState.filter(item => item !== id))
+    setUsers(prevState => prevState.filter(item => item._id !== id))
   }
 
   const handlePhrase = (number) => {
@@ -21,8 +21,9 @@ const Users = () => {
     </h1>
   }
 
-  return ( users.length !== 0 ?
+  return ( 
   <> {handlePhrase(users.length)}
+  {users.length !== 0 &&
     <table className="table">
       <thead>
         <tr>
@@ -49,12 +50,13 @@ const Users = () => {
             <td>{user.profession.name}</td>
             <td>{user.completedMeetings}</td>
             <td>{user.rate + '/5'}</td>
-            <td><button onClick={()=>handleDelete(user)} className='btn btn-danger'>delete</button></td>
+            <td><button onClick={()=>handleDelete(user._id)} className='btn btn-danger'>delete</button></td>
           </tr>
           )}
       </tbody>
     </table>
-  </> : <>{handlePhrase(users.length)}</>
+    }
+  </>
   )
 }
 
