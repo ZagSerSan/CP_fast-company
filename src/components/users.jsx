@@ -21,8 +21,8 @@ const Users = () => {
     </h1>
   }
 
-  return ( users.length !== 0
-    ? <> {handlePhrase(users.length)}
+  return ( users.length !== 0 ?
+  <> {handlePhrase(users.length)}
     <table className="table">
       <thead>
         <tr>
