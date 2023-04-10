@@ -10,33 +10,19 @@ const Users = () => {
     setUsers(prevState => prevState.filter(item => item !== id))
   }
 
-  const handlePhrase = () => {
-    return (
-      users.map(user =>
-      <tr key={user._id}>
-        <td key={user.name}>{user.name}</td>
-        <td key={user.qualities}>
-          {user.qualities.map(quality => 
-            <span
-            key={quality.name}
-            className={'badge bg-' + quality.color + ' m-1'}
-            >
-              {quality.name}
-            </span>)
-          }
-        </td>
-        <td key={user.profession.name}>{user.profession.name}</td>
-        <td key={user.completedMeetings}>{user.completedMeetings}</td>
-        <td key={user.rate}>{user.rate + '/5'}</td>
-        <td><button onClick={()=>handleDelete(user)} className='btn btn-danger'>delete</button></td>
-      </tr>
-      )
-    )
+  const handlePhrase = (number) => {
+    return number !== 0
+    ? <h1 style={{fontSize: '24px'}} className='badge bg-primary m-1'>{number} человек тусанет с тобой сегодня</h1>
+    : <h1
+      style={{fontSize: '24px'}}
+      className='badge bg-danger m-1'
+      >
+        Hикто не тусанет с тобой сегодня
+    </h1>
   }
 
-  return users.length !== 0
-  ? (<>
-    <h1 style={{fontSize: '24px'}} className='badge bg-primary m-1'>{users.length} человек тусанет с тобой сегодня</h1>
+  return ( users.length !== 0
+    ? <> {handlePhrase(users.length)}
     <table className="table">
       <thead>
         <tr>
@@ -49,15 +35,27 @@ const Users = () => {
         </tr>
       </thead>
       <tbody>
-        {handlePhrase()}
+        {users.map(user =>
+          <tr key={user._id}>
+            <td>{user.name}</td>
+            <td>
+              {user.qualities.map(quality => 
+                <span className={'badge bg-' + quality.color + ' m-1'}
+                >
+                  {quality.name}
+                </span>)
+              }
+            </td>
+            <td>{user.profession.name}</td>
+            <td>{user.completedMeetings}</td>
+            <td>{user.rate + '/5'}</td>
+            <td><button onClick={()=>handleDelete(user)} className='btn btn-danger'>delete</button></td>
+          </tr>
+          )}
       </tbody>
     </table>
-  </>) : (<h1
-    style={{fontSize: '24px'}}
-    className='badge bg-danger m-1'
-    >
-      Hикто не тусанет с тобой сегодня
-  </h1>)
+  </> : <>{handlePhrase(users.length)}</>
+  )
 }
 
 export default Users
