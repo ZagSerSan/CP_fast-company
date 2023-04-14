@@ -8,9 +8,13 @@ function App () {
   const handleDelete = (id) => {
     setUsers(prevState => prevState.filter(item => item._id !== id))
   }
-  const handleToggleBookMark = () => {
-    //todo
-    console.log('handleToggleBookMark');
+  const ToggleBookMark = (id) => {
+    setUsers(users.map(item => {
+      return {
+      ...item,
+      bookmark: item._id === id ? !item.bookmark : item.bookmark
+      }
+    }))
   }
 
   return (<>
@@ -24,11 +28,12 @@ function App () {
             <th scope="col">Профессия</th>
             <th scope="col">Встретился раз</th>
             <th scope="col">Оценка</th>
-            <th scope="col">Удалить</th>
+            <th scope="col">Избранное</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <Users users={users} onDelete={handleDelete}/>
+          <Users users={users} onDelete={handleDelete} onToggleBookMark={ToggleBookMark}/>
         </tbody>
       </table>
       }
