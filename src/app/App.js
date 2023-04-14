@@ -6,7 +6,6 @@ import api from "./api"
 function App () {
   // состояние
   const [users, setUsers] = useState(api.users.fetchAll())
-  console.log(users);
 
   // удаление пользователя
   const handleDelete = (id) => {
@@ -28,7 +27,7 @@ function App () {
           </tr>
         </thead>
         <tbody>
-          <Users users={users} handleDelete={handleDelete}/>
+          <Users users={users} onDelete={handleDelete}/>
         </tbody>
       </table>
       }
