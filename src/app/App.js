@@ -4,12 +4,13 @@ import SearchStatus from "./components/searchStatus";
 import api from "./api"
 
 function App () {
-  // состояние
   const [users, setUsers] = useState(api.users.fetchAll())
-
-  // удаление пользователя
   const handleDelete = (id) => {
     setUsers(prevState => prevState.filter(item => item._id !== id))
+  }
+  const handleToggleBookMark = () => {
+    //todo
+    console.log('handleToggleBookMark');
   }
 
   return (<>

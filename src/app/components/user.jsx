@@ -1,4 +1,5 @@
 import React from 'react'
+import Qualitie from './qualitie';
 import 'bootstrap/dist/css/bootstrap.css';
 
 const User = ({user, onHandleDelete}) => {
@@ -6,12 +7,7 @@ const User = ({user, onHandleDelete}) => {
     <tr key={user._id}>
       <td>{user.name}</td>
       <td>
-        {user.qualities.map(quality => 
-          <span key={quality._id} className={'badge bg-' + quality.color + ' m-1'}
-          >
-            {quality.name}
-          </span>)
-        }
+        <Qualitie qualities={user.qualities}/>
       </td>
       <td>{user.profession.name}</td>
       <td>{user.completedMeetings}</td>
