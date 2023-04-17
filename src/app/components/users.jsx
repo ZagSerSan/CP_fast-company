@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import User from './user'
 import 'bootstrap/dist/css/bootstrap.css';
 import Pagination from './pagination';
@@ -6,8 +6,11 @@ import Pagination from './pagination';
 const Users = ({users, onDelete, onToggleBookMark}) => {
   const count = users.length
   const pageSize = 4
+  const [currentPage, setCurrentPage] = useState(1)
+
   const handlePageChange = (pageIndex) => {
-    console.log('pageIndex', pageIndex)
+    // console.log('pageIndex', pageIndex)
+    setCurrentPage(pageIndex)
   }
 
   return <>
@@ -34,6 +37,7 @@ const Users = ({users, onDelete, onToggleBookMark}) => {
     <Pagination
       itemsCount={count}
       pageSize={pageSize}
+      currentPage={currentPage}
       onPageChange={handlePageChange}/>
   </>
 }
