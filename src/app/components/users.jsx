@@ -10,7 +10,6 @@ const Users = ({users, onDelete, onToggleBookMark}) => {
   const [currentPage, setCurrentPage] = useState(1)
 
   const handlePageChange = (pageIndex) => {
-    // console.log('pageIndex', pageIndex)
     setCurrentPage(pageIndex)
   }
 
