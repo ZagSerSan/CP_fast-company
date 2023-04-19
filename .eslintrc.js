@@ -11,10 +11,11 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    // настройка, что игнорировать:
+    // настройка, что и как будет проверенно на ошибки:
     semi: ["error", "never"],
     indent: ["error", 2],
     quotes: ["error", "double", { allowTemplateLiterals: true }],
+    "multiline-ternary": ["error", "never"],
     "space-before-function-paren": ["error", "never"]
   }
 }

@@ -1,5 +1,6 @@
 import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
+import PropTypes from "prop-types"
 
 const SearchStatus = ({ users }) => {
   const handlePhrase = (number) => {
@@ -16,5 +17,7 @@ const SearchStatus = ({ users }) => {
 
   return <>{handlePhrase(users.length)}</>
 }
-
+SearchStatus.propTypes = {
+  users: PropTypes.array.isRequired
+}
 export default SearchStatus

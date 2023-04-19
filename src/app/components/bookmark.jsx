@@ -1,5 +1,6 @@
 import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
+import PropTypes from "prop-types"
 
 const Bookmark = ({ userFromUser, onToggleBookMark }) => {
   return (
@@ -20,5 +21,8 @@ const Bookmark = ({ userFromUser, onToggleBookMark }) => {
     </>
   )
 }
-
+Bookmark.propTypes = {
+  userFromUser: PropTypes.string.isRequired,
+  onToggleBookMark: PropTypes.string.isRequired
+}
 export default Bookmark

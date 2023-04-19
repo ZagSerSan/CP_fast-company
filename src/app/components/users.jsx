@@ -3,6 +3,7 @@ import User from "./user"
 import "bootstrap/dist/css/bootstrap.css"
 import Pagination from "./pagination"
 import { paginate } from "../utils/paginate"
+import PropTypes from "prop-types"
 
 const Users = ({ users, onDelete, onToggleBookMark }) => {
   const count = users.length
@@ -51,5 +52,9 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
     </>
   )
 }
-
+Users.propTypes = {
+  users: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired
+}
 export default Users

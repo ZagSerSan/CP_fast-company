@@ -2,6 +2,7 @@ import React from "react"
 import Qualitie from "./qualitie"
 import Bookmark from "./bookmark"
 import "bootstrap/dist/css/bootstrap.css"
+import PropTypes from "prop-types"
 
 const User = ({ user, onHandleDelete, onToggleBookMark }) => {
   return (
@@ -29,5 +30,9 @@ const User = ({ user, onHandleDelete, onToggleBookMark }) => {
     </>
   )
 }
-
+User.propTypes = {
+  user: PropTypes.object.isRequired,
+  onHandleDelete: PropTypes.func.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired
+}
 export default User
