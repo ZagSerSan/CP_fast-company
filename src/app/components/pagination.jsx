@@ -16,7 +16,7 @@ const Pagination = ({itemsCount, pageSize, onPageChange, currentPage}) => {
             key={'page_'+page} 
             style={{cursor: 'pointer'}}
           >
-            <a  className="page-link" onClick={()=>onPageChange(page)}>{page}</a>
+            <button  className="page-link" onClick={()=>onPageChange(page)}>{page}</button>
           </li>
         ))}
       </ul>

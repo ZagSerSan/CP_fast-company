@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import User from './user'
 import 'bootstrap/dist/css/bootstrap.css';
 import Pagination from './pagination';
+import { paginate } from '../utils/paginate';
 
 const Users = ({users, onDelete, onToggleBookMark}) => {
   const count = users.length
@@ -12,6 +13,8 @@ const Users = ({users, onDelete, onToggleBookMark}) => {
     // console.log('pageIndex', pageIndex)
     setCurrentPage(pageIndex)
   }
+
+  const userCrop = paginate(users, currentPage, pageSize)
 
   return <>
     {count > 0 &&
@@ -28,7 +31,7 @@ const Users = ({users, onDelete, onToggleBookMark}) => {
           </tr>
         </thead>
         <tbody>
-        {users.map(user =>
+        {userCrop.map(user =>
           <User key={user._id} user={user} onHandleDelete={onDelete} onToggleBookMark={onToggleBookMark}/>
         )}
         </tbody>
