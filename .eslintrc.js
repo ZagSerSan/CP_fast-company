@@ -16,6 +16,6 @@ module.exports = {
     indent: ["error", 2],
     quotes: ["error", "double", { allowTemplateLiterals: true }],
     "multiline-ternary": ["error", "never"],
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", {anonymous: "always", named: "never"}]
   }
 }

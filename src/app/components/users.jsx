@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css"
 import Pagination from "./pagination"
 import { paginate } from "../utils/paginate"
 import PropTypes from "prop-types"
+import GroupList from "./groupList"
 
 const Users = ({ users, onDelete, onToggleBookMark }) => {
   const count = users.length
@@ -18,6 +19,7 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
 
   return (
     <>
+      <GroupList />
       {count > 0 && (
         <table className="table">
           <thead>
@@ -57,4 +59,5 @@ Users.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onToggleBookMark: PropTypes.func.isRequired
 }
+
 export default Users
