@@ -13,4 +13,6 @@ const fetchAll = () => new Promise(resolve => {
   }, 2000)
 })
 
-export default fetchAll
+export default {
+  fetchAll
+}

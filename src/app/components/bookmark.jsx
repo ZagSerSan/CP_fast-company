@@ -22,7 +22,7 @@ const Bookmark = ({ userFromUser, onToggleBookMark }) => {
   )
 }
 Bookmark.propTypes = {
-  userFromUser: PropTypes.string.isRequired,
-  onToggleBookMark: PropTypes.string.isRequired
+  userFromUser: PropTypes.object.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired
 }
 export default Bookmark
