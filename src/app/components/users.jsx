@@ -12,6 +12,8 @@ import GroupList from "./groupList"
 const Users = ({ users, onDelete, onToggleBookMark }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
+  const [selectedProf, setSelectedProf] = useState()
+
   const count = users.length
   const pageSize = 4
   useEffect(() => {
@@ -23,12 +25,16 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
   }
   const userCrop = paginate(users, currentPage, pageSize)
 
-  const handleProfessionSelect = (params) => {
-    console.log(params)
+  const handleProfessionSelect = (item) => {
+    setSelectedProf(item)
   }
   return (
-    <>
-      <GroupList items={professions} onItemSelect={() => handleProfessionSelect(professions)}/>
+    <>{professions &&
+      <GroupList
+        selectedProf={selectedProf}
+        items={professions}
+        onItemSelect={handleProfessionSelect}
+      />}
       {count > 0 && (
         <table className="table">
           <thead>
@@ -63,6 +69,7 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
     </>
   )
 }
+
 Users.propTypes = {
   users: PropTypes.array.isRequired,
   onDelete: PropTypes.func.isRequired,
