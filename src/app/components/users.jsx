@@ -35,6 +35,7 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
+    setCurrentPage(1)
   }
   const clearFilter = (params) => {
     setSelectedProf()
