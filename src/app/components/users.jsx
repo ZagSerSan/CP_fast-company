@@ -36,13 +36,26 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
   }
+  const clearFilter = (params) => {
+    setSelectedProf()
+  }
+
   return (
     <>{professions &&
-      <GroupList
-        selectedProf={selectedProf}
-        items={professions}
-        onItemSelect={handleProfessionSelect}
-      />}
+      <>
+        <GroupList
+          selectedProf={selectedProf}
+          items={professions}
+          onItemSelect={handleProfessionSelect}
+        />
+        <button
+          className="btn btn-secondary m-2"
+          onClick={clearFilter}
+        >
+            Сброс
+        </button>
+      </>
+      }
       {count > 0 && (
         <table className="table">
           <thead>
