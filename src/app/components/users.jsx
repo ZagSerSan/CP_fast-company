@@ -55,7 +55,7 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
           className="btn btn-secondary m-2"
           onClick={clearFilter}
         >
-            Сброс
+            Сброс фильтра
         </button>
       </>
       }
