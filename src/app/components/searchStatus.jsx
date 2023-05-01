@@ -2,7 +2,7 @@ import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import PropTypes from "prop-types"
 
-const SearchStatus = ({ users }) => {
+const SearchStatus = ({ count }) => {
   const handlePhrase = (number) => {
     return number !== 0 ? (
       <h1 style={{ fontSize: "24px" }} className="badge bg-primary m-1">
@@ -15,9 +15,9 @@ const SearchStatus = ({ users }) => {
     )
   }
 
-  return <>{handlePhrase(users.length)}</>
+  return <>{handlePhrase(count)}</>
 }
 SearchStatus.propTypes = {
-  users: PropTypes.array.isRequired
+  count: PropTypes.number.isRequired
 }
 export default SearchStatus

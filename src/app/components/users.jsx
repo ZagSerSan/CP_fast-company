@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css"
 import { paginate } from "../utils/paginate"
 import api from "../api"
 // components
+import SearchStatus from "./searchStatus"
 import User from "./user"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
@@ -25,24 +26,25 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
   }
 
   const filteredUsers = selectedProf
-    ? users.filter(user => user.profession === selectedProf)
+    ? users.filter((user) => user.profession.name === selectedProf.name)
     : users
   // для изменения страниц
   count = selectedProf ? filteredUsers.length : users.length
 
-  console.log('filteredUsers', filteredUsers)
   const userCrop = paginate(filteredUsers, currentPage, pageSize)
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
     setCurrentPage(1)
   }
-  const clearFilter = (params) => {
+  const clearFilter = () => {
     setSelectedProf()
   }
 
   return (
-    <>{professions &&
+    <>
+      <SearchStatus count={count} />
+      {professions &&
       <>
         <GroupList
           selectedProf={selectedProf}
@@ -93,7 +95,7 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
 }
 
 Users.propTypes = {
-  users: PropTypes.array.isRequired,
+  users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
   onDelete: PropTypes.func.isRequired,
   onToggleBookMark: PropTypes.func.isRequired
 }

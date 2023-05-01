@@ -144,12 +144,11 @@ const users = [
   }
 ]
 
-const fetchAll = () =>
-  new Promise((resolve) => {
-    window.setTimeout(function () {
-      resolve(users);
-    }, 2000);
-  });
+const fetchAll = () => new Promise((resolve) => {
+  window.setTimeout(function () {
+    resolve(users)
+  }, 2000)
+})
 
 export default {
   fetchAll
