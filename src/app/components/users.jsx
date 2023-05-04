@@ -9,6 +9,7 @@ import SearchStatus from "./searchStatus"
 import User from "./user"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
+import UsersTable from "./usersTable"
 
 const Users = ({ users, onDelete, onToggleBookMark }) => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -42,56 +43,35 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
   }
 
   return (
-    <>
-      <SearchStatus count={count} />
+  <>
+    <div className="filter">
       {professions &&
-      <>
+      <div>
         <GroupList
           selectedProf={selectedProf}
           items={professions}
           onItemSelect={handleProfessionSelect}
         />
-        <button
-          className="btn btn-secondary m-2"
+        <button 
+          className="btn btn-secondary clear-btn"
           onClick={clearFilter}
         >
-            Сброс фильтра
+            Сброс
         </button>
-      </>
+      </div>
       }
-      {count > 0 && (
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Имя</th>
-              <th scope="col">Качества</th>
-              <th scope="col">Профессия</th>
-              <th scope="col">Встретился раз</th>
-              <th scope="col">Оценка</th>
-              <th scope="col">Избранное</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {userCrop.map((user) => (
-              <User
-                key={user._id}
-                user={user}
-                onHandleDelete={onDelete}
-                onToggleBookMark={onToggleBookMark}
-              />
-            ))}
-          </tbody>
-        </table>
-      )}
+    </div>
+    <div className="content">
+      <SearchStatus count={count} />
+      {count > 0 && <UsersTable onToggleBookMark={onToggleBookMark} onDelete={onDelete} users={userCrop}/>}
       <Pagination
         itemsCount={count}
         pageSize={pageSize}
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-    </>
-  )
+    </div>
+  </>)
 }
 
 Users.propTypes = {

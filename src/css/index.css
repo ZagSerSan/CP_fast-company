@@ -1,0 +1,30 @@
+.root {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0px auto;
+}
+
+.filter {
+  padding: 15px;
+}
+
+.content {
+  width: 100%;
+}
+
+.nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.clear-btn {
+  width: 100%;
+  margin: 8px 0 0 0;
+}

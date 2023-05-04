@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
-import Users from "./components/users"
+import '../css/index.css'
 import apiUsers from "./api/fake.api/user.api"
+import Users from "./components/users"
 
 function App() {
   const [users, setUsers] = useState()
