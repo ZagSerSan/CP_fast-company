@@ -41,6 +41,10 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
   const clearFilter = () => {
     setSelectedProf()
   }
+  //todo сортировка
+  const handleSort = (params) => {
+    console.log(params)
+  }
 
   return (
   <>
@@ -63,7 +67,13 @@ const Users = ({ users, onDelete, onToggleBookMark }) => {
     </div>
     <div className="content">
       <SearchStatus count={count} />
-      {count > 0 && <UsersTable onToggleBookMark={onToggleBookMark} onDelete={onDelete} users={userCrop}/>}
+      {count > 0 &&
+      <UsersTable
+        onToggleBookMark={onToggleBookMark}
+        onDelete={onDelete}
+        users={userCrop}
+        onSort={handleSort}
+      />}
       <Pagination
         itemsCount={count}
         pageSize={pageSize}

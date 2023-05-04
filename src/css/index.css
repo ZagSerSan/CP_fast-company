@@ -13,6 +13,7 @@
 
 .content {
   width: 100%;
+  padding-top: 15px;
 }
 
 .nav {
@@ -27,4 +28,19 @@
 .clear-btn {
   width: 100%;
   margin: 8px 0 0 0;
+}
+
+.th {
+  cursor: pointer;
+  -webkit-transition: background-color 0.1s linear;
+  transition: background-color 0.1s linear;
+}
+.th:hover {
+  background-color: rgba(154, 156, 255, 0.2666666667);
+}
+
+.sort_icon {
+  width: 25px;
+  height: 25px;
+  margin-left: 3px;
 }
