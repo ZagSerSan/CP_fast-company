@@ -4,10 +4,10 @@ import _ from 'lodash'
 import "bootstrap/dist/css/bootstrap.css"
 // any utils
 import { paginate } from "../utils/paginate"
-import api from "../api"
+import professionsApi from "../api/fake.api/professions.api"
+
 // components
 import SearchStatus from "./searchStatus"
-import User from "./user"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
 import UsersTable from "./usersTable"
@@ -16,12 +16,13 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  // const [sortedUsers, setSortedUsers] = useState(users)
+  const [sortedSettings, setSortedSettings] = useState({iter: 'name', order: 'asc'})
 
   let count = users.length
   const pageSize = 4
+
   useEffect(() => {
-    api.professions.fetchAll().then(data => setProfession(data))
+    professionsApi.fetchAll().then(data => setProfession(data))
   }, [])
 
   const handlePageChange = (pageIndex) => {
@@ -36,11 +37,14 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
 
   //todo сортировка
   const handleSort = (item) => {
-    // setSortedUsers(_.orderBy(filteredUsers, [item], ['asc']))
-    console.log(item)
+    if (sortedSettings.iter === item) {
+      setSortedSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
+    } else {
+      setSortedSettings({iter: item, order: 'desc'})
+    }
   }
-
-  const userCrop = paginate(filteredUsers, currentPage, pageSize)
+  const sortedUsers = _.orderBy(filteredUsers, [sortedSettings.iter], [sortedSettings.order])
+  const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
@@ -48,6 +52,8 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   }
   const clearFilter = () => {
     setSelectedProf()
+    // обнуление масива users
+    onRefreshUsers()
   }
 
   return (
@@ -64,14 +70,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
           className="btn btn-secondary clear-btn"
           onClick={clearFilter}
         >
-            Сброс
-        </button>
-        <button
-          onClick={onRefreshUsers}
-          className="btn btn-success"
-          style={{marginTop: "7px", width: '100%'}}
-        >
-          Обновить
+            Сбросить
         </button>
       </div>
       }
