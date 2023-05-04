@@ -5,13 +5,19 @@ import Users from "./components/users"
 
 function App() {
   const [users, setUsers] = useState()
+  const [firstUsersState, setFirstUsersState] = useState()
 
   useEffect(()=>{
     apiUsers.fetchAll().then(data => setUsers(data))
+    apiUsers.fetchAll().then(data => setFirstUsersState(data))
   }, [])
 
   const handleDelete = (id) => {
     setUsers((prevState) => prevState.filter((item) => item._id !== id))
+  }
+  // refresh all users
+  const refreshUsers = () => {
+    setUsers(firstUsersState)
   }
   const ToggleBookMark = (id) => {
     setUsers(
@@ -30,6 +36,7 @@ function App() {
           users={users}
           onDelete={handleDelete}
           onToggleBookMark={ToggleBookMark}
+          onRefreshUsers={refreshUsers}
         />
       )}
   </>)
