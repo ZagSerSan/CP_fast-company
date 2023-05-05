@@ -71,12 +71,15 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     // параметров сортировки,
     setSortSettings({iter: 'name', order: 'asc'})
     // состояние заголовков таблицы
-    setThState(prevState => prevState.map(thItem => {
-      return {
-        ...thItem,
-        iconOrder: thItem.sortKey === 'name' ? false : true
-      }
-    }))
+    for (let key in thState) {
+        thState[key].iconOrder = false
+    }
+    //   prevState.map(thItem => {
+    //   return {
+    //     ...thItem,
+    //     iconOrder: thItem.sortKey === 'name' ? false : true
+    //   }
+    // }))
   }
 
   return (
