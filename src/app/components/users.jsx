@@ -16,7 +16,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  const [sortedSettings, setSortedSettings] = useState({iter: 'name', order: 'asc'})
+  const [sortedSettings, setSortedSettings] = useState({iter: 'profession.name', order: 'asc'})
 
   let count = users.length
   const pageSize = 4
@@ -37,12 +37,15 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
 
   //todo сортировка
   const handleSort = (item) => {
+    item = item === 'profession' ? item+'.name' : item
+    
     if (sortedSettings.iter === item) {
       setSortedSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
     } else {
-      setSortedSettings({iter: item, order: 'desc'})
+      setSortedSettings({iter: item, order: 'asc'})
     }
   }
+
   const sortedUsers = _.orderBy(filteredUsers, [sortedSettings.iter], [sortedSettings.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
