@@ -1,10 +1,34 @@
 import React from 'react'
 // import { useState } from 'react'
 import IconSVG from './iconSVG'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import User from './user'
 
-const UsersTable = ({users, onDelete, onToggleBookMark, onSort, sortedSettings, thState}) => {
+const UsersTable = ({
+  users,
+  onDelete,
+  onToggleBookMark,
+  sortSettings,
+  onSetSortSettings,
+  thState,
+  onSetThState
+}) => {
+
+  const handleSort = (itemSortKey) => {
+    // изменение сортировки элементов таблицы
+    if (sortSettings.iter === itemSortKey) {
+      onSetSortSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
+    } else {
+      onSetSortSettings({iter: itemSortKey, order: 'asc'})
+    }
+    // изменение иконок при сортировке
+    onSetThState(prevState => prevState.map(thItem => {
+      return {
+        ...thItem,
+        iconOrder: thItem.sortKey === itemSortKey ? !thItem.iconOrder : true
+      }
+    }))
+  }
 
   return (<>
     <table className="table">
@@ -14,7 +38,7 @@ const UsersTable = ({users, onDelete, onToggleBookMark, onSort, sortedSettings, 
             <th
               key={item.id}
               className={item.iter ? 'th' : ''}
-              onClick={item.iter ? ()=>onSort(item.sortKey) : null}
+              onClick={item.iter ? ()=>handleSort(item.sortKey) : null}
               scope="col"
             >
               {item.name}
@@ -35,6 +59,16 @@ const UsersTable = ({users, onDelete, onToggleBookMark, onSort, sortedSettings, 
       </tbody>
     </table>
   </>)
+}
+
+UsersTable.propTypes = {
+  users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
+  onDelete: PropTypes.func.isRequired,
+  onToggleBookMark: PropTypes.func.isRequired,
+  sortSettings: PropTypes.object.isRequired,
+  onSetSortSettings: PropTypes.func.isRequired,
+  thState: PropTypes.array.isRequired,
+  onSetThState: PropTypes.func.isRequired,
 }
 
 export default UsersTable

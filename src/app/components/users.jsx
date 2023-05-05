@@ -15,7 +15,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  const [sortedSettings, setSortedSettings] = useState({iter: 'name', order: 'asc'})
+  const [sortSettings, setSortSettings] = useState({iter: 'name', order: 'asc'})
   const [thState, setThState] = useState([
     {id: 'th1', name: 'Имя', sortKey: 'name', iter: true, iconOrder: false},
     {id: 'th2', name: 'Качества', sortKey: '', iter: false, iconOrder: true},
@@ -43,24 +43,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   // для изменения страниц
   count = selectedProf ? filteredUsers.length : users.length
 
-  //todo перенести функцию сортировки в компонент таблицы
-  const handleSort = (itemSortKey) => {
-    // изменение элементов сортировки
-    if (sortedSettings.iter === itemSortKey) {
-      setSortedSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
-    } else {
-      setSortedSettings({iter: itemSortKey, order: 'asc'})
-    }
-    // изменение иконок при сортировке
-    setThState(prevState => prevState.map(thItem => {
-      return {
-        ...thItem,
-        iconOrder: thItem.sortKey === itemSortKey ? !thItem.iconOrder : true
-      }
-    }))
-  }
-
-  const sortedUsers = _.orderBy(filteredUsers, [sortedSettings.iter], [sortedSettings.order])
+  const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
   const handleProfessionSelect = (item) => {
@@ -72,7 +55,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     // обнуление масива users
     onRefreshUsers()
     setCurrentPage(1)
-    setSortedSettings({iter: 'name', order: 'asc'})
+    setSortSettings({iter: 'name', order: 'asc'})
     setThState(prevState => prevState.map(thItem => {
       return {
         ...thItem,
@@ -107,9 +90,10 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
         onToggleBookMark={onToggleBookMark}
         onDelete={onDelete}
         users={userCrop}
-        onSort={handleSort}
         thState={thState}
-        sortedSettings={sortedSettings}
+        sortSettings={sortSettings}
+        onSetSortSettings={setSortSettings}
+        onSetThState={setThState}
         onRefreshUsers={onRefreshUsers}
       />}
       <Pagination
@@ -125,7 +109,8 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
 Users.propTypes = {
   users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
   onDelete: PropTypes.func.isRequired,
-  onToggleBookMark: PropTypes.func.isRequired
+  onToggleBookMark: PropTypes.func.isRequired,
+  onRefreshUsers: PropTypes.func.isRequired
 }
 
 export default Users
