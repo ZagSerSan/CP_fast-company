@@ -54,6 +54,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     setSelectedProf()
     // обнуление масива users
     onRefreshUsers()
+    setCurrentPage(1)
   }
 
   return (
