@@ -43,15 +43,15 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   // для изменения страниц
   count = selectedProf ? filteredUsers.length : users.length
 
-  //todo сортировка
+  //todo перенести функцию сортировки в компонент таблицы
   const handleSort = (itemSortKey) => {
-    
+    // изменение элементов сортировки
     if (sortedSettings.iter === itemSortKey) {
       setSortedSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
     } else {
       setSortedSettings({iter: itemSortKey, order: 'asc'})
     }
-
+    // изменение иконок при сортировке
     setThState(prevState => prevState.map(thItem => {
       return {
         ...thItem,
