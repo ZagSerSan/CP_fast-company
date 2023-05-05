@@ -17,6 +17,41 @@ const TableHeader = ({
       onSetSortSettings({iter: itemSortKey, order: 'asc'})
     }
     //todo изменение иконок при сортировке
+
+    for (let key in thState) {
+      if (thState[key].sortKey === itemSortKey && thState[key].iconOrder === true) {
+        console.log(`менять иконку на '${thState[key]}'`);
+      }
+        // console.log('if: проверка на добавление иконки по нажатому th');
+        thState[key].iconOrder = thState[key].sortKey === itemSortKey ?  true : false
+      // } else if (thState[key].iconOrder === true) {
+        // console.log('else: поменять на активном, остальные проходят проверку if');
+        // thState[key].iconOrder = thState[key].sortKey === itemSortKey ?  true : false
+      // }
+    }
+
+    // itemSortKey==='profession.name'?thState.profession : thState[itemSortKey]
+    // // onSetThState(prevState => {
+    // //   return prevState
+    // // })
+    // let test = Object.entries(thState).map(value => (
+      // {
+      //   ...value,
+      //   iconOrder: false
+      // }
+      // value
+      // console.log(value)
+    // ))
+
+    // let test2 = {...test}
+    // console.log('test2', test2)
+    // let obj = {}
+    // for (let i = 0; i < test.length; i++) {
+    //   obj[i] = test[i]
+    // }
+    // console.log('obj', obj);
+
+
     // onSetThState((prevState) => (
     //   Object.keys(prevState).map(prevStateKey => (
     //     {
@@ -69,7 +104,8 @@ const TableHeader = ({
               onClick={thState[thStateKey].sortKey ? ()=>handleSort(thState[thStateKey].sortKey) : null}
             >
               {thState[thStateKey].name}
-              {thState[thStateKey].sortKey && <IconSVG id={thState[thStateKey].iconOrder ? 'sort-descending' : 'sort-ascending'}/>}
+              {thState[thStateKey].iconOrder && 
+              <IconSVG id={sortSettings.order === 'asc' ? 'sort-ascending' : 'sort-descending'}/>}
             </th>
           ))}
         </tr>

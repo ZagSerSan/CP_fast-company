@@ -27,12 +27,12 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   // ])
   const [thState, setThState] = useState({
     name: {name: 'Имя', sortKey: 'name', iconOrder: false},
-    qualities: {name: 'Качества', sortKey: '', iconOrder: true},
-    profession: {name: 'Профессия', sortKey: 'profession.name', iconOrder: true},
-    completedMeetings: {name: 'Встретился раз', sortKey: 'completedMeetings', iconOrder: true},
-    rate: {name: 'Оценка', sortKey: 'rate', iconOrder: true},
-    bookmark: {name: 'Избранное', sortKey: 'bookmark', iconOrder: true},
-    delete: {name: '', sortKey: '', iconOrder: true}
+    qualities: {name: 'Качества', sortKey: '', iconOrder: false},
+    profession: {name: 'Профессия', sortKey: 'profession.name', iconOrder: false},
+    completedMeetings: {name: 'Встретился раз', sortKey: 'completedMeetings', iconOrder: false},
+    rate: {name: 'Оценка', sortKey: 'rate', iconOrder: false},
+    bookmark: {name: 'Избранное', sortKey: 'bookmark', iconOrder: false},
+    delete: {name: '', sortKey: '', iconOrder: false}
   })
 
   let count = users.length
