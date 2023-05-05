@@ -1,11 +1,13 @@
 import React from 'react'
+import { useState } from 'react'
 import IconSVG from './iconSVG'
 // import PropTypes from 'prop-types'
 import User from './user'
 
-const UsersTable = ({users, onDelete, onToggleBookMark, onSort}) => {
-  
-
+const UsersTable = ({users, onDelete, onToggleBookMark, onSort, sortedSettings}) => {
+  const [thState, setThState] = useState([
+    {name: 'Имя',}
+  ])
   return (<>
     <table className="table">
       <thead>
@@ -15,7 +17,7 @@ const UsersTable = ({users, onDelete, onToggleBookMark, onSort}) => {
             onClick={()=>onSort('name')}
             scope="col"
             >
-              Имя<IconSVG id={'sort-ascending'}/>
+              Имя<IconSVG id={sortedSettings.order==='asc'?'sort-ascending':'sort-descending'}/>
           </th>
           <th scope="col">Качества</th>
           <th
@@ -23,28 +25,28 @@ const UsersTable = ({users, onDelete, onToggleBookMark, onSort}) => {
             onClick={()=>onSort('profession')}
             scope="col"
             >
-              Профессия<IconSVG id={'sort-ascending'}/>
+              Профессия<IconSVG id={sortedSettings.order==='asc'?'sort-ascending':'sort-descending'}/>
           </th>
           <th
             className='th'
             onClick={()=>onSort('completedMeetings')}
             scope="col"
             >
-              Встретился раз<IconSVG id={'sort-ascending'}/>
+              Встретился раз<IconSVG id={sortedSettings.order==='asc'?'sort-ascending':'sort-descending'}/>
           </th>
           <th 
             className='th' 
             onClick={()=>onSort('rate')} 
             scope="col"
             >
-              Оценка<IconSVG id={'sort-ascending'}/>
+              Оценка<IconSVG id={sortedSettings.order==='asc'?'sort-ascending':'sort-descending'}/>
           </th>
           <th 
             className='th' 
             onClick={()=>onSort('bookmark')} 
             scope="col"
             >
-              Избранное<IconSVG id={'sort-ascending'}/>
+              Избранное<IconSVG id={sortedSettings.order==='asc'?'sort-ascending':'sort-descending'}/>
           </th>
           <th scope="col"></th>
         </tr>

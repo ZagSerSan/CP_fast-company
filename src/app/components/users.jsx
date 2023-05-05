@@ -16,7 +16,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  const [sortedSettings, setSortedSettings] = useState({iter: 'profession.name', order: 'asc'})
+  const [sortedSettings, setSortedSettings] = useState({iter: 'name', order: 'asc'})
 
   let count = users.length
   const pageSize = 4
@@ -87,6 +87,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
         onDelete={onDelete}
         users={userCrop}
         onSort={handleSort}
+        sortedSettings={sortedSettings}
         onRefreshUsers={onRefreshUsers}
       />}
       <Pagination
