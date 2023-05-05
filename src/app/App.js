@@ -5,6 +5,7 @@ import Users from "./components/users"
 
 function App() {
   const [users, setUsers] = useState()
+  // начальное состояние пользователей для сброса
   const [firstUsersState, setFirstUsersState] = useState()
 
   useEffect(()=>{
@@ -12,13 +13,15 @@ function App() {
     apiUsers.fetchAll().then(data => setFirstUsersState(data))
   }, [])
 
+  // функция кнопки удаления
   const handleDelete = (id) => {
     setUsers((prevState) => prevState.filter((item) => item._id !== id))
   }
-  // refresh all users
+  // func for refresh all users
   const refreshUsers = () => {
     setUsers(firstUsersState)
   }
+  // toogle bookmark function
   const ToggleBookMark = (id) => {
     setUsers(
       users.map((item) => {
@@ -32,13 +35,13 @@ function App() {
 
   return (<>
     {users && (
-        <Users
-          users={users}
-          onDelete={handleDelete}
-          onToggleBookMark={ToggleBookMark}
-          onRefreshUsers={refreshUsers}
-        />
-      )}
+      <Users
+        users={users}
+        onDelete={handleDelete}
+        onToggleBookMark={ToggleBookMark}
+        onRefreshUsers={refreshUsers}
+      />
+    )}
   </>)
 }
 export default App

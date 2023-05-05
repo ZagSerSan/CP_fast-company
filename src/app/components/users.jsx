@@ -16,15 +16,24 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({iter: 'name', order: 'asc'})
-  const [thState, setThState] = useState([
-    {id: 'th1', name: 'Имя', sortKey: 'name', iter: true, iconOrder: false},
-    {id: 'th2', name: 'Качества', sortKey: '', iter: false, iconOrder: true},
-    {id: 'th3', name: 'Профессия', sortKey: 'profession.name', iter: true, iconOrder: true},
-    {id: 'th4', name: 'Встретился раз', sortKey: 'completedMeetings', iter: true, iconOrder: true},
-    {id: 'th5', name: 'Оценка', sortKey: 'rate', iter: true, iconOrder: true},
-    {id: 'th6', name: 'Избранное', sortKey: 'bookmark', iter: true, iconOrder: true},
-    {id: 'th7', name: '', sortKey: '', iter: false, iconOrder: true}
-  ])
+  // const [thState, setThState] = useState([
+  //   {id: 'th1', name: 'Имя', sortKey: 'name', iconOrder: false},
+  //   {id: 'th2', name: 'Качества', sortKey: '', iconOrder: true},
+  //   {id: 'th3', name: 'Профессия', sortKey: 'profession.name', iconOrder: true},
+  //   {id: 'th4', name: 'Встретился раз', sortKey: 'completedMeetings', iconOrder: true},
+  //   {id: 'th5', name: 'Оценка', sortKey: 'rate', iconOrder: true},
+  //   {id: 'th6', name: 'Избранное', sortKey: 'bookmark', iconOrder: true},
+  //   {id: 'th7', name: '', sortKey: '', iconOrder: true}
+  // ])
+  const [thState, setThState] = useState({
+    name: {name: 'Имя', sortKey: 'name', iconOrder: false},
+    qualities: {name: 'Качества', sortKey: '', iconOrder: true},
+    profession: {name: 'Профессия', sortKey: 'profession.name', iconOrder: true},
+    completedMeetings: {name: 'Встретился раз', sortKey: 'completedMeetings', iconOrder: true},
+    rate: {name: 'Оценка', sortKey: 'rate', iconOrder: true},
+    bookmark: {name: 'Избранное', sortKey: 'bookmark', iconOrder: true},
+    delete: {name: '', sortKey: '', iconOrder: true}
+  })
 
   let count = users.length
   const pageSize = 4
@@ -46,16 +55,22 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
+  // функция фильтра профессий
   const handleProfessionSelect = (item) => {
     setSelectedProf(item)
     setCurrentPage(1)
   }
+  // функция сброса (глобально)
   const clearFilter = () => {
+    // обнуление: фильтра профессии,
     setSelectedProf()
-    // обнуление масива users
+    // масива users,
     onRefreshUsers()
+    // текущей страницы,
     setCurrentPage(1)
+    // параметров сортировки,
     setSortSettings({iter: 'name', order: 'asc'})
+    // состояние заголовков таблицы
     setThState(prevState => prevState.map(thItem => {
       return {
         ...thItem,
