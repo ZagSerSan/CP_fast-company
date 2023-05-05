@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.css"
 // any utils
 import { paginate } from "../utils/paginate"
 import professionsApi from "../api/fake.api/professions.api"
-
 // components
 import SearchStatus from "./searchStatus"
 import Pagination from "./pagination"
@@ -17,6 +16,15 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortedSettings, setSortedSettings] = useState({iter: 'name', order: 'asc'})
+  const [thState, setThState] = useState([
+    {id: 'th1', name: 'Имя', sortKey: 'name', iter: true, iconOrder: false},
+    {id: 'th2', name: 'Качества', sortKey: '', iter: false, iconOrder: true},
+    {id: 'th3', name: 'Профессия', sortKey: 'profession.name', iter: true, iconOrder: true},
+    {id: 'th4', name: 'Встретился раз', sortKey: 'completedMeetings', iter: true, iconOrder: true},
+    {id: 'th5', name: 'Оценка', sortKey: 'rate', iter: true, iconOrder: true},
+    {id: 'th6', name: 'Избранное', sortKey: 'bookmark', iter: true, iconOrder: true},
+    {id: 'th7', name: '', sortKey: '', iter: false, iconOrder: true}
+  ])
 
   let count = users.length
   const pageSize = 4
@@ -36,14 +44,20 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   count = selectedProf ? filteredUsers.length : users.length
 
   //todo сортировка
-  const handleSort = (item) => {
-    item = item === 'profession' ? item+'.name' : item
+  const handleSort = (itemSortKey) => {
     
-    if (sortedSettings.iter === item) {
+    if (sortedSettings.iter === itemSortKey) {
       setSortedSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
     } else {
-      setSortedSettings({iter: item, order: 'asc'})
+      setSortedSettings({iter: itemSortKey, order: 'asc'})
     }
+
+    setThState(prevState => prevState.map(thItem => {
+      return {
+        ...thItem,
+        iconOrder: thItem.sortKey === itemSortKey ? !thItem.iconOrder : true
+      }
+    }))
   }
 
   const sortedUsers = _.orderBy(filteredUsers, [sortedSettings.iter], [sortedSettings.order])
@@ -58,6 +72,13 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     // обнуление масива users
     onRefreshUsers()
     setCurrentPage(1)
+    setSortedSettings({iter: 'name', order: 'asc'})
+    setThState(prevState => prevState.map(thItem => {
+      return {
+        ...thItem,
+        iconOrder: thItem.sortKey === 'name' ? false : true
+      }
+    }))
   }
 
   return (
@@ -87,6 +108,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
         onDelete={onDelete}
         users={userCrop}
         onSort={handleSort}
+        thState={thState}
         sortedSettings={sortedSettings}
         onRefreshUsers={onRefreshUsers}
       />}
