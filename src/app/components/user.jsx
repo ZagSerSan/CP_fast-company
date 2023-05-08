@@ -19,12 +19,12 @@ const User = ({ user, onHandleDelete, onToggleBookMark }) => {
           {/* <Bookmark userFromUser={user} onToggleBookMark={onToggleBookMark} /> */}
         </td>
         <td>
-          <button
+          {/* <button
             onClick={() => onHandleDelete(user._id)}
             className="btn btn-danger"
           >
             delete
-          </button>
+          </button> */}
         </td>
       </tr>
     </>

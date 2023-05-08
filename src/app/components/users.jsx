@@ -24,7 +24,14 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     completedMeetings: {name: 'Встретился раз', path: 'completedMeetings', iconOrder: false},
     rate: {name: 'Оценка', path: 'rate', iconOrder: false},
     bookmark: {name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} onToggleBookMark={onToggleBookMark} />)},
-    delete: {name: '', path: '', iconOrder: false, component: 'delete'}
+    delete: {name: '', path: '', iconOrder: false, component: (user) => (
+      <button
+        onClick={() => onDelete(user._id)}
+        className="btn btn-danger"
+      >
+        delete
+      </button>
+    )}
   })
 
   let count = users.length
