@@ -16,7 +16,7 @@ const User = ({ user, onHandleDelete, onToggleBookMark }) => {
         <td>{user.completedMeetings}</td>
         <td>{user.rate + "/5"}</td>
         <td>
-          <Bookmark userFromUser={user} onToggleBookMark={onToggleBookMark} />
+          {/* <Bookmark userFromUser={user} onToggleBookMark={onToggleBookMark} /> */}
         </td>
         <td>
           <button

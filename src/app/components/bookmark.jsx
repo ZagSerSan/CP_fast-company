@@ -2,14 +2,14 @@ import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import PropTypes from "prop-types"
 
-const Bookmark = ({ userFromUser, onToggleBookMark }) => {
+const Bookmark = ({ user, onToggleBookMark }) => {
   return (
     <>
       <button
         style={{ border: "none", backgroundColor: "transparent" }}
-        onClick={() => onToggleBookMark(userFromUser._id)}
+        onClick={() => onToggleBookMark(user._id)}
       >
-        {userFromUser.bookmark ? (
+        {user.bookmark ? (
           <i
             style={{ fontSize: "20px" }}
             className="bi bi-bookmark-star-fill"
@@ -22,7 +22,7 @@ const Bookmark = ({ userFromUser, onToggleBookMark }) => {
   )
 }
 Bookmark.propTypes = {
-  userFromUser: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   onToggleBookMark: PropTypes.func.isRequired
 }
 export default Bookmark

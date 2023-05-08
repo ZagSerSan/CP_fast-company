@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import User from './user'
+// import User from './user'
 import TableHeader from './tableHeader'
+import TableBody from './tableBody'
 
 const UsersTable = ({
   users,
@@ -16,7 +17,8 @@ const UsersTable = ({
   return (<>
     <table className="table">
       <TableHeader {...{sortSettings,onSetSortSettings,thState,onSetThState}}/>
-      <tbody>
+      <TableBody {...{data: users, thState}} />
+      {/* <tbody>
         {users.map(user => (
           <User
             key={user._id}
@@ -25,7 +27,7 @@ const UsersTable = ({
             onToggleBookMark={onToggleBookMark}
           />
         ))}
-      </tbody>
+      </tbody> */}
     </table>
   </>)
 }

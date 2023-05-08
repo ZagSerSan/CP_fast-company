@@ -18,7 +18,7 @@ const TableHeader = ({
     }
     // изменение всех иконок при сортировке (активация одной из всех)
     for (let key in thState) {
-      thState[key].iconOrder = thState[key].sortKey === itemSortKey ?  true : false
+      thState[key].iconOrder = thState[key].path === itemSortKey ?  true : false
     }
   }
 
@@ -28,8 +28,8 @@ const TableHeader = ({
         {Object.keys(thState).map(thStateKey => (
           <th
             key={thStateKey}
-            className={thState[thStateKey].sortKey ? 'th' : ''}
-            onClick={thState[thStateKey].sortKey ? ()=>handleSort(thState[thStateKey].sortKey) : null}
+            className={thState[thStateKey].path ? 'th' : ''}
+            onClick={thState[thStateKey].path ? ()=>handleSort(thState[thStateKey].path) : null}
           >
             {thState[thStateKey].name}
             {thState[thStateKey].iconOrder && 

@@ -22,12 +22,13 @@ function App() {
     setUsers(firstUsersState)
   }
   // toogle bookmark function
-  const ToggleBookMark = (id) => {
-    setUsers(
-      users.map((item) => {
+  const ToggleBookMark = (userId) => {
+    console.log(userId)
+    setUsers(prevState =>
+      prevState.map((item) => {
         return {
           ...item,
-          bookmark: item._id === id ? !item.bookmark : item.bookmark
+          bookmark: item._id === userId ? !item.bookmark : item.bookmark
         }
       })
     )

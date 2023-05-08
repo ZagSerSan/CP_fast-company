@@ -10,6 +10,7 @@ import SearchStatus from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
 import UsersTable from "./usersTable"
+import Bookmark from './bookmark';
 
 const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -17,13 +18,13 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({iter: 'name', order: 'asc'})
   const [thState, setThState] = useState({
-    name: {name: 'Имя', sortKey: 'name', iconOrder: false},
-    qualities: {name: 'Качества', sortKey: '', iconOrder: false},
-    profession: {name: 'Профессия', sortKey: 'profession.name', iconOrder: false},
-    completedMeetings: {name: 'Встретился раз', sortKey: 'completedMeetings', iconOrder: false},
-    rate: {name: 'Оценка', sortKey: 'rate', iconOrder: false},
-    bookmark: {name: 'Избранное', sortKey: 'bookmark', iconOrder: false},
-    delete: {name: '', sortKey: '', iconOrder: false}
+    name: {name: 'Имя', path: 'name', iconOrder: false},
+    qualities: {name: 'Качества', path: '', iconOrder: false},
+    profession: {name: 'Профессия', path: 'profession.name', iconOrder: false},
+    completedMeetings: {name: 'Встретился раз', path: 'completedMeetings', iconOrder: false},
+    rate: {name: 'Оценка', path: 'rate', iconOrder: false},
+    bookmark: {name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} onToggleBookMark={onToggleBookMark} />)},
+    delete: {name: '', path: '', iconOrder: false, component: 'delete'}
   })
 
   let count = users.length
