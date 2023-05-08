@@ -36,7 +36,6 @@ UsersTable.propTypes = {
   onToggleBookMark: PropTypes.func.isRequired,
   sortSettings: PropTypes.object.isRequired,
   onSetSortSettings: PropTypes.func.isRequired,
-  // thState: PropTypes.array.isRequired,
   thState: PropTypes.object.isRequired,
   onSetThState: PropTypes.func.isRequired,
 }

@@ -1,0 +1,257 @@
+[33mcommit 3c926eb115213f800bc376247da9622f5e5d2b3e[m[33m ([m[1;36mHEAD -> [m[1;32mfeatures/sort[m[33m, [m[1;31morigin/features/sort[m[33m)[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 20:28:30 2023 +0200
+
+    upd clearFilter of thState
+
+[33mcommit e86046cc3a6123a28915b5e2ea750eceec3231c1[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 20:17:15 2023 +0200
+
+    релиз логики иконки сортировки
+
+[33mcommit 113e676f3cb3edf16125a1f4fa96f4b3dde49d80[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 17:30:27 2023 +0200
+
+    todo changeSortIcon func
+
+[33mcommit 977c9a2d2f9a1ba429431a78a5d03bf2eb7b61b0[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 13:07:46 2023 +0200
+
+    last todo is done: relocate handleSort func
+
+[33mcommit 0305a310403561501e115504aed8937716a744e9[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 12:47:28 2023 +0200
+
+    upd todo
+
+[33mcommit 88ec1dfcc2e8fba978e367ae5166857d79fed262[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 12:10:46 2023 +0200
+
+    add arrow logic
+
+[33mcommit e42f564ee7224eb4386d3671d301be6eb5acc264[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 10:43:27 2023 +0200
+
+    thState
+
+[33mcommit 3128b24d49b7caac7d0dc2b5f81fb89426bb3c09[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 10:07:17 2023 +0200
+
+    fixed sort of profession
+
+[33mcommit 951cf266a923e37dac0dc2ae828c80c8a7c6c694[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri May 5 09:42:50 2023 +0200
+
+    add IconSVG component
+
+[33mcommit 76c6b035b6dee9f794a6e4fadf0e87e050aef66c[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu May 4 17:11:03 2023 +0200
+
+    todo fix sorf by profession
+
+[33mcommit 6ef32a1ea68290b0dae381602ed5f0e978f4a99d[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu May 4 16:15:30 2023 +0200
+
+    add btn upd
+
+[33mcommit 59872b1bc021df7964bfec0dc778c6b6ecaa9c65[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/develop[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m, [m[1;32mdevelop[m[33m)[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu May 4 13:21:36 2023 +0200
+
+    add sort icon and some css
+
+[33mcommit 48d58d12775c37da59065dd35fb9435e6322681b[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu May 4 11:14:13 2023 +0200
+
+    add main style
+
+[33mcommit 571bd92137673832222085903c021d33510dfc75[m[33m ([m[1;31morigin/features/filter[m[33m)[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon May 1 13:13:23 2023 +0200
+
+    all is done
+
+[33mcommit 69cc9666502e45d7639415cf4e9f4bb5dcc08220[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon May 1 12:57:48 2023 +0200
+
+    Задание #1 main part is done
+
+[33mcommit 88a15a8eac97f2c0acde276a8c4e828786e546b0[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon May 1 10:49:23 2023 +0200
+
+    update api
+
+[33mcommit 04c711a5e2efdeec38fa52b2dc3ba457ca0a8848[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon May 1 09:17:48 2023 +0200
+
+    set current page for filter buttons
+
+[33mcommit 8902103f9e6a6434f6684be5254dcf6c391efd06[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon May 1 09:15:08 2023 +0200
+
+    add clearFilter
+
+[33mcommit a7d09e299220f89387d18a666b767d7134b4e9df[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri Apr 28 19:16:19 2023 +0200
+
+    реализация фильтрации
+
+[33mcommit 06f939e9f02b16a651c8a89a3d24afaaf72d5843[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri Apr 28 18:44:10 2023 +0200
+
+    обработка выбора
+
+[33mcommit 63e3505eebd787db57888f3a3fbd09c79ad348aa[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Tue Apr 25 09:11:38 2023 +0200
+
+    useEffect
+
+[33mcommit 5f91b4aeec45f67c188b7ae8ef0d1988d817bd6e[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon Apr 24 13:27:16 2023 +0200
+
+    todo => 3. [КП] Расширение API
+
+[33mcommit 226c2f2cf5213b57923b0485a283e0655ff96b00[m[33m ([m[1;31morigin/features/pagination[m[33m)[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Wed Apr 19 19:47:05 2023 +0200
+
+    4. Пагинация/[КП] Задание #1
+
+[33mcommit 7b9bec903e66e896d0ee473c85820e4ecb2f6f46[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Wed Apr 19 18:32:55 2023 +0200
+
+    8. [КП] Настройка ESLint
+
+[33mcommit 90aa0d77c3df471a8b76f10ca71bf87ad0bc1792[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Wed Apr 19 17:31:41 2023 +0200
+
+    7. [КП] Проверка типов с помощью PropTypes
+
+[33mcommit 0254826421ca69bede15b8df94db726ffbecaeaf[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Wed Apr 19 17:04:27 2023 +0200
+
+    6. [КП] Разбиение данных на страницы
+
+[33mcommit 4a9d9d2985f0c3167955fc97f03fa4ae8189bffb[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon Apr 17 11:48:11 2023 +0200
+
+    5. [КП] Обработка изменений страницы
+
+[33mcommit b0e9b7d7c109a6ade5cb6c02c071be8e504564e3[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon Apr 17 11:33:24 2023 +0200
+
+    отображение разбиения на страницы
+
+[33mcommit 0a53641693d0f240938f583d1882614645679cab[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri Apr 14 18:53:23 2023 +0200
+
+    main code  is done
+
+[33mcommit 628a7ab7f96621dddd875f523ffc93aa4cf9dc23[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri Apr 14 18:09:28 2023 +0200
+
+    set todo
+
+[33mcommit 2179a4f3dd2be3507e4423122c06d41be22b40ab[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri Apr 14 18:03:32 2023 +0200
+
+    v 1.1
+
+[33mcommit 7b28b954a4a9d63616cffc83c2d1f2021ca8449d[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Fri Apr 14 17:51:28 2023 +0200
+
+    version 1
+
+[33mcommit b3e3e69514c2a7f3debb6378841cd3934b15334d[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon Apr 10 21:13:04 2023 +0200
+
+    corrected code
+
+[33mcommit 1afcb3bcdab3dad4413c6a309cc62f7c689619a4[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon Apr 10 14:45:37 2023 +0200
+
+    corrected
+
+[33mcommit 8778269cf1e8a8f374d2a922eb5d312cf0f7c916[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Mon Apr 10 13:59:06 2023 +0200
+
+    fixed code
+
+[33mcommit 68f4580b4c2be72de1a9679c301df7c143770451[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 21:14:15 2023 +0200
+
+    final completion
+
+[33mcommit 816342408fddfc23583728e945ba92422a36d689[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 21:05:34 2023 +0200
+
+    change <th/> value
+
+[33mcommit d5f70c3919f018f2cd0041b42798ac9d576f77db[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 21:01:47 2023 +0200
+
+    done
+
+[33mcommit 18bd441326590da0da8a9ba853e4aff70cfc4070[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 20:57:32 2023 +0200
+
+    realese
+
+[33mcommit ef0396eec58cd6b3b0e7638b56ec7eaaf92e5876[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 20:20:26 2023 +0200
+
+    handlePhrase() is done
+
+[33mcommit 1e5394fc9b1cbace449118a52769f2c3d4300300[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 17:44:09 2023 +0200
+
+    create react app and del some default files
+
+[33mcommit d5164638c03eb4356b0efa702994936f3a57e108[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Thu Apr 6 17:25:11 2023 +0200
+
+    clear prevState, preparat space for course project
+
+[33mcommit 3548e35d20ae09c5eae969abca8c90d3b0115d3c[m
+Author: ZagSerSan <yan.steys1997@gmail.com>
+Date:   Wed Apr 5 15:18:56 2023 +0200
+
+    add homework

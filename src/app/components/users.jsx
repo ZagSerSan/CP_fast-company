@@ -16,15 +16,6 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({iter: 'name', order: 'asc'})
-  // const [thState, setThState] = useState([
-  //   {id: 'th1', name: 'Имя', sortKey: 'name', iconOrder: false},
-  //   {id: 'th2', name: 'Качества', sortKey: '', iconOrder: true},
-  //   {id: 'th3', name: 'Профессия', sortKey: 'profession.name', iconOrder: true},
-  //   {id: 'th4', name: 'Встретился раз', sortKey: 'completedMeetings', iconOrder: true},
-  //   {id: 'th5', name: 'Оценка', sortKey: 'rate', iconOrder: true},
-  //   {id: 'th6', name: 'Избранное', sortKey: 'bookmark', iconOrder: true},
-  //   {id: 'th7', name: '', sortKey: '', iconOrder: true}
-  // ])
   const [thState, setThState] = useState({
     name: {name: 'Имя', sortKey: 'name', iconOrder: false},
     qualities: {name: 'Качества', sortKey: '', iconOrder: false},
@@ -74,12 +65,6 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     for (let key in thState) {
         thState[key].iconOrder = false
     }
-    //   prevState.map(thItem => {
-    //   return {
-    //     ...thItem,
-    //     iconOrder: thItem.sortKey === 'name' ? false : true
-    //   }
-    // }))
   }
 
   return (
