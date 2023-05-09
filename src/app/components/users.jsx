@@ -10,7 +10,8 @@ import SearchStatus from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
 import UsersTable from "./usersTable"
-import Bookmark from './bookmark';
+import Bookmark from './bookmark'
+import Qualitie from './qualitie'
 
 const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -19,7 +20,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
   const [sortSettings, setSortSettings] = useState({iter: 'name', order: 'asc'})
   const [thState, setThState] = useState({
     name: {name: 'Имя', path: 'name', iconOrder: false},
-    qualities: {name: 'Качества', path: '', iconOrder: false},
+    qualities: {name: 'Качества', path: '', iconOrder: false, component: (user)=>(<Qualitie qualities={user.qualities} />)},
     profession: {name: 'Профессия', path: 'profession.name', iconOrder: false},
     completedMeetings: {name: 'Встретился раз', path: 'completedMeetings', iconOrder: false},
     rate: {name: 'Оценка', path: 'rate', iconOrder: false},
@@ -53,6 +54,7 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
 
   const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
+  // изменение страницы при кол-ве польз = 0 на текущей
   useEffect(()=>{
     setCurrentPage(prevState => {
       if (userCrop.length === 0 && count != 0) {
@@ -107,14 +109,11 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
       <SearchStatus count={count} />
       {count > 0 &&
       <UsersTable
-        onToggleBookMark={onToggleBookMark}
-        onDelete={onDelete}
         users={userCrop}
         thState={thState}
         sortSettings={sortSettings}
         onSetSortSettings={setSortSettings}
         onSetThState={setThState}
-        onRefreshUsers={onRefreshUsers}
       />}
       <Pagination
         itemsCount={count}

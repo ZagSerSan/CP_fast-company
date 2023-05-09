@@ -36,4 +36,5 @@ TableBody.propTypes = {
   data: PropTypes.array.isRequired,
   thState: PropTypes.object.isRequired,
 }
- export default TableBody
+
+export default TableBody

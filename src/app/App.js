@@ -23,7 +23,6 @@ function App() {
   }
   // toogle bookmark function
   const ToggleBookMark = (userId) => {
-    console.log(userId)
     setUsers(prevState =>
       prevState.map((item) => {
         return {
@@ -45,4 +44,5 @@ function App() {
     )}
   </>)
 }
+
 export default App
