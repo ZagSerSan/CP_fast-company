@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import _ from 'lodash'
 import "bootstrap/dist/css/bootstrap.css"
+// utils
 import apiUsers from "../api/fake.api/user.api"
-// any utils
-import { paginate } from "../utils/paginate"
 import professionsApi from "../api/fake.api/professions.api"
+import { paginate } from "../utils/paginate"
 // components
 import SearchStatus from "./searchStatus"
 import Pagination from "./pagination"
@@ -106,8 +106,7 @@ const Users = () => {
       }
     }
 
-    return (
-    <>
+    return (<>
       <div className="filter">
         {professions &&
         <div>
@@ -120,7 +119,7 @@ const Users = () => {
             className="btn btn-secondary clear-btn"
             onClick={clearFilter}
           >
-              Сбросить
+            Сбросить
           </button>
         </div>
         }
