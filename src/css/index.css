@@ -64,8 +64,8 @@ svg.loader {
             transform: translate3d(-50%, -50%, 0) rotateZ(0deg);
   }
   to {
-    -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(360deg);
-            transform: translate3d(-50%, -50%, 0) rotateZ(360deg);
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(-360deg);
+            transform: translate3d(-50%, -50%, 0) rotateZ(-360deg);
   }
 }
 
@@ -75,7 +75,7 @@ svg.loader {
             transform: translate3d(-50%, -50%, 0) rotateZ(0deg);
   }
   to {
-    -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(360deg);
-            transform: translate3d(-50%, -50%, 0) rotateZ(360deg);
+    -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(-360deg);
+            transform: translate3d(-50%, -50%, 0) rotateZ(-360deg);
   }
 }
