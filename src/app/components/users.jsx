@@ -53,6 +53,15 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
 
   const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
   const userCrop = paginate(sortedUsers, currentPage, pageSize)
+  useEffect(()=>{
+    setCurrentPage(prevState => {
+      if (userCrop.length === 0 && count != 0) {
+         return prevState-1
+      } else {
+        return prevState
+      }
+    })
+  },[userCrop])
 
   // функция фильтра профессий
   const handleProfessionSelect = (item) => {
