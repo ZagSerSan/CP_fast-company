@@ -33,3 +33,24 @@
   height: 25px;
   margin-left: 3px;
 }
+
+svg.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+
+  transform: translate3d(-50%, -50%, 0) rotateZ(0deg);
+  height: 200px;
+  fill: rgb(152, 145, 255);
+
+  animation: 5s loader linear infinite;
+}
+@keyframes loader {
+  from {
+    transform: translate3d(-50%, -50%, 0) rotateZ(0deg);
+  }
+  to {
+    transform: translate3d(-50%, -50%, 0) rotateZ(360deg);
+  }
+}

@@ -146,7 +146,8 @@ const Users = () => {
       </div>
     </>)
   } // if (users)
-  return "Loading..."
+  // return "Loading..."
+  return <IconSVG id={'loader'}/>
 }
 
 export default Users
