@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
-import PropTypes from "prop-types"
 import _ from 'lodash'
 import "bootstrap/dist/css/bootstrap.css"
+import apiUsers from "../api/fake.api/user.api"
 // any utils
 import { paginate } from "../utils/paginate"
 import professionsApi from "../api/fake.api/professions.api"
@@ -13,7 +13,10 @@ import UsersTable from "./usersTable"
 import Bookmark from './bookmark'
 import Qualitie from './qualitie'
 
-const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
+const Users = () => {
+  const [users, setUsers] = useState()
+  // начальное состояние пользователей для сброса
+  const [firstUsersState, setFirstUsersState] = useState()
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
@@ -24,112 +27,124 @@ const Users = ({ users, onDelete, onToggleBookMark, onRefreshUsers }) => {
     profession: {name: 'Профессия', path: 'profession.name', iconOrder: false},
     completedMeetings: {name: 'Встретился раз', path: 'completedMeetings', iconOrder: false},
     rate: {name: 'Оценка', path: 'rate', iconOrder: false},
-    bookmark: {name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} onToggleBookMark={onToggleBookMark} />)},
+    bookmark: {name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />)},
     delete: {name: '', path: '', iconOrder: false, component: (user) => (
       <button
-        onClick={() => onDelete(user._id)}
+        onClick={() => handleDelete(user._id)}
         className="btn btn-danger"
       >
         delete
       </button>
     )}
   })
-
-  let count = users.length
-  const pageSize = 4
-
+  useEffect(()=>{
+    apiUsers.fetchAll().then(data => setUsers(data))
+    apiUsers.fetchAll().then(data => setFirstUsersState(data))
+  }, [])
   useEffect(() => {
     professionsApi.fetchAll().then(data => setProfession(data))
   }, [])
 
-  const handlePageChange = (pageIndex) => {
-    setCurrentPage(pageIndex)
+  // функция кнопки удаления
+  const handleDelete = (id) => {
+    setUsers((prevState) => prevState.filter((item) => item._id !== id))
+  }
+  // func for refresh all users
+  const refreshUsers = () => {
+    setUsers(firstUsersState)
+  }
+  // toogle bookmark function
+  const toggleBookMark = (userId) => {
+    setUsers(prevState =>
+      prevState.map((item) => {
+        return {
+          ...item,
+          bookmark: item._id === userId ? !item.bookmark : item.bookmark
+        }
+      })
+    )
   }
 
-  const filteredUsers = selectedProf
-    ? users.filter((user) => user.profession.name === selectedProf.name)
-    : users
-  // для изменения страниц
-  count = selectedProf ? filteredUsers.length : users.length
+  if (users) {
+    const pageSize = 4
 
-  const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
-  const userCrop = paginate(sortedUsers, currentPage, pageSize)
-  // изменение страницы при кол-ве польз = 0 на текущей
-  useEffect(()=>{
-    setCurrentPage(prevState => {
-      if (userCrop.length === 0 && count != 0) {
-         return prevState-1
-      } else {
-        return prevState
-      }
-    })
-  },[userCrop])
-
-  // функция фильтра профессий
-  const handleProfessionSelect = (item) => {
-    setSelectedProf(item)
-    setCurrentPage(1)
-  }
-  // функция сброса (глобально)
-  const clearFilter = () => {
-    // обнуление: фильтра профессии,
-    setSelectedProf()
-    // масива users,
-    onRefreshUsers()
-    // текущей страницы,
-    setCurrentPage(1)
-    // параметров сортировки,
-    setSortSettings({iter: 'name', order: 'asc'})
-    // состояние заголовков таблицы
-    for (let key in thState) {
-        thState[key].iconOrder = false
+    const handlePageChange = (pageIndex) => {
+      setCurrentPage(pageIndex)
     }
-  }
 
-  return (
-  <>
-    <div className="filter">
-      {professions &&
-      <div>
-        <GroupList
-          selectedProf={selectedProf}
-          items={professions}
-          onItemSelect={handleProfessionSelect}
-        />
-        <button 
-          className="btn btn-secondary clear-btn"
-          onClick={clearFilter}
-        >
-            Сбросить
-        </button>
-      </div>
+    const filteredUsers = selectedProf
+      ? users.filter((user) => user.profession.name === selectedProf.name)
+      : users
+    // для изменения страниц
+    let count = selectedProf ? filteredUsers.length : users.length
+
+    const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
+    const userCrop = paginate(sortedUsers, currentPage, pageSize)
+    // изменение страницы при кол-ве польз = 0 на текущей
+    if (userCrop.length === 0 && count != 0) {
+      setCurrentPage(prevState => prevState-1)
+    }
+
+    // функция фильтра профессий
+    const handleProfessionSelect = (item) => {
+      setSelectedProf(item)
+      setCurrentPage(1)
+    }
+    // функция сброса (глобально)
+    const clearFilter = () => {
+      // обнуление: фильтра профессии,
+      setSelectedProf()
+      // масива users,
+      refreshUsers()
+      // текущей страницы,
+      setCurrentPage(1)
+      // параметров сортировки,
+      setSortSettings({iter: 'name', order: 'asc'})
+      // состояние заголовков таблицы
+      for (let key in thState) {
+          thState[key].iconOrder = false
       }
-    </div>
-    <div className="content">
-      <SearchStatus count={count} />
-      {count > 0 &&
-      <UsersTable
-        users={userCrop}
-        thState={thState}
-        sortSettings={sortSettings}
-        onSetSortSettings={setSortSettings}
-        onSetThState={setThState}
-      />}
-      <Pagination
-        itemsCount={count}
-        pageSize={pageSize}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
-    </div>
-  </>)
-}
+    }
 
-Users.propTypes = {
-  users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
-  onDelete: PropTypes.func.isRequired,
-  onToggleBookMark: PropTypes.func.isRequired,
-  onRefreshUsers: PropTypes.func.isRequired
+    return (
+    <>
+      <div className="filter">
+        {professions &&
+        <div>
+          <GroupList
+            selectedProf={selectedProf}
+            items={professions}
+            onItemSelect={handleProfessionSelect}
+          />
+          <button 
+            className="btn btn-secondary clear-btn"
+            onClick={clearFilter}
+          >
+              Сбросить
+          </button>
+        </div>
+        }
+      </div>
+      <div className="content">
+        <SearchStatus count={count} />
+        {count > 0 &&
+        <UsersTable
+          users={userCrop}
+          thState={thState}
+          sortSettings={sortSettings}
+          onSetSortSettings={setSortSettings}
+          onSetThState={setThState}
+        />}
+        <Pagination
+          itemsCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </>)
+  } // if (users)
+  return 'Loading...'
 }
 
 export default Users

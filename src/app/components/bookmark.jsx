@@ -2,12 +2,12 @@ import React from "react"
 import "bootstrap/dist/css/bootstrap.css"
 import PropTypes from "prop-types"
 
-const Bookmark = ({ user, onToggleBookMark }) => {
+const Bookmark = ({ user, toggleBookMark }) => {
   return (
     <>
       <button
         style={{ border: "none", backgroundColor: "transparent" }}
-        onClick={() => onToggleBookMark(user._id)}
+        onClick={() => toggleBookMark(user._id)}
       >
         {user.bookmark ? (
           <i
@@ -23,6 +23,6 @@ const Bookmark = ({ user, onToggleBookMark }) => {
 }
 Bookmark.propTypes = {
   user: PropTypes.object.isRequired,
-  onToggleBookMark: PropTypes.func.isRequired
+  toggleBookMark: PropTypes.func.isRequired
 }
 export default Bookmark
