@@ -12,6 +12,7 @@ import GroupList from "./groupList"
 import UsersTable from "./usersTable"
 import Bookmark from './bookmark'
 import Qualitie from './qualitie'
+import IconSVG from './iconSVG'
 
 const Users = () => {
   const [users, setUsers] = useState()
@@ -20,24 +21,26 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  const [sortSettings, setSortSettings] = useState({iter: 'name', order: 'asc'})
+  const [sortSettings, setSortSettings] = useState({ iter: 'name', order: 'asc' })
   const [thState, setThState] = useState({
-    name: {name: 'Имя', path: 'name', iconOrder: false},
-    qualities: {name: 'Качества', path: '', iconOrder: false, component: (user)=>(<Qualitie qualities={user.qualities} />)},
-    profession: {name: 'Профессия', path: 'profession.name', iconOrder: false},
-    completedMeetings: {name: 'Встретился раз', path: 'completedMeetings', iconOrder: false},
-    rate: {name: 'Оценка', path: 'rate', iconOrder: false},
-    bookmark: {name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />)},
-    delete: {name: '', path: '', iconOrder: false, component: (user) => (
-      <button
-        onClick={() => handleDelete(user._id)}
-        className="btn btn-danger"
-      >
-        delete
-      </button>
-    )}
+    name: { name: 'Имя', path: 'name', iconOrder: false },
+    qualities: { name: 'Качества', path: '', iconOrder: false, component: (user) => (<Qualitie qualities={user.qualities} />) },
+    profession: { name: 'Профессия', path: 'profession.name', iconOrder: false },
+    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings', iconOrder: false },
+    rate: { name: 'Оценка', path: 'rate', iconOrder: false },
+    bookmark: { name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />) },
+    delete: {
+      name: '', path: '', iconOrder: false, component: (user) => (
+        <button
+          onClick={() => handleDelete(user._id)}
+          className="btn btn-danger"
+        >
+          delete
+        </button>
+      )
+    }
   })
-  useEffect(()=>{
+  useEffect(() => {
     apiUsers.fetchAll().then(data => setUsers(data))
     apiUsers.fetchAll().then(data => setFirstUsersState(data))
   }, [])
@@ -82,7 +85,7 @@ const Users = () => {
     const userCrop = paginate(sortedUsers, currentPage, pageSize)
     // изменение страницы при кол-ве польз = 0 на текущей
     if (userCrop.length === 0 && count != 0) {
-      setCurrentPage(prevState => prevState-1)
+      setCurrentPage(prevState => prevState - 1)
     }
 
     // функция фильтра профессий
@@ -99,41 +102,41 @@ const Users = () => {
       // текущей страницы,
       setCurrentPage(1)
       // параметров сортировки,
-      setSortSettings({iter: 'name', order: 'asc'})
+      setSortSettings({ iter: 'name', order: 'asc' })
       // состояние заголовков таблицы
       for (let key in thState) {
-          thState[key].iconOrder = false
+        thState[key].iconOrder = false
       }
     }
 
     return (<>
       <div className="filter">
         {professions &&
-        <div>
-          <GroupList
-            selectedProf={selectedProf}
-            items={professions}
-            onItemSelect={handleProfessionSelect}
-          />
-          <button 
-            className="btn btn-secondary clear-btn"
-            onClick={clearFilter}
-          >
-            Сбросить
-          </button>
-        </div>
+          <div>
+            <GroupList
+              selectedProf={selectedProf}
+              items={professions}
+              onItemSelect={handleProfessionSelect}
+            />
+            <button
+              className="btn btn-secondary clear-btn"
+              onClick={clearFilter}
+            >
+              Сбросить
+            </button>
+          </div>
         }
       </div>
       <div className="content">
         <SearchStatus count={count} />
         {count > 0 &&
-        <UsersTable
-          users={userCrop}
-          thState={thState}
-          sortSettings={sortSettings}
-          onSetSortSettings={setSortSettings}
-          onSetThState={setThState}
-        />}
+          <UsersTable
+            users={userCrop}
+            thState={thState}
+            sortSettings={sortSettings}
+            onSetSortSettings={setSortSettings}
+            onSetThState={setThState}
+          />}
         <Pagination
           itemsCount={count}
           pageSize={pageSize}
@@ -143,7 +146,7 @@ const Users = () => {
       </div>
     </>)
   } // if (users)
-  return 'Loading...'
+  return "Loading..."
 }
 
 export default Users
