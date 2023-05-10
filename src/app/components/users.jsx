@@ -76,7 +76,7 @@ const Users = () => {
     }
 
     const filteredUsers = selectedProf
-      ? users.filter((user) => user.profession.name === selectedProf.name)
+      ? users.filter((user) => user.profession._id === selectedProf._id)
       : users
     // для изменения страниц
     let count = selectedProf ? filteredUsers.length : users.length
