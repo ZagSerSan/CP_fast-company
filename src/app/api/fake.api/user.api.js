@@ -144,6 +144,12 @@ const users = [
   }
 ]
 
+// const getId = () => new Promise((resolve) => {
+//   window.setTimeout(function () {
+//     resolve(users.filter(user => ))
+//   }, 2000)
+// })
+
 const fetchAll = () => new Promise((resolve) => {
   window.setTimeout(function () {
     resolve(users)

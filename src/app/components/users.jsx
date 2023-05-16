@@ -109,7 +109,8 @@ const Users = () => {
       }
     }
 
-    return (<>
+    return (
+    <div className="main-table">
       <div className="filter">
         {professions &&
           <div>
@@ -144,7 +145,7 @@ const Users = () => {
           onPageChange={handlePageChange}
         />
       </div>
-    </>)
+    </div>)
   } // if (users)
   // return "Loading..."
   return <IconSVG id={'loader'}/>
