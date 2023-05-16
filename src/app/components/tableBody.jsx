@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 
  const TableBody = ({data, thState}) => {
 
@@ -11,6 +12,11 @@ import _ from 'lodash'
         return component(dataItem)
       }
       return component
+    } else if (thState[thStateItem].path === 'name') {
+      const userId = `Users/${dataItem._id}`
+      return <Link to={userId}>
+        {dataItem.name}
+      </Link>
     }
     return _.get(dataItem,thState[thStateItem].path)
   }

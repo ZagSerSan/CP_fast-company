@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import _ from 'lodash'
 import "bootstrap/dist/css/bootstrap.css"
+import { useParams } from "react-router-dom"
 // utils
 import apiUsers from "../api/fake.api/user.api"
 import professionsApi from "../api/fake.api/professions.api"
@@ -13,6 +14,7 @@ import UsersTable from "./usersTable"
 import Bookmark from './bookmark'
 import Qualitie from './qualitie'
 import IconSVG from './iconSVG'
+import User from './user'
 
 const Users = () => {
   const [users, setUsers] = useState()
@@ -40,6 +42,11 @@ const Users = () => {
       )
     }
   })
+
+  //todo
+  const params = useParams()
+  const {userId} = params
+
   useEffect(() => {
     apiUsers.fetchAll().then(data => setUsers(data))
     apiUsers.fetchAll().then(data => setFirstUsersState(data))
@@ -109,45 +116,48 @@ const Users = () => {
       }
     }
 
-    return (
-    <div className="main-table">
-      <div className="filter">
-        {professions &&
-          <div>
-            <GroupList
-              selectedProf={selectedProf}
-              items={professions}
-              onItemSelect={handleProfessionSelect}
-            />
-            <button
-              className="btn btn-secondary clear-btn"
-              onClick={clearFilter}
-            >
-              Сбросить
-            </button>
-          </div>
-        }
-      </div>
-      <div className="content">
-        <SearchStatus count={count} />
-        {count > 0 &&
-          <UsersTable
-            users={userCrop}
-            thState={thState}
-            sortSettings={sortSettings}
-            onSetSortSettings={setSortSettings}
-            onSetThState={setThState}
-          />}
-        <Pagination
-          itemsCount={count}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
-      </div>
-    </div>)
+    return (<>
+    {userId 
+    ? <User {...{userCrop,userId}}/>
+    : <div className="main-table">
+        <div className="filter">
+          {professions &&
+            <div>
+              <GroupList
+                selectedProf={selectedProf}
+                items={professions}
+                onItemSelect={handleProfessionSelect}
+              />
+              <button
+                className="btn btn-secondary clear-btn"
+                onClick={clearFilter}
+              >
+                Сбросить
+              </button>
+            </div>
+          }
+        </div>
+        <div className="content">
+          <SearchStatus count={count} />
+          {count > 0 &&
+            <UsersTable
+              users={userCrop}
+              thState={thState}
+              sortSettings={sortSettings}
+              onSetSortSettings={setSortSettings}
+              onSetThState={setThState}
+            />}
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>}
+    </>)
   } // if (users)
-  // return "Loading..."
+  // else return "Loading..."
   return <IconSVG id={'loader'}/>
 }
 
