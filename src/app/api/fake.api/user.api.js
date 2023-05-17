@@ -144,11 +144,11 @@ const users = [
   }
 ]
 
-// const getId = () => new Promise((resolve) => {
-//   window.setTimeout(function () {
-//     resolve(users.filter(user => ))
-//   }, 2000)
-// })
+const getUserById = (id) => new Promise((resolve) => {
+  window.setTimeout(function () {
+    resolve(users.filter(user => user._id === id))
+  }, 1000)
+})
 
 const fetchAll = () => new Promise((resolve) => {
   window.setTimeout(function () {
@@ -157,5 +157,5 @@ const fetchAll = () => new Promise((resolve) => {
 })
 
 export default {
-  fetchAll
+  fetchAll, getUserById
 }
