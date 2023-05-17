@@ -25,14 +25,14 @@ const Users = () => {
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({ iter: 'name', order: 'asc' })
   const [thState, setThState] = useState({
-    name: { name: 'Имя', path: 'name', iconOrder: false },
-    qualities: { name: 'Качества', path: '', iconOrder: false, component: (user) => (<Qualitie qualities={user.qualities} />) },
-    profession: { name: 'Профессия', path: 'profession.name', iconOrder: false },
-    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings', iconOrder: false },
-    rate: { name: 'Оценка', path: 'rate', iconOrder: false },
-    bookmark: { name: 'Избранное', path: 'bookmark', iconOrder: false, component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />) },
+    name: { name: 'Имя', path: 'name'},
+    qualities: { name: 'Качества', path: '', component: (user) => (<Qualitie qualities={user.qualities} />) },
+    profession: { name: 'Профессия', path: 'profession.name'},
+    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings'},
+    rate: { name: 'Оценка', path: 'rate'},
+    bookmark: { name: 'Избранное', path: 'bookmark', component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />) },
     delete: {
-      name: '', path: '', iconOrder: false, component: (user) => (
+      name: '', path: '', component: (user) => (
         <button
           onClick={() => handleDelete(user._id)}
           className="btn btn-danger"
@@ -106,17 +106,13 @@ const Users = () => {
       refreshUsers()
       // текущей страницы,
       setCurrentPage(1)
-      // параметров сортировки,
+      // параметров сортировки
       setSortSettings({ iter: 'name', order: 'asc' })
-      // состояние заголовков таблицы
-      for (let key in thState) {
-        thState[key].iconOrder = false
-      }
     }
 
     return (<>
     {userId 
-    ? <User {...{userCrop,userId}}/>
+    ? <User {...{userId}}/>
     : <div className="main-table">
         <div className="filter">
           {professions &&
@@ -155,7 +151,7 @@ const Users = () => {
       </div>}
     </>)
   } // if (users)
-  // else return "Loading..."
+  // if else -> return "Loading..."
   return <IconSVG id={'loader'}/>
 }
 

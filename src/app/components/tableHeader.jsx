@@ -16,11 +16,6 @@ const TableHeader = ({
       // измен сорт кликом по НЕактивному элем (НЕ тот самый)
       onSetSortSettings({iter: itemSortKey, order: 'asc'})
     }
-    //todo изменение всех иконок при сортировке (активация одной из всех)
-    for (let key in thState) {
-      thState[key].iconOrder = thState[key].path === itemSortKey ?  true : false
-    }
-    // console.log('itemSortKey', itemSortKey);
   }
 
   return (
@@ -33,9 +28,9 @@ const TableHeader = ({
             onClick={thState[thStateKey].path ? ()=>handleSort(thState[thStateKey].path) : null}
           >
             {thState[thStateKey].name}
-            {/* {console.log(thState[thStateKey].path)} */}
-            {thState[thStateKey].iconOrder && 
-            <IconSVG id={sortSettings.order === 'asc' ? 'sort-ascending' : 'sort-descending'}/>}
+            {thState[thStateKey].path === sortSettings.iter
+            ? <IconSVG id={sortSettings.order === 'asc' ? 'sort-ascending' : 'sort-descending'}/>
+            : null}
           </th>
         ))}
       </tr>
@@ -47,7 +42,6 @@ TableHeader.propTypes = {
   sortSettings: PropTypes.object.isRequired,
   onSetSortSettings: PropTypes.func.isRequired,
   thState: PropTypes.object.isRequired,
-  onSetThState: PropTypes.func.isRequired,
 }
 
 export default TableHeader
