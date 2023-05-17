@@ -42,8 +42,6 @@ const Users = () => {
       )
     }
   })
-
-  //todo
   const params = useParams()
   const {userId} = params
 
