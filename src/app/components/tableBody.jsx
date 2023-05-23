@@ -12,12 +12,17 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min'
         return component(dataItem)
       }
       return component
-    } else if (thState[thStateItem].path === 'name') {
+    } // при итерации имени делаем ссылку на стр пользователя по ид
+      else if (thState[thStateItem].path === 'name') {
       const userId = `Users/${dataItem._id}`
       return <Link to={userId}>
         {dataItem.name}
       </Link>
-    }
+    } // при итерации оценки добавляем строку '/5'
+      else if (thState[thStateItem].path === 'rate') {
+        return `${_.get(dataItem,thState[thStateItem].path)} / 5`
+      }
+    // во всех остальных случаях возвр просто path
     return _.get(dataItem,thState[thStateItem].path)
   }
 
