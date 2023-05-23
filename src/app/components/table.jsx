@@ -8,8 +8,9 @@ import Bookmark from './qualitie'
 const Table = ({
   users,
   sortSettings,
-  onSetSortSettings,
-  toggleBookMark
+  setSortSettings,
+  toggleBookMark,
+  handleDelete
 }) => {
   const [thState, setThState] = useState({
     name: { name: 'Имя', path: 'name'},
@@ -32,7 +33,7 @@ const Table = ({
 
   return (
     <table className="table">
-      <TableHeader {...{sortSettings,onSetSortSettings,thState,setThState}}/>
+      <TableHeader {...{sortSettings,setSortSettings,thState,setThState}}/>
       <TableBody {...{data: users, thState}} />
     </table>
   )
@@ -41,8 +42,9 @@ const Table = ({
 Table.propTypes = {
   users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
-  onSetSortSettings: PropTypes.func.isRequired,
+  setSortSettings: PropTypes.func.isRequired,
   toggleBookMark: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 }
 
 export default Table

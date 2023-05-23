@@ -4,17 +4,17 @@ import IconSVG from './iconSVG'
 
 const TableHeader = ({
   sortSettings,
-  setThState,
+  setSortSettings,
   thState,
 }) => {
-
+  // sortSettings, setSortSettings
   const handleSort = (itemSortKey) => {
     // измен сорт кликом по активному элем (тот самый)
     if (sortSettings.iter === itemSortKey) {
-      setThState(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
+      setSortSettings(prevState => ({...prevState, order: prevState.order==='asc'?'desc':'asc'}))
     } else {
       // измен сорт кликом по НЕактивному элем (НЕ тот самый)
-      setThState({iter: itemSortKey, order: 'asc'})
+      setSortSettings({iter: itemSortKey, order: 'asc'})
     }
   }
 
@@ -40,7 +40,7 @@ const TableHeader = ({
 
 TableHeader.propTypes = {
   sortSettings: PropTypes.object.isRequired,
-  setThState: PropTypes.func.isRequired,
+  setSortSettings: PropTypes.func.isRequired,
   thState: PropTypes.object.isRequired,
 }
 

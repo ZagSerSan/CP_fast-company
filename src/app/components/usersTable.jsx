@@ -5,20 +5,22 @@ import Table from './table'
 const UsersTable = ({
   users,
   sortSettings,
-  onSetSortSettings,
-  toggleBookMark
+  setSortSettings,
+  toggleBookMark,
+  handleDelete
 }) => {
 
   return (<>
-    <Table {...{sortSettings,onSetSortSettings,users,toggleBookMark}}/>
+    <Table {...{sortSettings,setSortSettings,users,toggleBookMark,handleDelete}}/>
   </>)
 }
 
 UsersTable.propTypes = {
   users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
-  onSetSortSettings: PropTypes.func.isRequired,
-  toggleBookMark: PropTypes.func.isRequired
+  setSortSettings: PropTypes.func.isRequired,
+  toggleBookMark: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
 }
 
 export default UsersTable

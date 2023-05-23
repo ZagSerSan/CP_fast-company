@@ -116,10 +116,11 @@ const Users = () => {
           <SearchStatus count={count} />
           {count > 0 &&
             <UsersTable
-              toggleBookMark={toggleBookMark}
               users={userCrop}
               sortSettings={sortSettings}
-              onSetSortSettings={setSortSettings}
+              setSortSettings={setSortSettings}
+              toggleBookMark={toggleBookMark}
+              handleDelete={handleDelete}
             />}
           <Pagination
             itemsCount={count}
