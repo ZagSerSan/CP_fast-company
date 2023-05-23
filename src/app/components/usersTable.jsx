@@ -4,14 +4,13 @@ import Table from './table'
 
 const UsersTable = ({
   users,
-  thState,
   sortSettings,
   onSetSortSettings,
-  onSetThState
+  toggleBookMark
 }) => {
 
   return (<>
-    <Table {...{sortSettings,onSetSortSettings,thState,onSetThState,users}}/>
+    <Table {...{sortSettings,onSetSortSettings,users,toggleBookMark}}/>
   </>)
 }
 
@@ -19,8 +18,7 @@ UsersTable.propTypes = {
   users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
   onSetSortSettings: PropTypes.func.isRequired,
-  thState: PropTypes.object.isRequired,
-  onSetThState: PropTypes.func.isRequired,
+  toggleBookMark: PropTypes.func.isRequired
 }
 
 export default UsersTable

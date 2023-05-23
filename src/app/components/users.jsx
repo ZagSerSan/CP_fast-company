@@ -11,8 +11,6 @@ import SearchStatus from "./searchStatus"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
 import UsersTable from "./usersTable"
-import Bookmark from './bookmark'
-import Qualitie from './qualitie'
 import IconSVG from './iconSVG'
 import User from './user'
 
@@ -24,24 +22,7 @@ const Users = () => {
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({ iter: 'name', order: 'asc' })
-  const [thState, setThState] = useState({
-    name: { name: 'Имя', path: 'name'},
-    qualities: { name: 'Качества', path: '', component: (user) => (<Qualitie qualities={user.qualities} />) },
-    profession: { name: 'Профессия', path: 'profession.name'},
-    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings'},
-    rate: { name: 'Оценка', path: 'rate'},
-    bookmark: { name: 'Избранное', path: 'bookmark', component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />) },
-    delete: {
-      name: '', path: '', component: (user) => (
-        <button
-          onClick={() => handleDelete(user._id)}
-          className="btn btn-danger"
-        >
-          delete
-        </button>
-      )
-    }
-  })
+
   const params = useParams()
   const {userId} = params
 
@@ -135,11 +116,10 @@ const Users = () => {
           <SearchStatus count={count} />
           {count > 0 &&
             <UsersTable
+              toggleBookMark={toggleBookMark}
               users={userCrop}
-              thState={thState}
               sortSettings={sortSettings}
               onSetSortSettings={setSortSettings}
-              onSetThState={setThState}
             />}
           <Pagination
             itemsCount={count}
