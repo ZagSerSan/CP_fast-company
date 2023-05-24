@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import TextField from '../components/textField'
 import './login.css'
 
 const Login = () => {
@@ -20,14 +21,19 @@ const Login = () => {
 
   return ( 
     <form className='form' action="">
-      <div className='form-row'>
-        <label htmlFor='login'>Login:</label>
-        <input type="text" id='login' name='mail' value={mail} onChange={changeValue}/>
-      </div>
-      <div className='form-row'>
-        <label htmlFor='password'>Password:</label>
-        <input type="password" id='password' name='password' value={password} onChange={changeValue}/>
-      </div>
+      <TextField
+        label='Login/mail:'
+        name='mail'
+        value={mail}
+        onChange={changeValue}
+      />
+      <TextField
+        label='Password:'
+        name='password'
+        value={password}
+        type='password'
+        onChange={changeValue}
+      />
     </form>
    )
 }
