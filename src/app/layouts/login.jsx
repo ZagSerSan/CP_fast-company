@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import TextField from '../components/textField'
 import './login.css'
+import { validator } from '../utils/validator'
 
 const Login = () => {
   // состояние ошибок для валидации форм + validate()
@@ -29,17 +30,24 @@ const Login = () => {
     console.log('data', data)
   }
 
-  // функция валидации формы
+  const validatorConfig = {
+    mail: {
+      isRequired: {
+        message: 'Mail is required!'
+      }
+    },
+    password: {
+      isRequired: {
+        message: 'Password is required!'
+      }
+    }
+  }
+
   useEffect(() => {
     validate();
   }, [data])
   const validate = () => {
-    const errors = {}
-    for (const fieldName in data) {
-      if (data[fieldName].trim() === '') {
-        errors[fieldName] = `${fieldName} объязатльно для заполнения!`
-      }
-    }
+    const errors = validator(data,validatorConfig)
     setErrors(errors)
     return Object.keys(errors).length === 0
   }
