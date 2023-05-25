@@ -3,6 +3,7 @@ import { useState } from 'react'
 import TextField from '../components/textField'
 import './login.css'
 import { validator } from '../utils/validator'
+import { validatorLogin } from '../utils/validatorConfig'
 
 const Login = () => {
   // состояние ошибок для валидации форм + validate()
@@ -13,7 +14,7 @@ const Login = () => {
     password: ''
   })
   const {mail, password} = data;
-  
+
   const changeValue = ({target}) => {
     setData(prevState => (
       {
@@ -27,27 +28,15 @@ const Login = () => {
     validate()
     const ifValid = validate()
     if (!ifValid) return
+    // действие кнопки отправить если формы валидны
     console.log('data', data)
-  }
-
-  const validatorConfig = {
-    mail: {
-      isRequired: {
-        message: 'Mail is required!'
-      }
-    },
-    password: {
-      isRequired: {
-        message: 'Password is required!'
-      }
-    }
   }
 
   useEffect(() => {
     validate();
   }, [data])
   const validate = () => {
-    const errors = validator(data,validatorConfig)
+    const errors = validator(data,validatorLogin)
     setErrors(errors)
     return Object.keys(errors).length === 0
   }
