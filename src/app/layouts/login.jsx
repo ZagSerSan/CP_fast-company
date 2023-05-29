@@ -43,25 +43,39 @@ const Login = () => {
   // блокировка кнопки
   const isValid = Object.keys(errors).length === 0
 
-  return ( 
-    <form className='form' onSubmit={handleSubmit}>
-      <TextField
-        label='Login/mail:'
-        name='mail'
-        value={mail}
-        onChange={changeValue}
-        errors={errors}
-      />
-      <TextField
-        label='Password:'
-        name='password'
-        value={password}
-        type='password'
-        onChange={changeValue}
-        errors={errors}
-      />
-      <button disabled={!isValid}>Отправить</button>
-    </form>
+  return (
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3 shadow p-4">
+          <h2>Login</h2>
+          <form className='form' onSubmit={handleSubmit}>
+            <TextField
+              label='Login/mail:'
+              name='mail'
+              value={mail}
+              onChange={changeValue}
+              errors={errors}
+            />
+            <TextField
+              label='Password:'
+              name='password'
+              value={password}
+              type='password'
+              onChange={changeValue}
+              errors={errors}
+            />
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="btn btn-primary w-100 mx-auto"
+            >
+              Отправить
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </div>
    )
 }
  
