@@ -4,6 +4,7 @@ import TextField from '../components/textField'
 import './login.css'
 import { validator } from '../utils/validator'
 import { validatorConfig } from '../utils/validatorConfig'
+import { Link } from 'react-router-dom/cjs/react-router-dom'
 
 const Login = () => {
   // состояние ошибок для валидации форм + validate()
@@ -64,15 +65,24 @@ const Login = () => {
               onChange={changeValue}
               errors={errors}
             />
-            <button
-              type="submit"
-              disabled={!isValid}
-              className="btn btn-primary w-100 mx-auto"
-            >
-              Отправить
-            </button>
+            {!isValid
+            ? <button
+                type="submit"
+                disabled={!isValid}
+                className="btn btn-primary w-100 mx-auto"
+                to='/Users'
+              >
+                Login
+              </button>
+            : <Link
+                type="submit"
+                className="btn btn-primary w-100 mx-auto"
+                to='/Users'
+              >
+                Login
+              </Link>
+            }
           </form>
-
         </div>
       </div>
     </div>
