@@ -29,7 +29,6 @@ const TextField = ({name, label, value, type, errors, onChange }) => {
             className="btn btn-outline-secondary"
             onClick={toggleShowPassword}
           >
-            {/* {showPassword ? "Скрыть" : "Показать"} пароль */}
             <i className={'bi bi-eye' + (showPassword ? '-slash' : '')}></i>
           </button> 
         }

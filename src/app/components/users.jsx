@@ -8,6 +8,7 @@ import professionsApi from "../api/fake.api/professions.api"
 import { paginate } from "../utils/paginate"
 // components
 import SearchStatus from "./searchStatus"
+import SearchInput from "./searchInput"
 import Pagination from "./pagination"
 import GroupList from "./groupList"
 import UsersTable from "./usersTable"
@@ -22,7 +23,8 @@ const Users = () => {
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({ iter: 'name', order: 'asc' })
-
+  const [searchValue, setSearchValue] = useState('')
+  
   const params = useParams()
   const {userId} = params
 
@@ -61,14 +63,24 @@ const Users = () => {
       setCurrentPage(pageIndex)
     }
 
+    //todo поиск юсера
+    const changeSearchValue = ({target}) => {
+      setSelectedProf()
+      setSearchValue(target.value)
+    }
+    const searchedUsers = users.filter(user => {
+      return user.name.toLowerCase().includes(searchValue)
+    })
+
     const filteredUsers = selectedProf
       ? users.filter((user) => user.profession._id === selectedProf._id)
       : users
     // для изменения страниц
-    let count = selectedProf ? filteredUsers.length : users.length
-
-    const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
-    const userCrop = paginate(sortedUsers, currentPage, pageSize)
+    let count = selectedProf ? filteredUsers.length : searchValue ? searchedUsers.length : users.length
+    const sortedUsers = _.orderBy(searchValue ? searchedUsers : filteredUsers, [sortSettings.iter], [sortSettings.order])
+    const userCrop =  paginate(sortedUsers, currentPage, pageSize)
+    console.log('userCrop', userCrop)
+    
     // изменение страницы при кол-ве польз = 0 на текущей
     if (userCrop.length === 0 && count != 0) {
       setCurrentPage(prevState => prevState - 1)
@@ -78,6 +90,7 @@ const Users = () => {
     const handleProfessionSelect = (item) => {
       setSelectedProf(item)
       setCurrentPage(1)
+      setSearchValue('')
     }
     // функция сброса (глобально)
     const clearFilter = () => {
@@ -89,6 +102,8 @@ const Users = () => {
       setCurrentPage(1)
       // параметров сортировки
       setSortSettings({ iter: 'name', order: 'asc' })
+      // поиск
+      setSearchValue('')
     }
 
     return (<>
@@ -114,6 +129,14 @@ const Users = () => {
         </div>
         <div className="content">
           <SearchStatus count={count} />
+          <div>
+            <input
+              type='text'
+              placeholder="поиск"
+              onChange={changeSearchValue}
+              value={searchValue}
+            />
+          </div>
           {count > 0 &&
             <UsersTable
               users={userCrop}
