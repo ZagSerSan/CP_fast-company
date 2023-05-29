@@ -40,6 +40,8 @@ const Login = () => {
     setErrors(errors)
     return Object.keys(errors).length === 0
   }
+  // блокировка кнопки
+  const isValid = Object.keys(errors).length === 0
 
   return ( 
     <form className='form' onSubmit={handleSubmit}>
@@ -58,7 +60,7 @@ const Login = () => {
         onChange={changeValue}
         errors={errors}
       />
-      <button>Отправить</button>
+      <button disabled={!isValid}>Отправить</button>
     </form>
    )
 }

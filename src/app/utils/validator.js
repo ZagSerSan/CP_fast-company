@@ -8,17 +8,14 @@ export function validator (data,config) {
         statusValidate = data.trim() === ''
         break
       case 'isMail': {
-        const mailRegExp = /^\S+@\S+\.\S+$/g
-        statusValidate = !mailRegExp.test(data)
+        statusValidate = !/^\S+@\S+\.\S+$/g.test(data)
         break
       }
       case 'isCapitalSymbol':
-        const capitalRegExp = /[A-Z]+/g
-        statusValidate = !capitalRegExp.test(data)
+        statusValidate = !/[A-Z]+/g.test(data)
         break
       case 'isContainDigit':
-        const digitRegExp = /\d+/g
-        statusValidate = !digitRegExp.test(data)
+        statusValidate = !/\d+/g.test(data)
         break
       case 'isMinLenght':
         statusValidate = data.length < config.minValue
