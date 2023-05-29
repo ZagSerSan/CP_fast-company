@@ -1,5 +1,5 @@
 // конфигурация валидатора формы страницы Login.jsx
-export const validatorLogin = {
+export const validatorConfig = {
   mail: {
     isRequired: {
       message: 'Mail is required!'
@@ -11,6 +11,16 @@ export const validatorLogin = {
   password: {
     isRequired: {
       message: 'Password is required!'
+    },
+    isCapitalSymbol: {
+      message: 'Password must have Capital Symbol!'
+    },
+    isContainDigit: {
+      message: 'Password must have digit symbol!'
+    },
+    isMinLenght: {
+      message: 'Password must have min 8 symbols!',
+      minValue: 8
     }
   }
 }

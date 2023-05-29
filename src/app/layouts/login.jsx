@@ -3,7 +3,7 @@ import { useState } from 'react'
 import TextField from '../components/textField'
 import './login.css'
 import { validator } from '../utils/validator'
-import { validatorLogin } from '../utils/validatorConfig'
+import { validatorConfig } from '../utils/validatorConfig'
 
 const Login = () => {
   // состояние ошибок для валидации форм + validate()
@@ -36,7 +36,7 @@ const Login = () => {
     validate();
   }, [data])
   const validate = () => {
-    const errors = validator(data,validatorLogin)
+    const errors = validator(data,validatorConfig)
     setErrors(errors)
     return Object.keys(errors).length === 0
   }
