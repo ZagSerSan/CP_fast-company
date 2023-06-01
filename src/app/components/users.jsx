@@ -76,8 +76,20 @@ const Users = () => {
 
     const filteredUsers = selectedProf
       ? users.filter((user) => user.profession._id === selectedProf._id)
+      : searchValue
+      ? searchedUsers
       : users
     // для изменения страниц
+    const count = selectedProf
+      ? filteredUsers.length
+      : searchValue
+      ? searchedUsers.length
+      : users.length
+    const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
+    const userCrop = paginate(sortedUsers, currentPage, pageSize)
+    console.log('userCrop', userCrop)
+
+    /* backup code line 77 ==================================================
     const count = selectedProf
       ? filteredUsers.length
       : searchValue
@@ -90,6 +102,7 @@ const Users = () => {
     )
     const userCrop = paginate(sortedUsers, currentPage, pageSize)
     console.log('userCrop', userCrop)
+    ================================================== */
 
     // изменение страницы при кол-ве польз = 0 на текущей
     if (userCrop.length === 0 && count !== 0) {
