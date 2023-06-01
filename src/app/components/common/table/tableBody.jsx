@@ -11,12 +11,12 @@ const TableBody = ({ data, thState }) => {
         return component(dataItem)
       }
       return component
-    } // при итерации имени делаем ссылку на стр пользователя по ид
-    else if (thState[thStateItem].path === 'name') {
+    } else if (thState[thStateItem].path === 'name') {
+      // при итерации имени делаем ссылку на стр пользователя по ид
       const userId = `Users/${dataItem._id}`
       return <Link to={userId}>{dataItem.name}</Link>
-    } // при итерации оценки добавляем строку '/5'
-    else if (thState[thStateItem].path === 'rate') {
+    } else if (thState[thStateItem].path === 'rate') {
+      // при итерации оценки добавляем строку '/5'
       return `${_.get(dataItem, thState[thStateItem].path)} / 5`
     }
     // во всех остальных случаях возвр просто path

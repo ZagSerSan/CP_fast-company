@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import 'bootstrap/dist/css/bootstrap.css'
-import { useParams } from 'react-router-dom'
 // utils
-import apiUsers from '../api/fake.api/user.api'
-import professionsApi from '../api/fake.api/professions.api'
-import { paginate } from '../utils/paginate'
+import apiUsers from '../../../api/fake.api/user.api'
+import professionsApi from '../../../api/fake.api/professions.api'
+import { paginate } from '../../../utils/paginate'
 // components
-import SearchStatus from './searchStatus'
-import Pagination from './pagination'
-import GroupList from './groupList'
-import UsersTable from './usersTable'
-import IconSVG from './iconSVG'
-import User from './user'
+import SearchStatus from '../../ui/searchStatus'
+import Pagination from '../../common/pagination'
+import GroupList from '../../common/groupList'
+import UsersTable from '../../usersTable'
+import IconSVG from '../../common/iconSVG'
 
-const Users = () => {
+const UserListPage = () => {
   const [users, setUsers] = useState()
   // начальное состояние пользователей для сброса
   const [firstUsersState, setFirstUsersState] = useState()
@@ -26,9 +24,6 @@ const Users = () => {
     order: 'asc'
   })
   const [searchValue, setSearchValue] = useState('')
-
-  const params = useParams()
-  const { userId } = params
 
   useEffect(() => {
     apiUsers.fetchAll().then((data) => setUsers(data))
@@ -87,7 +82,6 @@ const Users = () => {
       : users.length
     const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
     const userCrop = paginate(sortedUsers, currentPage, pageSize)
-    console.log('userCrop', userCrop)
 
     /* backup code line 77 ==================================================
     const count = selectedProf
@@ -129,62 +123,56 @@ const Users = () => {
       setSearchValue('')
     }
 
-    return (
-      <>
-        {userId ? (
-          <User {...{ userId }} />
-        ) : (
-          <div className="main-table">
-            <div className="filter">
-              {professions && (
-                <div>
-                  <GroupList
-                    selectedProf={selectedProf}
-                    items={professions}
-                    onItemSelect={handleProfessionSelect}
-                  />
-                  <button
-                    className="btn btn-secondary clear-btn"
-                    onClick={clearFilter}
-                  >
-                    Сбросить
-                  </button>
-                </div>
-              )}
-            </div>
-            <div className="content">
-              <SearchStatus count={count} />
-              <div>
-                <input
-                  type="text"
-                  placeholder="поиск"
-                  onChange={changeSearchValue}
-                  value={searchValue}
-                />
-              </div>
-              {count > 0 && (
-                <UsersTable
-                  users={userCrop}
-                  sortSettings={sortSettings}
-                  setSortSettings={setSortSettings}
-                  toggleBookMark={toggleBookMark}
-                  handleDelete={handleDelete}
-                />
-              )}
-              <Pagination
-                itemsCount={count}
-                pageSize={pageSize}
-                currentPage={currentPage}
-                onPageChange={handlePageChange}
+    return (<>
+      <div className="main-table">
+        <div className="filter">
+          {professions && (
+            <div>
+              <GroupList
+                selectedProf={selectedProf}
+                items={professions}
+                onItemSelect={handleProfessionSelect}
               />
+              <button
+                className="btn btn-secondary clear-btn"
+                onClick={clearFilter}
+              >
+                Сбросить
+              </button>
             </div>
+          )}
+        </div>
+        <div className="content">
+          <SearchStatus count={count} />
+          <div>
+            <input
+              type="text"
+              placeholder="поиск"
+              onChange={changeSearchValue}
+              value={searchValue}
+            />
           </div>
-        )}
-      </>
-    )
+          {count > 0 && (
+            <UsersTable
+              users={userCrop}
+              sortSettings={sortSettings}
+              setSortSettings={setSortSettings}
+              toggleBookMark={toggleBookMark}
+              handleDelete={handleDelete}
+            />
+          )}
+          <Pagination
+            itemsCount={count}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
+    </>)
   } // if (users)
   // if else -> return "Loading..."
   return <IconSVG id={'loader'} />
 }
 
-export default Users
+export default UserListPage

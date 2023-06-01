@@ -6,8 +6,8 @@ import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import './css/user.css'
 // components
-import apiUsers from '../api/fake.api/user.api'
-import IconSVG from './iconSVG'
+import apiUsers from '../../../api/fake.api/user.api'
+import IconSVG from '../../common/iconSVG'
 
 const User = ({ userId }) => {
   const [selectedUser, setSelectedUser] = useState()

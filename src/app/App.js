@@ -1,10 +1,11 @@
 import React from 'react'
 import '../css/index.css'
 import { Switch, Route } from 'react-router-dom'
-import Nav from './components/nav'
+// components
 import Main from './layouts/main'
 import Login from './layouts/login'
-import Users from './components/users'
+import Nav from '../app/components/ui/nav'
+import Users from './layouts/users'
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import IconSVG from './iconSVG'
+import IconSVG from '../iconSVG'
 
 const TableHeader = ({ sortSettings, setSortSettings, thState }) => {
   // sortSettings, setSortSettings
