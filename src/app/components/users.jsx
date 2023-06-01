@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
-import "bootstrap/dist/css/bootstrap.css"
-import { useParams } from "react-router-dom"
+import 'bootstrap/dist/css/bootstrap.css'
+import { useParams } from 'react-router-dom'
 // utils
-import apiUsers from "../api/fake.api/user.api"
-import professionsApi from "../api/fake.api/professions.api"
-import { paginate } from "../utils/paginate"
+import apiUsers from '../api/fake.api/user.api'
+import professionsApi from '../api/fake.api/professions.api'
+import { paginate } from '../utils/paginate'
 // components
-import SearchStatus from "./searchStatus"
-import SearchInput from "./searchInput"
-import Pagination from "./pagination"
-import GroupList from "./groupList"
-import UsersTable from "./usersTable"
+import SearchStatus from './searchStatus'
+import Pagination from './pagination'
+import GroupList from './groupList'
+import UsersTable from './usersTable'
 import IconSVG from './iconSVG'
 import User from './user'
 
@@ -22,18 +21,21 @@ const Users = () => {
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
-  const [sortSettings, setSortSettings] = useState({ iter: 'name', order: 'asc' })
+  const [sortSettings, setSortSettings] = useState({
+    iter: 'name',
+    order: 'asc'
+  })
   const [searchValue, setSearchValue] = useState('')
-  
+
   const params = useParams()
-  const {userId} = params
+  const { userId } = params
 
   useEffect(() => {
-    apiUsers.fetchAll().then(data => setUsers(data))
-    apiUsers.fetchAll().then(data => setFirstUsersState(data))
+    apiUsers.fetchAll().then((data) => setUsers(data))
+    apiUsers.fetchAll().then((data) => setFirstUsersState(data))
   }, [])
   useEffect(() => {
-    professionsApi.fetchAll().then(data => setProfession(data))
+    professionsApi.fetchAll().then((data) => setProfession(data))
   }, [])
 
   // функция кнопки удаления
@@ -46,7 +48,7 @@ const Users = () => {
   }
   // toogle bookmark function
   const toggleBookMark = (userId) => {
-    setUsers(prevState =>
+    setUsers((prevState) =>
       prevState.map((item) => {
         return {
           ...item,
@@ -63,12 +65,12 @@ const Users = () => {
       setCurrentPage(pageIndex)
     }
 
-    //todo поиск юсера
-    const changeSearchValue = ({target}) => {
+    // todo поиск юсера
+    const changeSearchValue = ({ target }) => {
       setSelectedProf()
       setSearchValue(target.value)
     }
-    const searchedUsers = users.filter(user => {
+    const searchedUsers = users.filter((user) => {
       return user.name.toLowerCase().includes(searchValue)
     })
 
@@ -76,14 +78,22 @@ const Users = () => {
       ? users.filter((user) => user.profession._id === selectedProf._id)
       : users
     // для изменения страниц
-    let count = selectedProf ? filteredUsers.length : searchValue ? searchedUsers.length : users.length
-    const sortedUsers = _.orderBy(searchValue ? searchedUsers : filteredUsers, [sortSettings.iter], [sortSettings.order])
-    const userCrop =  paginate(sortedUsers, currentPage, pageSize)
+    const count = selectedProf
+      ? filteredUsers.length
+      : searchValue
+      ? searchedUsers.length
+      : users.length
+    const sortedUsers = _.orderBy(
+      searchValue ? searchedUsers : filteredUsers,
+      [sortSettings.iter],
+      [sortSettings.order]
+    )
+    const userCrop = paginate(sortedUsers, currentPage, pageSize)
     console.log('userCrop', userCrop)
-    
+
     // изменение страницы при кол-ве польз = 0 на текущей
-    if (userCrop.length === 0 && count != 0) {
-      setCurrentPage(prevState => prevState - 1)
+    if (userCrop.length === 0 && count !== 0) {
+      setCurrentPage((prevState) => prevState - 1)
     }
 
     // функция фильтра профессий
@@ -106,57 +116,62 @@ const Users = () => {
       setSearchValue('')
     }
 
-    return (<>
-    {userId 
-    ? <User {...{userId}}/>
-    : <div className="main-table">
-        <div className="filter">
-          {professions &&
-            <div>
-              <GroupList
-                selectedProf={selectedProf}
-                items={professions}
-                onItemSelect={handleProfessionSelect}
-              />
-              <button
-                className="btn btn-secondary clear-btn"
-                onClick={clearFilter}
-              >
-                Сбросить
-              </button>
+    return (
+      <>
+        {userId ? (
+          <User {...{ userId }} />
+        ) : (
+          <div className="main-table">
+            <div className="filter">
+              {professions && (
+                <div>
+                  <GroupList
+                    selectedProf={selectedProf}
+                    items={professions}
+                    onItemSelect={handleProfessionSelect}
+                  />
+                  <button
+                    className="btn btn-secondary clear-btn"
+                    onClick={clearFilter}
+                  >
+                    Сбросить
+                  </button>
+                </div>
+              )}
             </div>
-          }
-        </div>
-        <div className="content">
-          <SearchStatus count={count} />
-          <div>
-            <input
-              type='text'
-              placeholder="поиск"
-              onChange={changeSearchValue}
-              value={searchValue}
-            />
+            <div className="content">
+              <SearchStatus count={count} />
+              <div>
+                <input
+                  type="text"
+                  placeholder="поиск"
+                  onChange={changeSearchValue}
+                  value={searchValue}
+                />
+              </div>
+              {count > 0 && (
+                <UsersTable
+                  users={userCrop}
+                  sortSettings={sortSettings}
+                  setSortSettings={setSortSettings}
+                  toggleBookMark={toggleBookMark}
+                  handleDelete={handleDelete}
+                />
+              )}
+              <Pagination
+                itemsCount={count}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
-          {count > 0 &&
-            <UsersTable
-              users={userCrop}
-              sortSettings={sortSettings}
-              setSortSettings={setSortSettings}
-              toggleBookMark={toggleBookMark}
-              handleDelete={handleDelete}
-            />}
-          <Pagination
-            itemsCount={count}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
-        </div>
-      </div>}
-    </>)
+        )}
+      </>
+    )
   } // if (users)
   // if else -> return "Loading..."
-  return <IconSVG id={'loader'}/>
+  return <IconSVG id={'loader'} />
 }
 
 export default Users

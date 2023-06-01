@@ -13,14 +13,26 @@ const Table = ({
   handleDelete
 }) => {
   const [thState, setThState] = useState({
-    name: { name: 'Имя', path: 'name'},
-    qualities: { name: 'Качества', path: '', component: (user) => (<Qualitie qualities={user.qualities} />) },
-    profession: { name: 'Профессия', path: 'profession.name'},
-    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings'},
-    rate: { name: 'Оценка', path: 'rate'},
-    bookmark: { name: 'Избранное', path: 'bookmark', component: (user) => (<Bookmark user={user} toggleBookMark={toggleBookMark} />) },
+    name: { name: 'Имя', path: 'name' },
+    qualities: {
+      name: 'Качества',
+      path: '',
+      component: (user) => <Qualitie qualities={user.qualities} />
+    },
+    profession: { name: 'Профессия', path: 'profession.name' },
+    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings' },
+    rate: { name: 'Оценка', path: 'rate' },
+    bookmark: {
+      name: 'Избранное',
+      path: 'bookmark',
+      component: (user) => (
+        <Bookmark user={user} toggleBookMark={toggleBookMark} />
+      )
+    },
     delete: {
-      name: '', path: '', component: (user) => (
+      name: '',
+      path: '',
+      component: (user) => (
         <button
           onClick={() => handleDelete(user._id)}
           className="btn btn-danger"
@@ -33,14 +45,16 @@ const Table = ({
 
   return (
     <table className="table">
-      <TableHeader {...{sortSettings,setSortSettings,thState,setThState}}/>
-      <TableBody {...{data: users, thState}} />
+      <TableHeader
+        {...{ sortSettings, setSortSettings, thState, setThState }}
+      />
+      <TableBody {...{ data: users, thState }} />
     </table>
   )
 }
 
 Table.propTypes = {
-  users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
+  users: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
   setSortSettings: PropTypes.func.isRequired,
   toggleBookMark: PropTypes.func.isRequired,

@@ -9,14 +9,23 @@ const UsersTable = ({
   toggleBookMark,
   handleDelete
 }) => {
-
-  return (<>
-    <Table {...{sortSettings,setSortSettings,users,toggleBookMark,handleDelete}}/>
-  </>)
+  return (
+    <>
+      <Table
+        {...{
+          sortSettings,
+          setSortSettings,
+          users,
+          toggleBookMark,
+          handleDelete
+        }}
+      />
+    </>
+  )
 }
 
 UsersTable.propTypes = {
-  users: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
+  users: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
   setSortSettings: PropTypes.func.isRequired,
   toggleBookMark: PropTypes.func.isRequired,

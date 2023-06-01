@@ -6,7 +6,7 @@ export const validatorConfig = {
     },
     isMail: {
       message: 'Mail is not correct!'
-    },
+    }
   },
   password: {
     isRequired: {

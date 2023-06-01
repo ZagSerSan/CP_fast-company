@@ -14,15 +14,13 @@ const Login = () => {
     mail: '',
     password: ''
   })
-  const {mail, password} = data;
+  const { mail, password } = data
 
-  const changeValue = ({target}) => {
-    setData(prevState => (
-      {
-        ...prevState,
-        [target.name]: target.value,
-      }
-    ))
+  const changeValue = ({ target }) => {
+    setData((prevState) => ({
+      ...prevState,
+      [target.name]: target.value
+    }))
   }
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -34,10 +32,10 @@ const Login = () => {
   }
 
   useEffect(() => {
-    validate();
+    validate()
   }, [data])
   const validate = () => {
-    const errors = validator(data,validatorConfig)
+    const errors = validator(data, validatorConfig)
     setErrors(errors)
     return Object.keys(errors).length === 0
   }
@@ -49,44 +47,45 @@ const Login = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3 shadow p-4">
           <h2>Login</h2>
-          <form className='form' onSubmit={handleSubmit}>
+          <form className="form" onSubmit={handleSubmit}>
             <TextField
-              label='Login/mail:'
-              name='mail'
+              label="Login/mail:"
+              name="mail"
               value={mail}
               onChange={changeValue}
               errors={errors}
             />
             <TextField
-              label='Password:'
-              name='password'
+              label="Password:"
+              name="password"
               value={password}
-              type='password'
+              type="password"
               onChange={changeValue}
               errors={errors}
             />
-            {!isValid
-            ? <button
+            {!isValid ? (
+              <button
                 type="submit"
                 disabled={!isValid}
                 className="btn btn-primary w-100 mx-auto"
-                to='/Users'
+                to="/Users"
               >
                 Login
               </button>
-            : <Link
+            ) : (
+              <Link
                 type="submit"
                 className="btn btn-primary w-100 mx-auto"
-                to='/Users'
+                to="/Users"
               >
                 Login
               </Link>
-            }
+            )}
           </form>
         </div>
       </div>
     </div>
-   )
+  )
 }
- 
+
 export default Login
