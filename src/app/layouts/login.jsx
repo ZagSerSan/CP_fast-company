@@ -10,7 +10,7 @@ import './login.css'
 
 const Login = () => {
   const { type } = useParams('')
-  const [formType, setFormType] = useState(type === 'register' ? type : 'Login')
+  // const [formType, setFormType] = useState(type === 'register' ? type : 'Login')
 
   return (
     <div className="container mt-5">
