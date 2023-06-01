@@ -6,7 +6,7 @@ import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
 
-const loginForm = () => {
+const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
   // значение полей формы
@@ -43,7 +43,7 @@ const loginForm = () => {
   const isValid = Object.keys(errors).length === 0
 
   return (<>
-    <h2>Login</h2>
+    <h2>Registration</h2>
     <form className="form" onSubmit={handleSubmit}>
       <TextField
         label="Login/mail:"
@@ -75,12 +75,13 @@ const loginForm = () => {
           className="btn btn-primary w-100 mx-auto"
           to="/Users"
         >
-          Login
+          Register
         </Link>
       )}
-      <p>If you don`t have account, please <Link to='/Login/register'>Register</Link></p>
+      <p>If you have account, please <Link to='/Login'>Sign in</Link></p>
+      
     </form>
   </>)
 }
 
-export default loginForm
+export default RegisterForm
