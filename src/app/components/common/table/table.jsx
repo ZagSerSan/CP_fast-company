@@ -20,7 +20,7 @@ const Table = ({
       component: (user) => <Qualitie qualities={user.qualities} />
     },
     profession: { name: 'Профессия', path: 'profession.name' },
-    completedMeetings: { name: 'Встретился раз', path: 'completedMeetings' },
+    completedMeetings: { name: 'Встречи', path: 'completedMeetings' },
     rate: { name: 'Оценка', path: 'rate' },
     bookmark: {
       name: 'Избранное',
@@ -44,7 +44,7 @@ const Table = ({
   })
 
   return (
-    <table className="table">
+    <table className="table" style={{ minWidth: '1010px' }}>
       <TableHeader
         {...{ sortSettings, setSortSettings, thState, setThState }}
       />

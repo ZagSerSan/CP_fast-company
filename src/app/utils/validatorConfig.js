@@ -22,5 +22,10 @@ export const validatorConfig = {
       message: 'Password must have min 8 symbols!',
       minValue: 8
     }
+  },
+  profession: {
+    isRequired: {
+      message: 'Profesion is required!'
+    }
   }
 }

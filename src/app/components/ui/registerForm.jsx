@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
-// utils
+// utils, css
+import './formStyle.css'
+import professionsApi from '../../api/fake.api/professions.api'
 import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
+import SelectField from '../common/form/selectField'
 
 const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
@@ -12,9 +15,15 @@ const RegisterForm = () => {
   // значение полей формы
   const [data, setData] = useState({
     mail: '',
-    password: ''
+    password: '',
+    profession: ''
   })
-  const { mail, password } = data
+
+  // for SelectField
+  const [professions, setProfession] = useState()
+  useEffect(() => {
+    professionsApi.fetchAll().then((data) => setProfession(data))
+  }, [])
 
   const changeValue = ({ target }) => {
     setData((prevState) => ({
@@ -48,17 +57,25 @@ const RegisterForm = () => {
       <TextField
         label="Login/mail:"
         name="mail"
-        value={mail}
+        value={data.mail}
         onChange={changeValue}
         errors={errors}
       />
       <TextField
         label="Password:"
         name="password"
-        value={password}
+        value={data.password}
         type="password"
         onChange={changeValue}
         errors={errors}
+      />
+      <SelectField
+        label='Your profession:'
+        defaultOption='Choose your profession...'
+        value={data.profession}
+        professions={professions}
+        error={errors.profession}
+        changeValue={changeValue}
       />
       {!isValid ? (
         <button
@@ -79,7 +96,6 @@ const RegisterForm = () => {
         </Link>
       )}
       <p>If you have account, please <Link to='/Login'>Sign in</Link></p>
-      
     </form>
   </>)
 }
