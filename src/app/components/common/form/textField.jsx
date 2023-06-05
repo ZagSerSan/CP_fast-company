@@ -5,14 +5,21 @@ import 'bootstrap/dist/css/bootstrap.css'
 const TextField = ({ name, label, value, type, errors, onChange }) => {
   // Добавляем состояние показывать/не показывать пароль
   const [showPassword, setShowPassword] = useState(false)
+  // состояние "форма была тронута"
+  const [isBlured, setIsBlured] = useState(false)
 
   const handleChange = ({ target }) => {
     onChange({name: target.name, value: target.value})
+    setIsBlured(true)
   }
 
   // Метод для изменения состояния
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
+  }
+
+  const toogleBluredState = () => {
+    setIsBlured(true)
   }
 
   return (
@@ -23,13 +30,12 @@ const TextField = ({ name, label, value, type, errors, onChange }) => {
         </label>
         <input
           type={showPassword ? 'text' : type}
+          className={'form-control' + (!isBlured ? '' : (errors[name] ? ' is-invalid' : ' is-valid'))}
           id={name}
           name={name}
           value={value}
           onChange={handleChange}
-          className={
-            'form-control' + (errors[name] ? ' is-invalid' : ' is-valid')
-          }
+          onBlur={toogleBluredState}
         />
         {type === 'password' && (
           <button

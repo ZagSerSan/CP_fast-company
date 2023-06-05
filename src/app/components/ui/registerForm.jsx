@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
 // utils, css
-import './formStyle.css'
+import './form.module.css'
 import professionsApi from '../../api/fake.api/professions.api'
 import qualitiesApi from '../../api/fake.api/qualities.api'
 import { validator } from '../../utils/validator'
@@ -11,6 +11,7 @@ import TextField from '../common/form/textField'
 import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
 import MultiSelectField from '../common/form/multiSelectField'
+import CheckBoxField from '../common/form/checkBoxField'
 
 const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
@@ -21,7 +22,8 @@ const RegisterForm = () => {
     password: '',
     profession: '',
     sex: 'male',
-    qualities: []
+    qualities: [],
+    licence: false
   })
 
   // all api qualities state
@@ -104,8 +106,16 @@ const RegisterForm = () => {
           qualities={qualities}
           onChange={handleChange}
           name='qualities'
-          label='Change your qualities:'
+          label='Choose your qualities:'
         />
+        <CheckBoxField
+          value={data.licence}
+          onChange={handleChange}
+          name='licence'
+          error={errors.licence}
+        >
+          Confirm the <a href=''>license agreement</a>.
+        </CheckBoxField>
         {!isValid ? (
           <button
             type="submit"
@@ -123,7 +133,7 @@ const RegisterForm = () => {
             Register
           </Link>
         )}
-        <p>
+        <p className='mt-2'>
           If you have account, please <Link to="/Login">Sign in</Link>
         </p>
       </form>

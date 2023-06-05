@@ -27,5 +27,10 @@ export const validatorConfig = {
     isRequired: {
       message: 'Profesion is required!'
     }
+  },
+  licence: {
+    isRequired: {
+      message: 'The license agreement is required!'
+    }
   }
 }

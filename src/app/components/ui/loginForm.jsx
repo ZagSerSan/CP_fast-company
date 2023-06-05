@@ -5,6 +5,7 @@ import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
+import CheckBoxField from '../common/form/checkBoxField'
 
 const loginForm = () => {
   // состояние ошибок для валидации форм + validate()
@@ -12,16 +13,20 @@ const loginForm = () => {
   // значение полей формы
   const [data, setData] = useState({
     mail: '',
-    password: ''
+    password: '',
+    stayOn: false
   })
   const { mail, password } = data
 
-  const changeValue = ({ target }) => {
-    setData((prevState) => ({
-      ...prevState,
-      [target.name]: target.value
-    }))
+  const handleChange = (fieldData) => {
+    setData(prevState => (
+      {
+        ...prevState,
+        [fieldData.name]: fieldData.value
+      }
+    ))
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     validate()
@@ -41,7 +46,7 @@ const loginForm = () => {
   }
   // блокировка кнопки
   const isValid = Object.keys(errors).length === 0
-
+  
   return (
     <>
       <h2>Login</h2>
@@ -50,7 +55,7 @@ const loginForm = () => {
           label="Login/mail:"
           name="mail"
           value={mail}
-          onChange={changeValue}
+          onChange={handleChange}
           errors={errors}
         />
         <TextField
@@ -58,9 +63,16 @@ const loginForm = () => {
           name="password"
           value={password}
           type="password"
-          onChange={changeValue}
+          onChange={handleChange}
           errors={errors}
         />
+        <CheckBoxField
+          value={data.stayOn}
+          onChange={handleChange}
+          name='stayOn'
+        >
+          Stay on the site.
+        </CheckBoxField>
         {!isValid ? (
           <button
             type="submit"
@@ -79,7 +91,7 @@ const loginForm = () => {
             Login
           </Link>
         )}
-        <p>
+        <p className='mt-2'>
           If you don`t have account, please{' '}
           <Link to="/Login/register">Register</Link>
         </p>
