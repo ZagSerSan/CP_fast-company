@@ -1,3 +1,4 @@
+// for user.api.js
 export const professionsObject = {
   doctor: { _id: '67rdca3eeb7f6fgeed471818', name: 'Доктор' },
   waiter: { _id: '67rdca3eeb7f6fgeed471820', name: 'Официант' },
@@ -7,7 +8,7 @@ export const professionsObject = {
   cook: { _id: '67rdca3eeb7f6fgeed471829', name: 'Повар' }
 }
 
-// тоже будет работать
+// for user table (+ array below)
 export const professions = {
   doctor: { _id: '67rdca3eeb7f6fgeed471818', name: 'Доктор' },
   waiter: { _id: '67rdca3eeb7f6fgeed471820', name: 'Официант' },
@@ -17,6 +18,7 @@ export const professions = {
   cook: { _id: '67rdca3eeb7f6fgeed471829', name: 'Повар' }
 }
 
+// тоже будет работать
 // export const professions = [
 //   { _id: '67rdca3eeb7f6fgeed471818', name: 'Доктор' },
 //   { _id: '67rdca3eeb7f6fgeed471820', name: 'Официант' },

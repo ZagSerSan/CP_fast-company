@@ -6,6 +6,10 @@ const TextField = ({ name, label, value, type, errors, onChange }) => {
   // Добавляем состояние показывать/не показывать пароль
   const [showPassword, setShowPassword] = useState(false)
 
+  const handleChange = ({ target }) => {
+    onChange({name: target.name, value: target.value})
+  }
+
   // Метод для изменения состояния
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState)
@@ -22,7 +26,7 @@ const TextField = ({ name, label, value, type, errors, onChange }) => {
           id={name}
           name={name}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           className={
             'form-control' + (errors[name] ? ' is-invalid' : ' is-valid')
           }

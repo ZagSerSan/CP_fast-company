@@ -3,32 +3,32 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ["plugin:react/recommended", "standard"],
+  extends: ['plugin:react/recommended', 'standard'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: 12,
-    sourceType: "module"
+    sourceType: 'module'
   },
-  plugins: ["react"],
+  plugins: ['react'],
   rules: {
     semi: ['error', 'never'],
     indent: [0, 4],
-    "space-before-function-paren": [
-      "error",
-      { anonymous: "always", named: "never" }
+    'space-before-function-paren': [
+      'error',
+      { anonymous: 'always', named: 'never' }
     ],
     quotes: [
-      "error",
-      "single",
+      'error',
+      'single',
       {
         allowTemplateLiterals: true,
         avoidEscape: true
       }
     ],
-    "multiline-ternary": ["off"],
-    "no-trailing-spaces": ["off"],
-    "object-curly-spacing": ["off"]
+    'multiline-ternary': ['off'],
+    'no-trailing-spaces': ['off'],
+    'object-curly-spacing': ['off']
   }
-};
+}

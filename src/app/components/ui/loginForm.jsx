@@ -42,45 +42,50 @@ const loginForm = () => {
   // блокировка кнопки
   const isValid = Object.keys(errors).length === 0
 
-  return (<>
-    <h2>Login</h2>
-    <form className="form" onSubmit={handleSubmit}>
-      <TextField
-        label="Login/mail:"
-        name="mail"
-        value={mail}
-        onChange={changeValue}
-        errors={errors}
-      />
-      <TextField
-        label="Password:"
-        name="password"
-        value={password}
-        type="password"
-        onChange={changeValue}
-        errors={errors}
-      />
-      {!isValid ? (
-        <button
-          type="submit"
-          disabled={!isValid}
-          className="btn btn-primary w-100 mx-auto"
-          to="/Users"
-        >
-          Login
-        </button>
-      ) : (
-        <Link
-          type="submit"
-          className="btn btn-primary w-100 mx-auto"
-          to="/Users"
-        >
-          Login
-        </Link>
-      )}
-      <p>If you don`t have account, please <Link to='/Login/register'>Register</Link></p>
-    </form>
-  </>)
+  return (
+    <>
+      <h2>Login</h2>
+      <form className="form" onSubmit={handleSubmit}>
+        <TextField
+          label="Login/mail:"
+          name="mail"
+          value={mail}
+          onChange={changeValue}
+          errors={errors}
+        />
+        <TextField
+          label="Password:"
+          name="password"
+          value={password}
+          type="password"
+          onChange={changeValue}
+          errors={errors}
+        />
+        {!isValid ? (
+          <button
+            type="submit"
+            disabled={!isValid}
+            className="btn btn-primary w-100 mx-auto"
+            to="/Users"
+          >
+            Login
+          </button>
+        ) : (
+          <Link
+            type="submit"
+            className="btn btn-primary w-100 mx-auto"
+            to="/Users"
+          >
+            Login
+          </Link>
+        )}
+        <p>
+          If you don`t have account, please{' '}
+          <Link to="/Login/register">Register</Link>
+        </p>
+      </form>
+    </>
+  )
 }
 
 export default loginForm

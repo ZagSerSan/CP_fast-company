@@ -80,7 +80,11 @@ const UserListPage = () => {
       : searchValue
       ? searchedUsers.length
       : users.length
-    const sortedUsers = _.orderBy(filteredUsers, [sortSettings.iter], [sortSettings.order])
+    const sortedUsers = _.orderBy(
+      filteredUsers,
+      [sortSettings.iter],
+      [sortSettings.order]
+    )
     const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
     /* backup code line 77 ==================================================
@@ -123,53 +127,55 @@ const UserListPage = () => {
       setSearchValue('')
     }
 
-    return (<>
-      <div className="main-table">
-        <div className="filter">
-          {professions && (
+    return (
+      <>
+        <div className="main-table">
+          <div className="filter">
+            {professions && (
+              <div>
+                <GroupList
+                  selectedProf={selectedProf}
+                  items={professions}
+                  onItemSelect={handleProfessionSelect}
+                />
+                <button
+                  className="btn btn-secondary clear-btn"
+                  onClick={clearFilter}
+                >
+                  Сбросить
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="content">
+            <SearchStatus count={count} />
             <div>
-              <GroupList
-                selectedProf={selectedProf}
-                items={professions}
-                onItemSelect={handleProfessionSelect}
+              <input
+                type="text"
+                placeholder="поиск"
+                onChange={changeSearchValue}
+                value={searchValue}
               />
-              <button
-                className="btn btn-secondary clear-btn"
-                onClick={clearFilter}
-              >
-                Сбросить
-              </button>
             </div>
-          )}
-        </div>
-        <div className="content">
-          <SearchStatus count={count} />
-          <div>
-            <input
-              type="text"
-              placeholder="поиск"
-              onChange={changeSearchValue}
-              value={searchValue}
+            {count > 0 && (
+              <UsersTable
+                users={userCrop}
+                sortSettings={sortSettings}
+                setSortSettings={setSortSettings}
+                toggleBookMark={toggleBookMark}
+                handleDelete={handleDelete}
+              />
+            )}
+            <Pagination
+              itemsCount={count}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={handlePageChange}
             />
           </div>
-          {count > 0 && (
-            <UsersTable
-              users={userCrop}
-              sortSettings={sortSettings}
-              setSortSettings={setSortSettings}
-              toggleBookMark={toggleBookMark}
-              handleDelete={handleDelete}
-            />
-          )}
-          <Pagination
-            itemsCount={count}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
         </div>
-      </div>
-    </>)
+      </>
+    )
   } // if (users)
   // if else -> return "Loading..."
   return <IconSVG id={'loader'} />
