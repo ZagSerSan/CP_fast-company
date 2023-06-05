@@ -8,6 +8,7 @@ import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
 import SelectField from '../common/form/selectField'
+import RadioField from '../common/form/radioField'
 
 const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
@@ -16,7 +17,8 @@ const RegisterForm = () => {
   const [data, setData] = useState({
     mail: '',
     password: '',
-    profession: ''
+    profession: '',
+    sex: 'male'
   })
 
   // for SelectField
@@ -25,7 +27,7 @@ const RegisterForm = () => {
     professionsApi.fetchAll().then((data) => setProfession(data))
   }, [])
 
-  const changeValue = ({ target }) => {
+  const handleChange = ({ target }) => {
     setData((prevState) => ({
       ...prevState,
       [target.name]: target.value
@@ -58,7 +60,7 @@ const RegisterForm = () => {
         label="Login/mail:"
         name="mail"
         value={data.mail}
-        onChange={changeValue}
+        onChange={handleChange}
         errors={errors}
       />
       <TextField
@@ -66,7 +68,7 @@ const RegisterForm = () => {
         name="password"
         value={data.password}
         type="password"
-        onChange={changeValue}
+        onChange={handleChange}
         errors={errors}
       />
       <SelectField
@@ -75,7 +77,17 @@ const RegisterForm = () => {
         value={data.profession}
         professions={professions}
         error={errors.profession}
-        changeValue={changeValue}
+        handleChange={handleChange}
+      />
+      <RadioField
+        options={[
+          {name: 'Male', value: 'male'},
+          {name: 'Female', value: 'female'},
+          {name: 'Other', value: 'other'}
+        ]}
+        value={data.sex}
+        name='sex'
+        onChange={handleChange}
       />
       {!isValid ? (
         <button

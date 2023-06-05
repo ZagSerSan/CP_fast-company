@@ -28,6 +28,7 @@ module.exports = {
       }
     ],
     "multiline-ternary": ["off"],
-    "no-trailing-spaces": ["off"]
+    "no-trailing-spaces": ["off"],
+    "object-curly-spacing": ["off"]
   }
 };

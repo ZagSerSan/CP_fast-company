@@ -1,7 +1,4 @@
-/* eslint-disable */
-
-import React, { useState } from 'react'
-import { useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom/cjs/react-router-dom'
 import LoginForm from '../components/ui/loginForm'
 import RegisterForm from '../components/ui/registerForm'
