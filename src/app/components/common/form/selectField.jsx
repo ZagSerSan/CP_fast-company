@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const SelectField = ({
@@ -9,6 +9,9 @@ const SelectField = ({
   error,
   onChange
 }) => {
+  // состояние "форма была тронута"
+  const [isBlured, setIsBlured] = useState(false)
+
   const professionsArray =
     !Array.isArray(professions) && typeof professions === 'object'
       ? Object.keys(professions).map((profession) => ({
@@ -19,6 +22,10 @@ const SelectField = ({
 
   const handleChange = ({ target }) => {
     onChange({name: target.name, value: target.value})
+    setIsBlured(true)
+  }
+  const toogleBluredState = () => {
+    setIsBlured(true)
   }
 
   return (
@@ -28,11 +35,13 @@ const SelectField = ({
       </label>
 
       <select
-        className={'form-select' + (error ? ' is-invalid' : ' is-valid')}
+        // className={'form-select' + (error ? ' is-invalid' : ' is-valid')}
+        className={'form-select' + (!isBlured ? '' : (error ? ' is-invalid' : ' is-valid'))}
         id="validationCustom04"
         name="profession"
         value={value}
         onChange={handleChange}
+        onBlur={toogleBluredState}
         required
       >
         <option disabled value="">
