@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 const SelectField = ({
+  name,
   label,
   defaultOption,
   value,
@@ -12,12 +13,9 @@ const SelectField = ({
   // состояние "форма была тронута"
   const [isBlured, setIsBlured] = useState(false)
 
-  const professionsArray =
+  const optionsArray =
     !Array.isArray(professions) && typeof professions === 'object'
-      ? Object.keys(professions).map((profession) => ({
-          name: professions[profession].name,
-          value: professions[profession]._id
-        }))
+      ? Object.values(professions)
       : professions
 
   const handleChange = ({ target }) => {
@@ -30,15 +28,14 @@ const SelectField = ({
 
   return (
     <div className="mb-4">
-      <label htmlFor="validationCustom04" className="form-label">
+      <label htmlFor={name} className="form-label">
         {label}
       </label>
 
       <select
-        // className={'form-select' + (error ? ' is-invalid' : ' is-valid')}
         className={'form-select' + (!isBlured ? '' : (error ? ' is-invalid' : ' is-valid'))}
-        id="validationCustom04"
-        name="profession"
+        id={name}
+        name={name}
         value={value}
         onChange={handleChange}
         onBlur={toogleBluredState}
@@ -48,10 +45,10 @@ const SelectField = ({
           {defaultOption}
         </option>
 
-        {professionsArray &&
-          professionsArray.map((profession) => (
+        {optionsArray &&
+          optionsArray.map(profession => (
             <option key={profession.value} value={profession.value}>
-              {profession.name}
+              {profession.label}
             </option>
           ))}
       </select>
@@ -64,6 +61,7 @@ const SelectField = ({
 }
 
 SelectField.propTypes = {
+  name: PropTypes.string,
   label: PropTypes.string,
   defaultOption: PropTypes.string,
   value: PropTypes.string,

@@ -27,10 +27,23 @@ const RegisterForm = () => {
   })
 
   // all api qualities state
-  const [qualities, setQualities] = useState({})
+  const [qualities, setQualities] = useState([])
+
   useEffect(() => {
-    qualitiesApi.fetchAll().then((data) => setQualities(data))
-    professionsApi.fetchAll().then((data) => setProfession(data))
+    qualitiesApi.fetchAll().then((data) => {
+      const qualitiesList = Object.keys(data).map(qualitieName => (
+        { label: data[qualitieName].name, value: data[qualitieName]._id }
+      ))
+      setQualities(qualitiesList)
+    })
+
+    professionsApi.fetchAll().then((data) => {
+      const professionsList = Object.keys(data).map((professionName) => ({
+          label: data[professionName].name,
+          value: data[professionName]._id
+      }))
+      setProfession(professionsList)
+    })
   }, [])
 
   // for SelectField
@@ -45,13 +58,43 @@ const RegisterForm = () => {
       }
     ))
   }
+
+  // действие кнопки отправить если формы валидны
+  const getProfessionById = (id) => {
+    for (const prof of professions) {
+      if (prof.value === id) {
+          return { _id: prof.value, name: prof.label }
+      }
+    }
+  }
+  const getQualities = (elements) => {
+    const qualitiesArray = []
+    for (const elem of elements) {
+      for (const quality in qualities) {
+        if (elem.value === qualities[quality].value) {
+          qualitiesArray.push({
+              _id: qualities[quality].value,
+              name: qualities[quality].label,
+              color: qualities[quality].color
+          })
+        }
+      }
+    }
+    return qualitiesArray
+  }
   const handleSubmit = (e) => {
     e.preventDefault()
-    validate()
+
     const ifValid = validate()
     if (!ifValid) return
+
     // действие кнопки отправить если формы валидны
-    console.log('data', data)
+    const { profession, qualities } = data
+    console.log({
+      ...data,
+      professions: getProfessionById(profession),
+      qualities: getQualities(qualities)
+    })
   }
 
   useEffect(() => {
@@ -85,6 +128,7 @@ const RegisterForm = () => {
           errors={errors}
         />
         <SelectField
+          name='profession'
           label="Your profession:"
           defaultOption="Choose your profession..."
           value={data.profession}
@@ -103,10 +147,11 @@ const RegisterForm = () => {
           onChange={handleChange}
         />
         <MultiSelectField 
-          qualities={qualities}
-          onChange={handleChange}
           name='qualities'
           label='Choose your qualities:'
+          defaultValue={data.qualities}
+          qualities={qualities}
+          onChange={handleChange}
         />
         <CheckBoxField
           value={data.licence}
@@ -116,23 +161,13 @@ const RegisterForm = () => {
         >
           Confirm the <a href=''>license agreement</a>.
         </CheckBoxField>
-        {!isValid ? (
-          <button
-            type="submit"
-            disabled={!isValid}
-            className="btn btn-primary w-100 mx-auto"
-          >
-            Register
-          </button>
-        ) : (
-          <Link
-            
-            className="btn btn-primary w-100 mx-auto"
-            to="/Users"
-          >
-            Register
-          </Link>
-        )}
+        <button
+          type="submit"
+          disabled={!isValid}
+          className="btn btn-primary w-100 mx-auto"
+        >
+          Register
+        </button>
         <p className='mt-2'>
           If you have account, please <Link to="/Login">Sign in</Link>
         </p>

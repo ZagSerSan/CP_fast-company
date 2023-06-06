@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 // css
 import 'bootstrap/dist/css/bootstrap.css'
-import './css/user.css'
+import './user.css'
 // components
 import apiUsers from '../../../api/fake.api/user.api'
 import IconSVG from '../../common/iconSVG'
