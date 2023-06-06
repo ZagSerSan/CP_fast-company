@@ -56,19 +56,6 @@
   margin-left: 3px;
 }
 
-svg.loader {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 1000;
-  -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(0deg);
-  transform: translate3d(-50%, -50%, 0) rotateZ(0deg);
-  height: 200px;
-  fill: rgb(152, 145, 255);
-  -webkit-animation: 5s loader linear infinite;
-  animation: 5s loader linear infinite;
-}
-
 @-webkit-keyframes loader {
   from {
     -webkit-transform: translate3d(-50%, -50%, 0) rotateZ(0deg);

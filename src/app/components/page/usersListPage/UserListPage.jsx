@@ -87,21 +87,6 @@ const UserListPage = () => {
     )
     const userCrop = paginate(sortedUsers, currentPage, pageSize)
 
-    /* backup code line 77 ==================================================
-    const count = selectedProf
-      ? filteredUsers.length
-      : searchValue
-      ? searchedUsers.length
-      : users.length
-    const sortedUsers = _.orderBy(
-      searchValue ? searchedUsers : filteredUsers,
-      [sortSettings.iter],
-      [sortSettings.order]
-    )
-    const userCrop = paginate(sortedUsers, currentPage, pageSize)
-    console.log('userCrop', userCrop)
-    ================================================== */
-
     // изменение страницы при кол-ве польз = 0 на текущей
     if (userCrop.length === 0 && count !== 0) {
       setCurrentPage((prevState) => prevState - 1)
