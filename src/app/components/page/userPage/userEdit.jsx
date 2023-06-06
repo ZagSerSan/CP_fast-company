@@ -109,70 +109,76 @@ const UserEdit = () => {
   const isValid = Object.keys(errors).length === 0
 
   return (
-    <>
-      <h2>Registration</h2>
-      <form className="form" onSubmit={handleSubmit}>
-        <TextField
-          label="Login/mail:"
-          name="mail"
-          value={data.mail}
-          onChange={handleChange}
-          errors={errors}
-        />
-        <TextField
-          label="Password:"
-          name="password"
-          value={data.password}
-          type="password"
-          onChange={handleChange}
-          errors={errors}
-        />
-        <SelectField
-          name='profession'
-          label="Your profession:"
-          defaultOption="Choose your profession..."
-          value={data.profession}
-          professions={professions}
-          error={errors.profession}
-          onChange={handleChange}
-        />
-        <RadioField
-          options={[
-            { name: 'Male', value: 'male' },
-            { name: 'Female', value: 'female' },
-            { name: 'Other', value: 'other' }
-          ]}
-          value={data.sex}
-          name="sex"
-          onChange={handleChange}
-        />
-        <MultiSelectField 
-          name='qualities'
-          label='Choose your qualities:'
-          defaultValue={data.qualities}
-          qualities={qualities}
-          onChange={handleChange}
-        />
-        <CheckBoxField
-          value={data.licence}
-          onChange={handleChange}
-          name='licence'
-          error={errors.licence}
-        >
-          Confirm the <a href=''>license agreement</a>.
-        </CheckBoxField>
-        <button
-          type="submit"
-          disabled={!isValid}
-          className="btn btn-primary w-100 mx-auto"
-        >
-          Register
-        </button>
-        <p className='mt-2'>
-          If you have account, please <Link to="/Login">Sign in</Link>
-        </p>
-      </form>
-    </>
+    <div className="container mt-4">
+      <div className="row">
+        <div className="col-md-6 offset-md-3 shadow p-4">
+          
+          <h2>Registration</h2>
+          <form className="form" onSubmit={handleSubmit}>
+            <TextField
+              label="Name:"
+              name="name"
+              value={data.mail}
+              onChange={handleChange}
+              errors={errors}
+            />
+            <TextField
+              label="Password:"
+              name="password"
+              value={data.password}
+              type="password"
+              onChange={handleChange}
+              errors={errors}
+            />
+            <SelectField
+              name='profession'
+              label="Your profession:"
+              defaultOption="Choose your profession..."
+              value={data.profession}
+              professions={professions}
+              error={errors.profession}
+              onChange={handleChange}
+            />
+            <RadioField
+              options={[
+                { name: 'Male', value: 'male' },
+                { name: 'Female', value: 'female' },
+                { name: 'Other', value: 'other' }
+              ]}
+              value={data.sex}
+              name="sex"
+              onChange={handleChange}
+            />
+            <MultiSelectField 
+              name='qualities'
+              label='Choose your qualities:'
+              defaultValue={data.qualities}
+              qualities={qualities}
+              onChange={handleChange}
+            />
+            <CheckBoxField
+              value={data.licence}
+              onChange={handleChange}
+              name='licence'
+              error={errors.licence}
+            >
+              Confirm the <a href=''>license agreement</a>.
+            </CheckBoxField>
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="btn btn-primary w-100 mx-auto"
+            >
+              Register
+            </button>
+            <p className='mt-2'>
+              If you have account, please <Link to="/Login">Sign in</Link>
+            </p>
+          </form>
+
+        </div>
+      </div>
+    </div>
   )
 }
 
