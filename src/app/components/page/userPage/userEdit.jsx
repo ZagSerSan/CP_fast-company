@@ -27,17 +27,15 @@ const UserEdit = ({userId}) => {
   // all api qualities state
   const [qualities, setQualities] = useState([])
   // for SelectField
-  const [professions, setProfession] = useState()
-  console.log('professions', professions)
+  const [professions, setProfessions] = useState()
 
   useEffect(() => {
     userApi.getUserById(userId).then(data => {
       const qualitiesList = (data.qualities).map(qualitie => (
         { label: qualitie.name, value: qualitie._id }
       ))
-      setData({...data, qualities: qualitiesList})
+      setData({...data, profession: data.profession._id, qualities: qualitiesList})
     })
-
     qualitiesApi.fetchAll().then((data) => {
       const qualitiesList = Object.keys(data).map(qualitieName => (
         { label: data[qualitieName].name, value: data[qualitieName]._id, color:  data[qualitieName].color}
@@ -50,7 +48,7 @@ const UserEdit = ({userId}) => {
           label: data[professionName].name,
           value: data[professionName]._id
       }))
-      setProfession(professionsList)
+      setProfessions(professionsList)
     })
   }, [])
 
@@ -100,7 +98,6 @@ const UserEdit = ({userId}) => {
     //   professions: getProfessionById(profession),
     //   qualities: getQualities(qualities)
     // })
-
     userApi.update(userId, {
       ...data,
       profession: getProfessionById(profession),
@@ -108,6 +105,9 @@ const UserEdit = ({userId}) => {
     })
     history.replace(`/Users/${userId}`)
   }
+
+
+  
   const backWithoutSave = () => {
     history.replace(`/Users/${userId}`)
   }
@@ -146,7 +146,7 @@ const UserEdit = ({userId}) => {
               name='profession'
               label="Your profession:"
               defaultOption="Change your profession..."
-              value={data.profession._id}
+              value={data.profession}
               professions={professions}
               error={errors.profession}
               onChange={handleChange}
