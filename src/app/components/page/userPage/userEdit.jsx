@@ -26,7 +26,10 @@ const UserEdit = ({userId}) => {
 
   // all api qualities state
   const [qualities, setQualities] = useState([])
-  
+  // for SelectField
+  const [professions, setProfession] = useState()
+  console.log('professions', professions)
+
   useEffect(() => {
     userApi.getUserById(userId).then(data => {
       const qualitiesList = (data.qualities).map(qualitie => (
@@ -50,9 +53,6 @@ const UserEdit = ({userId}) => {
       setProfession(professionsList)
     })
   }, [])
-
-  // for SelectField
-  const [professions, setProfession] = useState()
 
   // handleChange => onChange в дочерних компонентах (полях)
   const handleChange = (fieldData) => {
@@ -111,7 +111,6 @@ const UserEdit = ({userId}) => {
   const backWithoutSave = () => {
     history.replace(`/Users/${userId}`)
   }
-  console.log('errors :>> ', errors);
 
   useEffect(() => {
     validate()

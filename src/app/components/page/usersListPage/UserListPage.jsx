@@ -51,6 +51,11 @@ const UserListPage = () => {
         }
       })
     )
+    // change localStore
+    const users = JSON.parse(localStorage.getItem('users'))
+    const userIndex = users.findIndex((u) => u._id === userId)
+    users[userIndex] = { ...users[userIndex], bookmark: !users[userIndex].bookmark }
+    localStorage.setItem('users', JSON.stringify(users))
   }
 
   if (users) {
