@@ -12,13 +12,14 @@ import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
 import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
   // значение полей формы
   const [data, setData] = useState({
-    mail: '',
+    email: '',
     password: '',
     profession: '',
     sex: 'male',
@@ -27,6 +28,7 @@ const RegisterForm = () => {
   })
 
   // all api qualities state
+  const history = useHistory()
   const [qualities, setQualities] = useState([])
 
   useEffect(() => {
@@ -95,6 +97,7 @@ const RegisterForm = () => {
       professions: getProfessionById(profession),
       qualities: getQualities(qualities)
     })
+    history.push('/Users')
   }
 
   useEffect(() => {
@@ -114,7 +117,7 @@ const RegisterForm = () => {
       <form className="form" onSubmit={handleSubmit}>
         <TextField
           label="Login/mail:"
-          name="mail"
+          name="email"
           value={data.mail}
           onChange={handleChange}
           errors={errors}

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom/cjs/react-router-dom'
+// import { Link } from 'react-router-dom/cjs/react-router-dom'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import PropTypes from 'prop-types'
 // utils, css
 import './userEdit.module.css'
@@ -14,10 +15,10 @@ import TextField from '../../common/form/textField'
 import SelectField from '../../common/form/selectField'
 import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
-import CheckBoxField from '../../common/form/checkBoxField'
 import IconSVG from '../../common/iconSVG'
 
 const UserEdit = ({userId}) => {
+  let history = useHistory()
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
   // значение полей формы
@@ -36,7 +37,7 @@ const UserEdit = ({userId}) => {
 
     qualitiesApi.fetchAll().then((data) => {
       const qualitiesList = Object.keys(data).map(qualitieName => (
-        { label: data[qualitieName].name, value: data[qualitieName]._id }
+        { label: data[qualitieName].name, value: data[qualitieName]._id, color:  data[qualitieName].color}
       ))
       setQualities(qualitiesList)
     })
@@ -94,27 +95,32 @@ const UserEdit = ({userId}) => {
 
     // действие кнопки отправить если формы валидны
     const { profession, qualities } = data
-    console.log({
+    // console.log({
+    //   ...data,
+    //   professions: getProfessionById(profession),
+    //   qualities: getQualities(qualities)
+    // })
+
+    userApi.update(userId, {
       ...data,
       professions: getProfessionById(profession),
       qualities: getQualities(qualities)
     })
+    history.replace(`/Users/${userId}`)
   }
+  const backWithoutSave = () => {
+    history.replace(`/Users/${userId}`)
+  }
+  console.log('errors :>> ', errors);
 
-  // useEffect(() => {
-  //   validate()
-  // }, [data])
-  // const validate = () => {
-  //   const errors = validator(data, validatorConfig)
-  //   setErrors(errors)
-  //   return Object.keys(errors).length === 0
-  // }
-  // блокировка кнопки
-  // const isValid = Object.keys(errors).length === 0
-
-  // console.log('data', data)
-  // console.log('qualities :>> ', qualities)
-  data && console.log('data.qualities', data.qualities)
+  useEffect(() => {
+    validate()
+  }, [data])
+  const validate = () => {
+    const errors = validator(data, validatorConfig)
+    setErrors(errors)
+    return Object.keys(errors).length === 0
+  }
   
   return (
     <div className="container mt-4">
@@ -163,13 +169,15 @@ const UserEdit = ({userId}) => {
               qualities={qualities}
               onChange={handleChange}
             />
-            <button
-              type="submit"
-              // disabled={!isValid}
-              className="btn btn-primary w-100 mx-auto"
-            >
-              Change
-            </button>
+            {Object.keys(errors).length === 0
+            ? <button
+                type="submit"
+                className="btn btn-primary w-100 mx-auto"
+              >
+                Save and back
+              </button>
+            : <button className='btn btn-secondary w-100 mx-auto' onClick={backWithoutSave}>Back without save</button>
+            }
           </form>
         </div>  : <IconSVG id='loader'/>}
       </div>
@@ -182,56 +190,3 @@ UserEdit.propTypes = {
 }
 
 export default UserEdit
-
-/**
-          <form className="form" onSubmit={handleSubmit}>
-              <TextField
-                label="Name"
-                name="name"
-                value={data._id}
-                type="password"
-                onChange={handleChange}
-                errors={errors}
-              />
-              <TextField
-                label="Email"
-                name="mail"
-                value={data.mail}
-                onChange={handleChange}
-                errors={errors}
-              />
-              <SelectField
-                name='profession'
-                label="Your profession:"
-                defaultOption="Choose your profession..."
-                value={data.profession._id}
-                professions={professions}
-                error={errors.profession}
-                onChange={handleChange}
-              />
-              <RadioField
-                options={[
-                  { name: 'Male', value: 'male' },
-                  { name: 'Female', value: 'female' },
-                  { name: 'Other', value: 'other' }
-                ]}
-                value={data.sex}
-                name="sex"
-                onChange={handleChange}
-              />
-              <MultiSelectField 
-                name='qualities'
-                label='Choose your qualities:'
-                defaultValue={data.qualities}
-                qualities={qualities}
-                onChange={handleChange}
-              />
-              <button
-                type="submit"
-                disabled={!isValid}
-                className="btn btn-primary w-100 mx-auto"
-              >
-                Change
-              </button>
-            </form>
- */

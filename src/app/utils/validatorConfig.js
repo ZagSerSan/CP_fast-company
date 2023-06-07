@@ -1,6 +1,11 @@
 // конфигурация валидатора формы страницы Login.jsx
 export const validatorConfig = {
-  mail: {
+  name: {
+    isRequired: {
+      message: 'Name is required!'
+    }
+  },
+  email: {
     isRequired: {
       message: 'Mail is required!'
     },

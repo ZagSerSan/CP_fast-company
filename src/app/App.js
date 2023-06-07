@@ -1,5 +1,4 @@
 import React from 'react'
-import '../css/index.css'
 import { Switch, Route } from 'react-router-dom'
 // components
 import Main from './layouts/main'

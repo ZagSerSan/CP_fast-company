@@ -1,7 +1,18 @@
 .user-page {
   padding: 0 20px 20px;
+  font-family: 'Raleway';
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .user-page .btn {
   margin-top: 30px;
+}
+
+.btnBackMarginRight {
+  margin-right: 10px;
+}
+
+.user-name {
+  margin-bottom: 23px;
 }
