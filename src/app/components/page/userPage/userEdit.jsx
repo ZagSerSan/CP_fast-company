@@ -103,7 +103,7 @@ const UserEdit = ({userId}) => {
 
     userApi.update(userId, {
       ...data,
-      professions: getProfessionById(profession),
+      profession: getProfessionById(profession),
       qualities: getQualities(qualities)
     })
     history.replace(`/Users/${userId}`)
