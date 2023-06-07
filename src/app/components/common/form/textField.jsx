@@ -57,7 +57,7 @@ TextField.defaultValues = {
 TextField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   type: PropTypes.string,
   errors: PropTypes.object,
   onChange: PropTypes.func.isRequired
