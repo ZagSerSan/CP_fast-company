@@ -22,7 +22,7 @@ const UserPage = ({ userId }) => {
   return (
     <>
     <div className="container">
-      <div className="row gutters-sm">
+      <div className="row gutters-sm mt-2">
 
         <div className="col-md-4 mb-3">
           {selectedUser ? (
@@ -44,8 +44,8 @@ const UserPage = ({ userId }) => {
                     .substring(7)}.svg`}
                   className="rounded-circle shadow-1-strong me-3"
                   alt="avatar"
-                  width="65"
-                  height="65"
+                  width="120"
+                  height="120"
                 />
                 <div className="mt-3">
                   <h4>{selectedUser.name}</h4>

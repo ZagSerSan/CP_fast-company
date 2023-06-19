@@ -125,7 +125,7 @@ const UserEdit = ({ userId }) => {
   }
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 mb-4">
       <div className="row">
         {data ? (
           <div className="col-md-6 offset-md-3 shadow p-4">
@@ -171,18 +171,21 @@ const UserEdit = ({ userId }) => {
                 qualities={qualities}
                 onChange={handleChange}
               />
-              {Object.keys(errors).length === 0 ? (
-                <button type="submit" className="btn btn-primary w-100 mx-auto">
-                  Save and back
-                </button>
-              ) : (
+              <div className='w-100 d-flex justify-content-between'>
                 <button
-                  className="btn btn-secondary w-100 mx-auto"
+                  className="btn btn-secondary mx-auto"
                   onClick={backWithoutSave}
                 >
                   Back without save
                 </button>
-              )}
+                <button
+                  disabled={!(Object.keys(errors).length === 0)}
+                  type="submit"
+                  className="btn btn-primary mx-auto"
+                >
+                  Save and back
+                </button>
+              </div>
             </form>
           </div>
         ) : (
