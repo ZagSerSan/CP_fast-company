@@ -2,21 +2,25 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Select from 'react-select'
 
-const MultiSelectField = ({ qualities, onChange, name, label, defaultValue }) => {
+const MultiSelectField = ({
+  qualities,
+  onChange,
+  name,
+  label,
+  defaultValue
+}) => {
   const qualitiesArray =
     !Array.isArray(qualities) && typeof qualities === 'object'
       ? Object.values(qualities)
       : qualities
-  
+
   const handleChange = (value) => {
-    onChange({name, value})
+    onChange({ name, value })
   }
 
   return (
     <div className="mb-4">
-      <label className="form-label">
-        {label}
-      </label>
+      <label className="form-label">{label}</label>
 
       <Select
         isMulti
@@ -29,7 +33,6 @@ const MultiSelectField = ({ qualities, onChange, name, label, defaultValue }) =>
         onChange={handleChange}
       />
     </div>
-
   )
 }
 

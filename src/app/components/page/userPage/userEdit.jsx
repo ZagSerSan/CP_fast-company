@@ -17,7 +17,7 @@ import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
 import IconSVG from '../../common/iconSVG'
 
-const UserEdit = ({userId}) => {
+const UserEdit = ({ userId }) => {
   let history = useHistory()
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
@@ -30,23 +30,30 @@ const UserEdit = ({userId}) => {
   const [professions, setProfessions] = useState()
 
   useEffect(() => {
-    userApi.getUserById(userId).then(data => {
-      const qualitiesList = (data.qualities).map(qualitie => (
-        { label: qualitie.name, value: qualitie._id }
-      ))
-      setData({...data, profession: data.profession._id, qualities: qualitiesList})
+    userApi.getUserById(userId).then((data) => {
+      const qualitiesList = data.qualities.map((qualitie) => ({
+        label: qualitie.name,
+        value: qualitie._id
+      }))
+      setData({
+        ...data,
+        profession: data.profession._id,
+        qualities: qualitiesList
+      })
     })
     qualitiesApi.fetchAll().then((data) => {
-      const qualitiesList = Object.keys(data).map(qualitieName => (
-        { label: data[qualitieName].name, value: data[qualitieName]._id, color:  data[qualitieName].color}
-      ))
+      const qualitiesList = Object.keys(data).map((qualitieName) => ({
+        label: data[qualitieName].name,
+        value: data[qualitieName]._id,
+        color: data[qualitieName].color
+      }))
       setQualities(qualitiesList)
     })
 
     professionsApi.fetchAll().then((data) => {
       const professionsList = Object.keys(data).map((professionName) => ({
-          label: data[professionName].name,
-          value: data[professionName]._id
+        label: data[professionName].name,
+        value: data[professionName]._id
       }))
       setProfessions(professionsList)
     })
@@ -54,19 +61,17 @@ const UserEdit = ({userId}) => {
 
   // handleChange => onChange в дочерних компонентах (полях)
   const handleChange = (fieldData) => {
-    setData((prevState) => (
-      {
-        ...prevState,
-        [fieldData.name]: fieldData.value
-      }
-    ))
+    setData((prevState) => ({
+      ...prevState,
+      [fieldData.name]: fieldData.value
+    }))
   }
 
   // действие кнопки отправить если формы валидны
   const getProfessionById = (id) => {
     for (const prof of professions) {
       if (prof.value === id) {
-          return { _id: prof.value, name: prof.label }
+        return { _id: prof.value, name: prof.label }
       }
     }
   }
@@ -76,9 +81,9 @@ const UserEdit = ({userId}) => {
       for (const quality in qualities) {
         if (elem.value === qualities[quality].value) {
           qualitiesArray.push({
-              _id: qualities[quality].value,
-              name: qualities[quality].label,
-              color: qualities[quality].color
+            _id: qualities[quality].value,
+            name: qualities[quality].label,
+            color: qualities[quality].color
           })
         }
       }
@@ -106,8 +111,6 @@ const UserEdit = ({userId}) => {
     history.replace(`/Users/${userId}`)
   }
 
-
-  
   const backWithoutSave = () => {
     history.replace(`/Users/${userId}`)
   }
@@ -120,65 +123,71 @@ const UserEdit = ({userId}) => {
     setErrors(errors)
     return Object.keys(errors).length === 0
   }
-  
+
   return (
     <div className="container mt-4">
       <div className="row">
-      {data ? 
-        <div className="col-md-6 offset-md-3 shadow p-4">
-          <form className="form" onSubmit={handleSubmit}>
-            <TextField
-              label="Name"
-              name="name"
-              value={data.name}
-              type="text"
-              onChange={handleChange}
-              errors={errors}
-            />
-            <TextField
-              label="Email"
-              name="email"
-              value={data.email}
-              onChange={handleChange}
-              errors={errors}
-            />
-            <SelectField
-              name='profession'
-              label="Your profession:"
-              defaultOption="Change your profession..."
-              value={data.profession}
-              professions={professions}
-              error={errors.profession}
-              onChange={handleChange}
-            />
-            <RadioField
-              options={[
-                { name: 'Male', value: 'male' },
-                { name: 'Female', value: 'female' },
-                { name: 'Other', value: 'other' }
-              ]}
-              value={data.sex}
-              name="sex"
-              onChange={handleChange}
-            />
-            <MultiSelectField 
-              name='qualities'
-              label='Change your qualities:'
-              defaultValue={data.qualities}
-              qualities={qualities}
-              onChange={handleChange}
-            />
-            {Object.keys(errors).length === 0
-            ? <button
-                type="submit"
-                className="btn btn-primary w-100 mx-auto"
-              >
-                Save and back
-              </button>
-            : <button className='btn btn-secondary w-100 mx-auto' onClick={backWithoutSave}>Back without save</button>
-            }
-          </form>
-        </div>  : <IconSVG id='loader'/>}
+        {data ? (
+          <div className="col-md-6 offset-md-3 shadow p-4">
+            <form className="form" onSubmit={handleSubmit}>
+              <TextField
+                label="Name"
+                name="name"
+                value={data.name}
+                type="text"
+                onChange={handleChange}
+                errors={errors}
+              />
+              <TextField
+                label="Email"
+                name="email"
+                value={data.email}
+                onChange={handleChange}
+                errors={errors}
+              />
+              <SelectField
+                name="profession"
+                label="Your profession:"
+                defaultOption="Change your profession..."
+                value={data.profession}
+                professions={professions}
+                error={errors.profession}
+                onChange={handleChange}
+              />
+              <RadioField
+                options={[
+                  { name: 'Male', value: 'male' },
+                  { name: 'Female', value: 'female' },
+                  { name: 'Other', value: 'other' }
+                ]}
+                value={data.sex}
+                name="sex"
+                onChange={handleChange}
+              />
+              <MultiSelectField
+                name="qualities"
+                label="Change your qualities:"
+                defaultValue={data.qualities}
+                qualities={qualities}
+                onChange={handleChange}
+              />
+              {Object.keys(errors).length === 0 ? (
+                <button type="submit" className="btn btn-primary w-100 mx-auto">
+                  Save and back
+                </button>
+              ) : (
+                <button
+                  className="btn btn-secondary w-100 mx-auto"
+                  onClick={backWithoutSave}
+                >
+                  Back without save
+                </button>
+              )}
+            </form>
+          </div>
+        ) : (
+          <IconSVG id="loader" />
+        )}
       </div>
     </div>
   )

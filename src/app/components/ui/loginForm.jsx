@@ -19,12 +19,10 @@ const loginForm = () => {
   const { mail, password } = data
 
   const handleChange = (fieldData) => {
-    setData(prevState => (
-      {
-        ...prevState,
-        [fieldData.name]: fieldData.value
-      }
-    ))
+    setData((prevState) => ({
+      ...prevState,
+      [fieldData.name]: fieldData.value
+    }))
   }
 
   const handleSubmit = (e) => {
@@ -46,7 +44,7 @@ const loginForm = () => {
   }
   // блокировка кнопки
   const isValid = Object.keys(errors).length === 0
-  
+
   return (
     <>
       <h2>Login</h2>
@@ -69,7 +67,7 @@ const loginForm = () => {
         <CheckBoxField
           value={data.stayOn}
           onChange={handleChange}
-          name='stayOn'
+          name="stayOn"
         >
           Stay on the site.
         </CheckBoxField>
@@ -91,7 +89,7 @@ const loginForm = () => {
             Login
           </Link>
         )}
-        <p className='mt-2'>
+        <p className="mt-2">
           If you don`t have account, please{' '}
           <Link to="/Login/register">Register</Link>
         </p>

@@ -9,7 +9,7 @@ const TextField = ({ name, label, value, type, errors, onChange }) => {
   const [isBlured, setIsBlured] = useState(false)
 
   const handleChange = ({ target }) => {
-    onChange({name: target.name, value: target.value})
+    onChange({ name: target.name, value: target.value })
     setIsBlured(true)
   }
 
@@ -30,7 +30,10 @@ const TextField = ({ name, label, value, type, errors, onChange }) => {
         </label>
         <input
           type={showPassword ? 'text' : type}
-          className={'form-control' + (!isBlured ? '' : (errors[name] ? ' is-invalid' : ' is-valid'))}
+          className={
+            'form-control' +
+            (!isBlured ? '' : errors[name] ? ' is-invalid' : ' is-valid')
+          }
           id={name}
           name={name}
           value={value}

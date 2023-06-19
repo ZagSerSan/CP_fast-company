@@ -33,16 +33,17 @@ const RegisterForm = () => {
 
   useEffect(() => {
     qualitiesApi.fetchAll().then((data) => {
-      const qualitiesList = Object.keys(data).map(qualitieName => (
-        { label: data[qualitieName].name, value: data[qualitieName]._id }
-      ))
+      const qualitiesList = Object.keys(data).map((qualitieName) => ({
+        label: data[qualitieName].name,
+        value: data[qualitieName]._id
+      }))
       setQualities(qualitiesList)
     })
 
     professionsApi.fetchAll().then((data) => {
       const professionsList = Object.keys(data).map((professionName) => ({
-          label: data[professionName].name,
-          value: data[professionName]._id
+        label: data[professionName].name,
+        value: data[professionName]._id
       }))
       setProfession(professionsList)
     })
@@ -53,19 +54,17 @@ const RegisterForm = () => {
 
   // handleChange => onChange в дочерних компонентах (полях)
   const handleChange = (fieldData) => {
-    setData((prevState) => (
-      {
-        ...prevState,
-        [fieldData.name]: fieldData.value
-      }
-    ))
+    setData((prevState) => ({
+      ...prevState,
+      [fieldData.name]: fieldData.value
+    }))
   }
 
   // действие кнопки отправить если формы валидны
   const getProfessionById = (id) => {
     for (const prof of professions) {
       if (prof.value === id) {
-          return { _id: prof.value, name: prof.label }
+        return { _id: prof.value, name: prof.label }
       }
     }
   }
@@ -75,9 +74,9 @@ const RegisterForm = () => {
       for (const quality in qualities) {
         if (elem.value === qualities[quality].value) {
           qualitiesArray.push({
-              _id: qualities[quality].value,
-              name: qualities[quality].label,
-              color: qualities[quality].color
+            _id: qualities[quality].value,
+            name: qualities[quality].label,
+            color: qualities[quality].color
           })
         }
       }
@@ -131,7 +130,7 @@ const RegisterForm = () => {
           errors={errors}
         />
         <SelectField
-          name='profession'
+          name="profession"
           label="Your profession:"
           defaultOption="Choose your profession..."
           value={data.profession}
@@ -149,9 +148,9 @@ const RegisterForm = () => {
           name="sex"
           onChange={handleChange}
         />
-        <MultiSelectField 
-          name='qualities'
-          label='Choose your qualities:'
+        <MultiSelectField
+          name="qualities"
+          label="Choose your qualities:"
           defaultValue={data.qualities}
           qualities={qualities}
           onChange={handleChange}
@@ -159,10 +158,10 @@ const RegisterForm = () => {
         <CheckBoxField
           value={data.licence}
           onChange={handleChange}
-          name='licence'
+          name="licence"
           error={errors.licence}
         >
-          Confirm the <a href=''>license agreement</a>.
+          Confirm the <a href="">license agreement</a>.
         </CheckBoxField>
         <button
           type="submit"
@@ -171,7 +170,7 @@ const RegisterForm = () => {
         >
           Register
         </button>
-        <p className='mt-2'>
+        <p className="mt-2">
           If you have account, please <Link to="/Login">Sign in</Link>
         </p>
       </form>

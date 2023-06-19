@@ -4,7 +4,7 @@ import style from './form.module.css'
 
 const RadioField = ({ label, options, name, onChange, value }) => {
   const handleChange = ({ target }) => {
-    onChange({name: target.name, value: target.value})
+    onChange({ name: target.name, value: target.value })
   }
 
   return (

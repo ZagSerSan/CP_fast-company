@@ -19,7 +19,7 @@ const SelectField = ({
       : professions
 
   const handleChange = ({ target }) => {
-    onChange({name: target.name, value: target.value})
+    onChange({ name: target.name, value: target.value })
     setIsBlured(true)
   }
   const toogleBluredState = () => {
@@ -33,7 +33,9 @@ const SelectField = ({
       </label>
 
       <select
-        className={'form-select' + (!isBlured ? '' : (error ? ' is-invalid' : ' is-valid'))}
+        className={
+          'form-select' + (!isBlured ? '' : error ? ' is-invalid' : ' is-valid')
+        }
         id={name}
         name={name}
         value={value}
@@ -46,7 +48,7 @@ const SelectField = ({
         </option>
 
         {optionsArray &&
-          optionsArray.map(profession => (
+          optionsArray.map((profession) => (
             <option key={profession.value} value={profession.value}>
               {profession.label}
             </option>

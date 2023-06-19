@@ -8,7 +8,15 @@ import UsersList from '../components/page/usersListPage'
 const Users = () => {
   const { userId, edit } = useParams()
 
-  return userId ? (edit ? <UserEdit userId={userId}/> : <UserPage {...{ userId }} />) : <UsersList />
+  return userId ? (
+    edit ? (
+      <UserEdit userId={userId} />
+    ) : (
+      <UserPage {...{ userId }} />
+    )
+  ) : (
+    <UsersList />
+  )
   // return userId ? <UserPage {...{ userId }} /> : <UsersList />
 }
 
