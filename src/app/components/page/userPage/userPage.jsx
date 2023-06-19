@@ -77,6 +77,15 @@ const UserPage = ({ userId }) => {
                 </p>
               </div>
             </div>
+            <div className="card mb-3">
+              <div className="card-body d-flex flex-column justify-content-center text-center">
+                <h5 className="card-title">
+                  <span>Completed meetings</span>
+                </h5>
+
+                <h1 className="display-1">{selectedUser.completedMeetings}</h1>
+              </div>
+            </div>
             </>
             // <div className="user-page">
             //   <h2 className="user-name">
