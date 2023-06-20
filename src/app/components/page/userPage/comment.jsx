@@ -1,18 +1,15 @@
-/* eslint-disable */
+/* eslint-disableX */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import userApi from '../../../api/fake.api/user.api'
+import { getDateFormat } from '../../../utils/formatDate'
 
 const Comment = ({commentUserId, comment, onDelete}) => {
-	//todo
   // получение пользователей написавших комментарии на текущей странице
   const [commentedUser, setCommentedUser] = useState()
   useEffect(() => {
     userApi.getUserById(commentUserId).then(user => setCommentedUser(user))
   }, [])
-
-	const date = new Date(comment.created_at * 1000)
-	// console.log('date', date)
 
   return (
     <div className="bg-light card-body  mb-3">
@@ -35,7 +32,7 @@ const Comment = ({commentUserId, comment, onDelete}) => {
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-1 ">
 										{commentedUser?.name}
-                    <span className="small">{' - ' + date}</span>
+                    <span className="small">{getDateFormat(comment.created_at)}</span>
                   </p>
                   <button onClick={() => onDelete(comment._id)} className="btn btn-sm text-primary d-flex align-items-center">
                     <i className="bi bi-x-lg"></i>

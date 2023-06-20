@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disableX */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 // api
@@ -17,8 +17,6 @@ const CommentsList = ({ userId }) => {
       setThisUserComments(prev => prev.filter(item => item._id !== commentId))
     )
   }
-
-  // console.log('thisUserComments :>> ', thisUserComments);
 
   return (
     <>
