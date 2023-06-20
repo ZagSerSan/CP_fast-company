@@ -171,7 +171,7 @@ const UserEdit = ({ userId }) => {
                 qualities={qualities}
                 onChange={handleChange}
               />
-              <div className='w-100 d-flex justify-content-between'>
+              <div className="w-100 d-flex justify-content-between">
                 <button
                   className="btn btn-secondary mx-auto"
                   onClick={backWithoutSave}
