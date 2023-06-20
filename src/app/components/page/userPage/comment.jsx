@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import userApi from '../../../api/fake.api/user.api'
 
-const Comment = ({commentUserId, comment}) => {
+const Comment = ({commentUserId, comment, onDelete}) => {
 	//todo
   // получение пользователей написавших комментарии на текущей странице
   const [commentedUser, setCommentedUser] = useState()
@@ -37,7 +37,7 @@ const Comment = ({commentUserId, comment}) => {
 										{commentedUser?.name}
                     <span className="small">{' - ' + date}</span>
                   </p>
-                  <button className="btn btn-sm text-primary d-flex align-items-center">
+                  <button onClick={() => onDelete(comment._id)} className="btn btn-sm text-primary d-flex align-items-center">
                     <i className="bi bi-x-lg"></i>
                   </button>
                 </div>
@@ -53,7 +53,8 @@ const Comment = ({commentUserId, comment}) => {
 
 Comment.propTypes = {
 	commentUserId: PropTypes.string,
-	comment: PropTypes.object
+	comment: PropTypes.object,
+	onDelete: PropTypes.func
 }
 
 export default Comment

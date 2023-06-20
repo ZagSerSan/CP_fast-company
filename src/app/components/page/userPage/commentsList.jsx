@@ -7,11 +7,18 @@ import commentsApi from '../../../api/fake.api/comments.api'
 import Comment from './comment'
 
 const CommentsList = ({ userId }) => {
-  const [thisUserComments, setThisUserComments] = useState()
+  const [thisUserComments, setThisUserComments] = useState([])
   useEffect(() => {
     commentsApi.fetchCommentsForUser(userId).then(data => setThisUserComments(data))
   }, [])
-  // console.log('thisUserComments', thisUserComments)
+
+  const deleteComment = (commentId) => {
+    commentsApi.remove(commentId).then(
+      setThisUserComments(prev => prev.filter(item => item._id !== commentId))
+    )
+  }
+
+  // console.log('thisUserComments :>> ', thisUserComments);
 
   return (
     <>
@@ -19,7 +26,7 @@ const CommentsList = ({ userId }) => {
         {' '}
         <div className="card-body ">(add comment)</div>
       </div>
-      {thisUserComments && (
+      {thisUserComments.length > 0 ? (
         <div className="card mb-3">
           <div className="card-body ">
             <h2>Comments</h2>
@@ -28,12 +35,13 @@ const CommentsList = ({ userId }) => {
               <Comment
                 key={comment._id}
                 commentUserId={comment.userId}
-                comment={comment}  
+                comment={comment}
+                onDelete={deleteComment}
               />
             ))}
           </div>
         </div>
-      )}
+      ) : null}
     </>
   )
 }
