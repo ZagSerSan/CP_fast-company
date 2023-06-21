@@ -17,16 +17,23 @@ const CommentsList = ({ userId }) => {
       setThisUserComments(prev => prev.filter(item => item._id !== commentId))
     )
   }
-
+  
+  // sort comments
+  thisUserComments.sort(function compare(a, b) {
+    const dateA = new Date(Number(a.created_at))
+    const dateB = new Date(Number(b.created_at))
+    return dateB - dateA
+  })
+  
   return (
     <>
-      <div className="card mb-2">
+      <div className='card mb-2'>
         {' '}
-        <div className="card-body ">(add comment)</div>
+        <div className='card-body '>(add comment)</div>
       </div>
       {thisUserComments.length > 0 ? (
-        <div className="card mb-3">
-          <div className="card-body ">
+        <div className='card mb-3'>
+          <div className='card-body '>
             <h2>Comments</h2>
             <hr />
             {thisUserComments.map(comment => (

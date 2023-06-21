@@ -26,9 +26,9 @@ export const getDateFormat = (date, separator = ' ') => {
     return ` - 30 минут назад`
   } else if (differenceOnMinuts < (60 * 24)) {
     // если разница меньше дня (минуты * кол-во часов в сутках)
-    // const modMinutes = String(minutes).length === 1 ? `0${minutes}` : minutes
+    const modMinutes = String(date.getMinutes()).length === 1 ? `0${date.getMinutes()}` : date.getMinutes()
     // return ` - ${hours}:${modMinutes}`
-    return ` - ${date.getHours()}:${date.getMinutes()}`
+    return ` - ${date.getHours()}:${modMinutes}`
   } else if (differenceOnMinuts < (60 * 24 * 365)) {
     // если меньше года (минуты * кол-во часов в сутках * дней в году)
     return ` - ${date.getDate()} ${date.toLocaleString('default', {month: 'long'})}`

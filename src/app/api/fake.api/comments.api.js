@@ -10,7 +10,7 @@ const comments = [
     _id: '67rdca3eeb7f6fgdasd',
     pageId: '67rdca3eeb7f6fgeed471815',
     userId: '67rdca3eeb7f6fgeed471815',
-    content: 'Lorem ipsum dolor and etc',
+    content: 'Lorem ipsum dolor and',
     created_at: '1633573058520'
   },
   {
@@ -20,6 +20,29 @@ const comments = [
     content: 'Lorem ipsum dolor and etc',
     created_at: '1633573058520'
   }
+  // for view sort func - LДжон Дориан
+  // {
+  //   _id: '67rdwa3e3b7f6fcdasd',
+  //   pageId: '67rdca3eeb7f6fgeed471815',
+  //   userId: '67rdca3eeb7f6fgeed471815',
+  //   content: 'sdfdDDDSdss dolor and',
+  //   created_at: Date.parse('2023 06 21 6:05')
+  // },
+  // {
+  //   _id: '67rdca3eeb7f6fcdasd',
+  //   pageId: '67rdca3eeb7f6fgeed471815',
+  //   userId: '67rdca3eeb7f6fgeed471815',
+  //   content: 'Lorem dfsdfsd',
+  //   created_at: Date.now()
+  // },
+  // {
+  //   _id: '67rdca3e3b7f6fcdasd',
+  //   pageId: '67rdca3eeb7f6fgeed471815',
+  //   userId: '67rdca3eeb7f6fgeed471815',
+  //   content: 'sdfdDDDSdss dolor and',
+  //   created_at: Date.parse('2023 06 21 7:00')
+  // },
+  // ===
 ]
 if (!localStorage.getItem('comments')) {
   localStorage.setItem('comments', JSON.stringify(comments))
