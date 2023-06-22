@@ -63,7 +63,7 @@ const CommentsList = ({ userId }) => {
   useEffect(() => {
     validate()
   }, [commentData])
-  
+
   const validate = () => {
     const errors = validator(commentData, validatorConfig)
     setErrors(errors)
@@ -115,7 +115,7 @@ const CommentsList = ({ userId }) => {
                 value={commentData.content}
               ></textarea>
             </div>
-            <button type="submit" onClick={addComment} className="btn btn-primary">Submit</button>
+            <button type="submit" onClick={addComment} className="btn btn-primary">Опубликовать</button>
           </form>
         </div>
       </div>
