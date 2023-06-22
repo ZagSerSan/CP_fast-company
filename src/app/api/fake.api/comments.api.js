@@ -41,7 +41,7 @@ const comments = [
   //   userId: '67rdca3eeb7f6fgeed471815',
   //   content: 'sdfdDDDSdss dolor and',
   //   created_at: Date.parse('2023 06 21 7:00')
-  // },
+  // }
   // ===
 ]
 if (!localStorage.getItem('comments')) {
