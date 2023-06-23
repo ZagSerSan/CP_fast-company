@@ -50,6 +50,15 @@ const CommentsList = ({ userId }) => {
         data
       ]))
     )
+
+    setCommentData(prev => (
+      {
+        ...prev,
+        userId: '',
+        content: ''
+      }
+    ))
+    setIsBlured(false)
   }
 
   useEffect(() => {
