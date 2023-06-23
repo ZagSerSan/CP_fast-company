@@ -13,6 +13,14 @@ export const validatorConfig = {
       message: 'Mail is not correct!'
     }
   },
+  mail: {
+    isRequired: {
+      message: 'Mail is required!'
+    },
+    isMail: {
+      message: 'Mail is not correct!'
+    }
+  },
   password: {
     isRequired: {
       message: 'Password is required!'
