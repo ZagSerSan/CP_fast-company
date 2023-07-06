@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import userApi from '../../../api/fake.api/user.api'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
+// import SelectField from '../../common/form/selectField'
 
 const AddCommentForm = ({ userId, onSubmit }) => {
   const [users, setUsers] = useState()
@@ -45,6 +46,16 @@ const AddCommentForm = ({ userId, onSubmit }) => {
   return (
     <form>
       <div className="form-group mb-3">
+        {/* <SelectField
+          name="userId"
+          label="New comment:"
+          defaultOption="Выберите пользователя..."
+          value={commentData.userId}
+          id='new-comment-input-1'
+          professions={users}
+          error={errors.name}
+          onChange={handleChange}
+        /> */}
         <label htmlFor="new-comment-input-1">New comment</label>
         <select
           className={
