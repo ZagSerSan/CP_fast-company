@@ -1,17 +1,13 @@
-/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-// utils, css
+import { orderBy } from 'lodash'
 import './commentsList.css'
-// api
 import commentsApi from '../../../api/fake.api/comments.api'
-// components
 import Comment from './comment'
 import AddCommentForm from './addCommentForm'
 
 const CommentsList = ({ userId }) => {
   const [thisUserComments, setThisUserComments] = useState([])
-
   useEffect(() => {
     commentsApi.fetchCommentsForUser(userId).then(data => setThisUserComments(data))
   }, [])
@@ -24,19 +20,11 @@ const CommentsList = ({ userId }) => {
   }
   const addComment = (commentData) => {
     commentsApi.add(commentData).then(data =>
-      setThisUserComments(prev => ([
-        ...prev,
-        data
-      ]))
+      setThisUserComments(prev => ([...prev, data]))
     )
   }
-  
-  // sort comments
-  thisUserComments.sort(function compare(a, b) {
-    const dateA = new Date(Number(a.created_at))
-    const dateB = new Date(Number(b.created_at))
-    return dateB - dateA
-  })
+
+  const sortedComments = orderBy(thisUserComments, ['created_at'], ['desc'])
   
   return (
     <>
@@ -47,12 +35,12 @@ const CommentsList = ({ userId }) => {
         </div>
       </div>
 
-      {thisUserComments.length > 0 ? (
+      {sortedComments.length > 0 ? (
         <div className='card mb-3'>
           <div className='card-body '>
             <h2>Comments</h2>
             <hr />
-            {thisUserComments.map(comment => (
+            {sortedComments.map(comment => (
               <Comment
                 key={comment._id}
                 commentUserId={comment.userId}
