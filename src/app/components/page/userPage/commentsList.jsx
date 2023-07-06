@@ -1,34 +1,19 @@
-/* eslint-disableX */
+/* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 // utils, css
-import { validator } from '../../../utils/validator'
-import { validatorConfig } from '../../../utils/validatorConfig'
 import './commentsList.css'
 // api
 import commentsApi from '../../../api/fake.api/comments.api'
-import userApi from '../../../api/fake.api/user.api'
 // components
 import Comment from './comment'
 import AddCommentForm from './addCommentForm'
 
 const CommentsList = ({ userId }) => {
   const [thisUserComments, setThisUserComments] = useState([])
-  const [isBlured, setIsBlured] = useState(false)
-  const [errors, setErrors] = useState({})
-  const [users, setUsers] = useState()
-  // const [errors, setErrors] = useState({})
-  const [commentData, setCommentData] = useState(
-    {
-      pageId: userId,
-      userId: '',
-      content: ''
-    }
-  )
 
   useEffect(() => {
     commentsApi.fetchCommentsForUser(userId).then(data => setThisUserComments(data))
-    userApi.fetchAll().then(data => setUsers(data))
   }, [])
 
   // DALETE and ADD func
@@ -37,39 +22,13 @@ const CommentsList = ({ userId }) => {
       setThisUserComments(prev => prev.filter(item => item._id !== commentId))
     )
   }
-  const addComment = (e) => {
-    e.preventDefault()
-    setIsBlured(true)
-
-    const ifValid = validate()
-    if (!ifValid) return
-
+  const addComment = (commentData) => {
     commentsApi.add(commentData).then(data =>
       setThisUserComments(prev => ([
         ...prev,
         data
       ]))
     )
-
-    setCommentData(prev => (
-      {
-        ...prev,
-        userId: '',
-        content: ''
-      }
-    ))
-    setIsBlured(false)
-  }
-
-  useEffect(() => {
-    validate()
-  }, [commentData])
-
-  const validate = () => {
-    const errors = validator(commentData, validatorConfig)
-    setErrors(errors)
-
-    return Object.keys(errors).length === 0
   }
   
   // sort comments
@@ -84,7 +43,7 @@ const CommentsList = ({ userId }) => {
       <div className='card mb-2'>
         {' '}
         <div className='card-body '>
-          <AddCommentForm {...{userId, addComment, isBlured, setIsBlured, errors, commentData, setCommentData, users}}/>
+          <AddCommentForm onSubmit={addComment} userId={userId}/>
         </div>
       </div>
 

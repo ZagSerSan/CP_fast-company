@@ -26,6 +26,7 @@ const UserPage = ({ userId }) => {
               name={selectedUser.name}
               profession={selectedUser.profession.name}
               rate={selectedUser.rate}
+              userId={userId}
             />
             <QualitiesCard qualities={selectedUser.qualities}/>
             <MeetingsCard meetings={selectedUser.completedMeetings}/>
