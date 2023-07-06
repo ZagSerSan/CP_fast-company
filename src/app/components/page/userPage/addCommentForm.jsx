@@ -3,17 +3,19 @@ import PropTypes from 'prop-types'
 import userApi from '../../../api/fake.api/user.api'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
+import { toast } from 'react-toastify'
 // import SelectField from '../../common/form/selectField'
 
 const AddCommentForm = ({ userId, onSubmit }) => {
   const [users, setUsers] = useState()
   const [errors, setErrors] = useState({})
   const [isBlured, setIsBlured] = useState(false)
-  const [commentData, setCommentData] = useState({
+  const initialState = {
     pageId: userId,
     userId: '',
     content: ''
-  })
+  }
+  const [commentData, setCommentData] = useState(initialState)
   useEffect(() => {
     userApi.fetchAll().then(data => setUsers(data))
   }, [])
@@ -28,8 +30,13 @@ const AddCommentForm = ({ userId, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const isValid = validate()
-    if (!isValid) return setIsBlured(true)
+    if (!isValid) {
+      toast.info('Комметнарий не может быть пустым.')
+      return setIsBlured(true)
+    }
     onSubmit(commentData)
+    setCommentData(initialState)
+    setIsBlured(false)
   }
 
   useEffect(() => {

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 // components
 import Main from './layouts/main'
 import Login from './layouts/login'
@@ -15,6 +17,7 @@ function App() {
         <Route path="/Login/:type?" component={Login} />
         <Route path="/Users/:userId?/:edit?" component={Users} />
       </Switch>
+      <ToastContainer />
     </>
   )
 }
