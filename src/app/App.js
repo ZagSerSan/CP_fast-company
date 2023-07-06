@@ -14,8 +14,8 @@ function App() {
       <Nav />
       <Switch>
         <Route path="/" exact component={Main} />
-        <Route path="/Login/:type?" component={Login} />
-        <Route path="/Users/:userId?/:edit?" component={Users} />
+        <Route path="/login/:type?" component={Login} />
+        <Route path="/users/:userId?/:edit?" component={Users} />
       </Switch>
       <ToastContainer />
     </>
