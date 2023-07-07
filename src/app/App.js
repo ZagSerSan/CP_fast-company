@@ -8,6 +8,7 @@ import Login from './layouts/login'
 import Nav from '../app/components/ui/nav'
 import Users from './layouts/users'
 import { ProfessionProvider } from './hooks/useProfession'
+import { QualitiesProvider } from './hooks/useQualities'
 
 function App() {
   return (
@@ -16,8 +17,10 @@ function App() {
       <Switch>
         <Route path="/" exact component={Main} />
         <ProfessionProvider>
-          <Route path="/login/:type?" component={Login} />
-          <Route path="/users/:userId?/:edit?" component={Users} />
+          <QualitiesProvider>
+            <Route path="/login/:type?" component={Login} />
+            <Route path="/users/:userId?/:edit?" component={Users} />
+          </QualitiesProvider>
         </ProfessionProvider>
       </Switch>
       <ToastContainer />

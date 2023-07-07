@@ -10,7 +10,7 @@ export const useUsers = () => {
   return useContext(UserContext)
 }
 
-const UserProvider = ({ children }) => {
+const UserProvider = ({children}) => {
   const [users, setUsers] = useState([])
   const [isLoading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -28,7 +28,7 @@ const UserProvider = ({ children }) => {
   }, [error])
   async function getUsers() {
     try {
-      const { content } = await userService.get()
+      const {content} = await userService.get()
       setUsers(content)
       setLoading(false)
     } catch (error) {
@@ -36,13 +36,13 @@ const UserProvider = ({ children }) => {
     }
   }
   const errorCatcher = (error) => {
-    const { message } = error.response.data
+    const {message} = error.response.data
     setError(message)
   }
 
   return (
-    <UserContext.Provider value={{ users }}>
-      {!isLoading ? children : <IconSVG id="loader" />}
+    <UserContext.Provider value={{users}}>
+      {!isLoading ? children : <IconSVG id='loader'/>}
     </UserContext.Provider>
   )
 }
