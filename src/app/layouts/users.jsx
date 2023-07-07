@@ -17,7 +17,9 @@ const Users = () => {
         ) : (
           <UserPage {...{ userId }} />
         )
-      ) : <UsersList />}
+      ) : (
+        <UsersList />
+      )}
     </UserProvider>
   )
 }

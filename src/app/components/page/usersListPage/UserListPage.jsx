@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import 'bootstrap/dist/css/bootstrap.css'
 // utils
-import apiUsers from '../../../api/fake.api/user.api'
 import professionsApi from '../../../api/fake.api/professions.api'
 import { paginate } from '../../../utils/paginate'
 // components
@@ -11,11 +10,10 @@ import Pagination from '../../common/pagination'
 import GroupList from '../../common/groupList'
 import UsersTable from '../../usersTable'
 import IconSVG from '../../common/iconSVG'
+import { useUsers } from '../../../hooks/useUsers'
 
 const UserListPage = () => {
-  const [users, setUsers] = useState()
-  // начальное состояние пользователей для сброса
-  const [firstUsersState, setFirstUsersState] = useState()
+  const { users } = useUsers()
   const [currentPage, setCurrentPage] = useState(1)
   const [professions, setProfession] = useState()
   const [selectedProf, setSelectedProf] = useState()
@@ -26,31 +24,34 @@ const UserListPage = () => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    apiUsers.fetchAll().then((data) => setUsers(data))
-    apiUsers.fetchAll().then((data) => setFirstUsersState(data))
-  }, [])
-  useEffect(() => {
     professionsApi.fetchAll().then((data) => setProfession(data))
   }, [])
 
   // функция кнопки удаления
   const handleDelete = (id) => {
-    setUsers((prevState) => prevState.filter((item) => item._id !== id))
+    console.log(id)
   }
   // func for refresh all users
   const refreshUsers = () => {
-    setUsers(firstUsersState)
+    console.log('"refreshUsers" not a func')
   }
   // toogle bookmark function
   const toggleBookMark = (userId) => {
-    setUsers((prevState) =>
-      prevState.map((item) => {
-        return {
-          ...item,
-          bookmark: item._id === userId ? !item.bookmark : item.bookmark
-        }
-      })
-    )
+    // const newArray = users.map((item) => {
+    //   return {
+    //     ...item,
+    //     bookmark: item._id === userId ? !item.bookmark : item.bookmark
+    //   }
+    // })
+    // setUsers(newArray)
+    // setUsers((prevState) =>
+    //   prevState.map((item) => {
+    //     return {
+    //       ...item,
+    //       bookmark: item._id === userId ? !item.bookmark : item.bookmark
+    //     }
+    //   })
+    // )
     // change localStore
     const users = JSON.parse(localStorage.getItem('users'))
     const userIndex = users.findIndex((u) => u._id === userId)
@@ -169,8 +170,7 @@ const UserListPage = () => {
         </div>
       </>
     )
-  } // if (users)
-  // if else -> return "Loading..."
+  }
   return <IconSVG id={'loader'} />
 }
 

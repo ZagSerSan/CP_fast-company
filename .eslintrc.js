@@ -30,6 +30,6 @@ module.exports = {
     'multiline-ternary': ['off'],
     'no-trailing-spaces': ['off'],
     'object-curly-spacing': ['off'],
-    'no-tabs': ['off'],
+    'no-tabs': ['off']
   }
 }

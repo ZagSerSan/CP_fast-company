@@ -1,4 +1,5 @@
-select, option {
+select,
+option {
   cursor: pointer;
 }
 textarea.form-control {

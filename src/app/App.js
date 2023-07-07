@@ -7,6 +7,7 @@ import Main from './layouts/main'
 import Login from './layouts/login'
 import Nav from '../app/components/ui/nav'
 import Users from './layouts/users'
+import { ProfessionProvider } from './hooks/useProfession'
 
 function App() {
   return (
@@ -14,8 +15,10 @@ function App() {
       <Nav />
       <Switch>
         <Route path="/" exact component={Main} />
-        <Route path="/Login/:type?" component={Login} />
-        <Route path="/Users/:userId?/:edit?" component={Users} />
+        <ProfessionProvider>
+          <Route path="/login/:type?" component={Login} />
+          <Route path="/users/:userId?/:edit?" component={Users} />
+        </ProfessionProvider>
       </Switch>
       <ToastContainer />
     </>

@@ -4,11 +4,11 @@ import PropTypes from 'prop-types'
 import userApi from '../../../api/fake.api/user.api'
 import { getDateFormat } from '../../../utils/formatDate'
 
-const Comment = ({commentUserId, comment, onDelete}) => {
+const Comment = ({ commentUserId, comment, onDelete }) => {
   // получение пользователей написавших комментарии на текущей странице
   const [commentedUser, setCommentedUser] = useState()
   useEffect(() => {
-    userApi.getUserById(commentUserId).then(user => setCommentedUser(user))
+    userApi.getUserById(commentUserId).then((user) => setCommentedUser(user))
   }, [])
 
   return (
@@ -17,11 +17,11 @@ const Comment = ({commentUserId, comment, onDelete}) => {
         <div className="col">
           <div className="d-flex flex-start ">
             <img
-							src={`https://avatars.dicebear.com/api/avataaars/${(
-								Math.random() + 1
-							)
-								.toString(36)
-								.substring(7)}.svg`}
+              src={`https://avatars.dicebear.com/api/avataaars/${(
+                Math.random() + 1
+              )
+                .toString(36)
+                .substring(7)}.svg`}
               className="rounded-circle shadow-1-strong me-3"
               alt="avatar"
               width="65"
@@ -31,10 +31,15 @@ const Comment = ({commentUserId, comment, onDelete}) => {
               <div className="mb-4">
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-1 ">
-										{commentedUser?.name}
-                    <span className="small">{getDateFormat(comment.created_at)}</span>
+                    {commentedUser?.name}
+                    <span className="small">
+                      {getDateFormat(comment.created_at)}
+                    </span>
                   </p>
-                  <button onClick={() => onDelete(comment._id)} className="btn btn-sm text-primary d-flex align-items-center">
+                  <button
+                    onClick={() => onDelete(comment._id)}
+                    className="btn btn-sm text-primary d-flex align-items-center"
+                  >
                     <i className="bi bi-x-lg"></i>
                   </button>
                 </div>
@@ -49,9 +54,9 @@ const Comment = ({commentUserId, comment, onDelete}) => {
 }
 
 Comment.propTypes = {
-	commentUserId: PropTypes.string,
-	comment: PropTypes.object,
-	onDelete: PropTypes.func
+  commentUserId: PropTypes.string,
+  comment: PropTypes.object,
+  onDelete: PropTypes.func
 }
 
 export default Comment

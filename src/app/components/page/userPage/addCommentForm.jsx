@@ -17,11 +17,11 @@ const AddCommentForm = ({ userId, onSubmit }) => {
   }
   const [commentData, setCommentData] = useState(initialState)
   useEffect(() => {
-    userApi.fetchAll().then(data => setUsers(data))
+    userApi.fetchAll().then((data) => setUsers(data))
   }, [])
 
-  const handleChange = ({target}) => {
-    setCommentData(prev => ({
+  const handleChange = ({ target }) => {
+    setCommentData((prev) => ({
       ...prev,
       [target.name]: target.value
     }))
@@ -66,34 +66,41 @@ const AddCommentForm = ({ userId, onSubmit }) => {
         <label htmlFor="new-comment-input-1">New comment</label>
         <select
           className={
-            'form-select' + (!isBlured ? '' : errors.userId ? ' is-invalid' : ' is-valid')
+            'form-select' +
+            (!isBlured ? '' : errors.userId ? ' is-invalid' : ' is-valid')
           }
-          name='userId'
+          name="userId"
           onChange={handleChange}
           id="new-comment-input-1"
           value={commentData.userId}
         >
-          <option disabled value=''>
+          <option disabled value="">
             Выберите пользователя
           </option>
-          {users && users.map(user => (
-            <option value={user._id} key={user._id}>{user.name}</option>
-          ))}
+          {users &&
+            users.map((user) => (
+              <option value={user._id} key={user._id}>
+                {user.name}
+              </option>
+            ))}
         </select>
       </div>
       <div className="form-group mb-3">
         <label htmlFor="new-comment-textarea-1">Сообщение</label>
         <textarea
-          name='content'
+          name="content"
           className={
-            'form-control' + (!isBlured ? '' : errors.content ? ' is-invalid' : ' is-valid')
+            'form-control' +
+            (!isBlured ? '' : errors.content ? ' is-invalid' : ' is-valid')
           }
           id="new-comment-textarea-1"
           onChange={handleChange}
           value={commentData.content}
         ></textarea>
       </div>
-      <button type="submit" onClick={handleSubmit} className="btn btn-primary">Опубликовать</button>
+      <button type="submit" onClick={handleSubmit} className="btn btn-primary">
+        Опубликовать
+      </button>
     </form>
   )
 }

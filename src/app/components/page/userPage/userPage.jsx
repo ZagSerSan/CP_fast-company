@@ -22,18 +22,18 @@ const UserPage = ({ userId }) => {
       {selectedUser ? (
         <div className="row gutters-sm mt-2">
           <div className="col-md-4 mb-3">
-            <UserCard 
+            <UserCard
               name={selectedUser.name}
               profession={selectedUser.profession.name}
               rate={selectedUser.rate}
               userId={userId}
             />
-            <QualitiesCard qualities={selectedUser.qualities}/>
-            <MeetingsCard meetings={selectedUser.completedMeetings}/>
+            <QualitiesCard qualities={selectedUser.qualities} />
+            <MeetingsCard meetings={selectedUser.completedMeetings} />
           </div>
 
           <div className="col-md-8">
-            <CommentsList {...{userId}}/>
+            <CommentsList {...{ userId }} />
           </div>
         </div>
       ) : (

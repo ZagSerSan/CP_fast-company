@@ -27,18 +27,13 @@ const UserCard = ({ userId, name, profession, rate }) => {
           />
           <div className="mt-3">
             <h4>{name}</h4>
-            <p className="text-secondary mb-1">
-              {profession}
-            </p>
+            <p className="text-secondary mb-1">{profession}</p>
             <div className="text-muted">
               <i
                 className="bi bi-caret-down-fill text-primary"
                 role="button"
               ></i>
-              <i
-                className="bi bi-caret-up text-secondary"
-                role="button"
-              ></i>
+              <i className="bi bi-caret-up text-secondary" role="button"></i>
               <span className="ms-2">{rate}</span>
             </div>
           </div>

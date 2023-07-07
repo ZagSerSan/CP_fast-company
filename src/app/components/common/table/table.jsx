@@ -4,6 +4,7 @@ import TableHeader from './tableHeader'
 import TableBody from './tableBody'
 import Qualitie from '../../ui/qualitie'
 import Bookmark from '../../common/bookmark'
+import Profession from '../../ui/profession'
 
 const Table = ({
   users,
@@ -19,7 +20,10 @@ const Table = ({
       path: '',
       component: (user) => <Qualitie qualities={user.qualities} />
     },
-    profession: { name: 'Профессия', path: 'profession.name' },
+    profession: {
+      name: 'Профессия',
+      component: (user) => <Profession id={user.profession} />
+    },
     completedMeetings: { name: 'Встречи', path: 'completedMeetings' },
     rate: { name: 'Оценка', path: 'rate' },
     bookmark: {

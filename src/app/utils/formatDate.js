@@ -24,18 +24,27 @@ export const getDateFormat = (date, separator = ' ') => {
     return ` - 10 минут назад`
   } else if (differenceOnMinuts < 60) {
     return ` - 30 минут назад`
-  } else if (differenceOnMinuts < (60 * 24)) {
+  } else if (differenceOnMinuts < 60 * 24) {
     // если разница меньше дня (минуты * кол-во часов в сутках)
-    const modMinutes = String(date.getMinutes()).length === 1 ? `0${date.getMinutes()}` : date.getMinutes()
+    const modMinutes =
+      String(date.getMinutes()).length === 1
+        ? `0${date.getMinutes()}`
+        : date.getMinutes()
     // return ` - ${hours}:${modMinutes}`
     return ` - ${date.getHours()}:${modMinutes}`
-  } else if (differenceOnMinuts < (60 * 24 * 365)) {
+  } else if (differenceOnMinuts < 60 * 24 * 365) {
     // если меньше года (минуты * кол-во часов в сутках * дней в году)
-    return ` - ${date.getDate()} ${date.toLocaleString('default', {month: 'long'})}`
+    return ` - ${date.getDate()} ${date.toLocaleString('default', {
+      month: 'long'
+    })}`
   } else if (differenceOnMinuts < 0) {
-    return ` - ${date.getDate()} ${date.toLocaleString('default', {month: 'long'})}`
+    return ` - ${date.getDate()} ${date.toLocaleString('default', {
+      month: 'long'
+    })}`
   } else {
     // если больше года
-    return ` - ${date.getDate()} ${date.toLocaleString('default', {month: 'long'})} ${date.getFullYear()}`
+    return ` - ${date.getDate()} ${date.toLocaleString('default', {
+      month: 'long'
+    })} ${date.getFullYear()}`
   }
 }
