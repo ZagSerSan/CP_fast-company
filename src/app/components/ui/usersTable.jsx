@@ -17,7 +17,7 @@ const UsersTable = ({
     qualities: {
       name: 'Качества',
       path: '',
-      component: (user) => <Qualitie qualities={user.qualities} />
+      component: (user) => <Qualitie qualityIds={user.qualities} />
     },
     profession: {
       name: 'Профессия',

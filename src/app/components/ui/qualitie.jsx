@@ -1,23 +1,29 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.css'
 import PropTypes from 'prop-types'
+import 'bootstrap/dist/css/bootstrap.css'
+import { useQualities } from '../../hooks/useQualities'
 
-const Qualitie = ({ qualities }) => {
+const Qualitie = ({ qualityIds }) => {
+  const { isLoading, getQuality } = useQualities()
+  const qualities = getQuality(qualityIds)
+
   return (
     <>
-      {qualities &&
-        qualities.map((quality) => (
+      {!isLoading ? (
+        qualities.map(quality => (
           <span
             key={quality._id}
             className={'badge bg-' + quality.color + ' m-1'}
           >
             {quality.name}
           </span>
-        ))}
+        ))
+      ) : 'loading...'
+      }
     </>
   )
 }
 Qualitie.propTypes = {
-  qualities: PropTypes.array
+  qualityIds: PropTypes.array
 }
 export default Qualitie
