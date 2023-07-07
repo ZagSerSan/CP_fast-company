@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Table from './common/table/table'
+import Table from '../common/table/table'
 
 const UsersTable = ({
   users,
@@ -13,9 +13,9 @@ const UsersTable = ({
     <>
       <Table
         {...{
+          users,
           sortSettings,
           setSortSettings,
-          users,
           toggleBookMark,
           handleDelete
         }}

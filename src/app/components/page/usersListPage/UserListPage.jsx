@@ -9,7 +9,7 @@ import { paginate } from '../../../utils/paginate'
 import SearchStatus from '../../ui/searchStatus'
 import Pagination from '../../common/pagination'
 import GroupList from '../../common/groupList'
-import UsersTable from '../../usersTable'
+import UsersTable from '../../ui/usersTable'
 import IconSVG from '../../common/iconSVG'
 import { useUsers } from '../../../hooks/useUsers'
 
