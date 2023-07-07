@@ -8,14 +8,14 @@ export const useProfession = () => {
   return useContext(ProfessionContext)
 }
 
-export const ProfessionProvider = ({children}) => {
+export const ProfessionProvider = ({ children }) => {
   const [isLoading, setLoading] = useState(true)
   const [professions, setProfessions] = useState([])
   const [error, setError] = useState(null)
 
-  // вызов getProfessions() при монтировании компонента
+  // вызов getProfessionsList() при монтировании компонента
   useEffect(() => {
-    getProfessions()
+    getProfessionsList()
   }, [])
   // обработка/показ ошибки пользователю
   useEffect(() => {
@@ -25,21 +25,26 @@ export const ProfessionProvider = ({children}) => {
     }
   }, [error])
   const errorCatcher = (error) => {
-    const {message} = error.response.data
+    const { message } = error.response.data
     setError(message)
   }
-  async function getProfessions() {
+  function getProfession(id) {
+    return professions.find((prof) => prof._id === id)
+  }
+  async function getProfessionsList() {
     try {
-      const {content} = await professionService.get()
+      const { content } = await professionService.get()
       setProfessions(content)
       setLoading(false)
     } catch (error) {
       errorCatcher(error)
     }
   }
- 
+
   return (
-    <ProfessionContext.Provider value={{isLoading, professions, setProfessions}}>
+    <ProfessionContext.Provider
+      value={{ isLoading, professions, setProfessions, getProfession }}
+    >
       {children}
     </ProfessionContext.Provider>
   )
@@ -47,7 +52,7 @@ export const ProfessionProvider = ({children}) => {
 
 ProfessionProvider.propTypes = {
   children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node), 
+    PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ])
 }
