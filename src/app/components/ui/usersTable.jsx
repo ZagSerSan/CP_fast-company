@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import Table from '../common/table/table'
+import Qualitie from './qualitie'
+import Bookmark from '../common/bookmark'
 
 const UsersTable = ({
   users,
@@ -9,6 +11,37 @@ const UsersTable = ({
   toggleBookMark,
   handleDelete
 }) => {
+  const [thState, setThState] = useState({
+    name: { name: 'Имя', path: 'name' },
+    qualities: {
+      name: 'Качества',
+      path: '',
+      component: (user) => <Qualitie qualities={user.qualities} />
+    },
+    profession: { name: 'Профессия', path: 'profession.name' },
+    completedMeetings: { name: 'Встречи', path: 'completedMeetings' },
+    rate: { name: 'Оценка', path: 'rate' },
+    bookmark: {
+      name: 'Избранное',
+      path: 'bookmark',
+      component: (user) => (
+        <Bookmark user={user} toggleBookMark={toggleBookMark} />
+      )
+    },
+    delete: {
+      name: '',
+      path: '',
+      component: (user) => (
+        <button
+          onClick={() => handleDelete(user._id)}
+          className="btn btn-danger"
+        >
+          delete
+        </button>
+      )
+    }
+  })
+
   return (
     <>
       <Table
@@ -16,8 +49,8 @@ const UsersTable = ({
           users,
           sortSettings,
           setSortSettings,
-          toggleBookMark,
-          handleDelete
+          thState,
+          setThState
         }}
       />
     </>
