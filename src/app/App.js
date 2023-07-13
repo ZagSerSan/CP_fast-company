@@ -9,20 +9,22 @@ import Nav from '../app/components/ui/nav'
 import Users from './layouts/users'
 import { ProfessionProvider } from './hooks/useProfession'
 import { QualitiesProvider } from './hooks/useQualities'
+import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
 
 function App() {
   return (
     <>
       <Nav />
-      <Switch>
-        <Route path="/" exact component={Main} />
-        <ProfessionProvider>
-          <QualitiesProvider>
+      <ProfessionProvider>
+        <QualitiesProvider>
+          <Switch>
+            <Route path="/" exact component={Main} />
             <Route path="/login/:type?" component={Login} />
             <Route path="/users/:userId?/:edit?" component={Users} />
-          </QualitiesProvider>
-        </ProfessionProvider>
-      </Switch>
+            <Redirect to='/'/>
+          </Switch>
+        </QualitiesProvider>
+      </ProfessionProvider>
       <ToastContainer />
     </>
   )

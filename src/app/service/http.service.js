@@ -10,15 +10,23 @@ axios.interceptors.request.use(
     if (configFile.isFirebase) {
       const containSlash = /\/$/gi.test(config.url)
       config.url = (containSlash ? config.url.slice(0, -1) : config.url) + '.json'
-      console.log(config.url)
     }
     return config
   }, function (error) {
     return Promise.reject(error)
   }
 )
-
-axios.interceptors.response.use((res) => res,
+const transformData = (data) => {
+  return data ? Object.keys(data).map(key => ({
+    ...data[key]
+  })) : []
+}
+axios.interceptors.response.use((res) => {
+  if (configFile.isFirebase) {
+    res.data = {content: transformData(res.data)}
+  }
+  return res
+},
 function (error) {
   // условие для отлавливания ожидаемой ошибки (см коды статусов http)
   const expectedErrors = 
