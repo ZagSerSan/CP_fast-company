@@ -16,8 +16,7 @@ const SelectField = ({
   const optionsArray =
     !Array.isArray(professions) && typeof professions === 'object'
       ? Object.values(professions)
-      : professions
-  // .map(item => ({label: item.name, value: item._id}))
+      : professions.map(item => ({label: item.name, value: item._id}))
 
   const handleChange = ({ target }) => {
     onChange({ name: target.name, value: target.value })

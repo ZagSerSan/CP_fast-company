@@ -12,7 +12,7 @@ const MultiSelectField = ({
   const qualitiesArray =
     !Array.isArray(qualities) && typeof qualities === 'object'
       ? Object.values(qualities)
-      : qualities
+      : qualities.map(item => ({label: item.name, value: item._id}))
 
   const handleChange = (value) => {
     onChange({ name, value })
