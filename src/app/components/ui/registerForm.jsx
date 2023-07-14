@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+// import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { useProfession } from '../../hooks/useProfession'
 import { useQualities } from '../../hooks/useQualities'
+import { useAuth } from '../../hooks/useAuth'
 // utils, css
 import './form.module.css'
 import { validator } from '../../utils/validator'
@@ -26,9 +27,10 @@ const RegisterForm = () => {
     qualities: [],
     licence: false
   })
+  const {signUp} = useAuth()
 
   // all api qualities state
-  const history = useHistory()
+  // const history = useHistory()
   const {qualities} = useQualities()
   const {professions} = useProfession()
 
@@ -50,6 +52,7 @@ const RegisterForm = () => {
       ...data,
       qualities: data.qualities.map(q => q.value)
     })
+    signUp(data)
     // history.push('/Users')
   }
 
