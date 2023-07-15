@@ -42,18 +42,21 @@ const RegisterForm = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const ifValid = validate()
     if (!ifValid) return
 
-    // действие кнопки отправить если формы валидны
-    console.log({
-      ...data,
-      qualities: data.qualities.map(q => q.value)
-    })
-    signUp(data)
-    // history.push('/Users')
+    try {
+      await signUp(data)
+      console.log({
+        ...data,
+        qualities: data.qualities.map(q => q.value)
+      })
+      // history.push('/Users')
+    } catch (error) {
+      setErrors(error)
+    }
   }
 
   useEffect(() => {

@@ -3,9 +3,11 @@ import { toast } from 'react-toastify'
 import configFile from '../config.json'
 
 // "apiEndPoint": "http://localhost:4000/api/v1/"
-axios.defaults.baseURL = configFile.apiEndPoint
+const http = axios.create({
+  baseURL: configFile.apiEndPoint
+})
 
-axios.interceptors.request.use(
+http.interceptors.request.use(
   function (config) {
     if (configFile.isFirebase) {
       const containSlash = /\/$/gi.test(config.url)
@@ -21,7 +23,7 @@ const transformData = (data) => {
     ...data[key]
   })) : []
 }
-axios.interceptors.response.use((res) => {
+http.interceptors.response.use((res) => {
   if (configFile.isFirebase) {
     res.data = {content: transformData(res.data)}
   }
@@ -42,10 +44,10 @@ function (error) {
 })
 
 const httpService = {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete
+  get: http.get,
+  post: http.post,
+  put: http.put,
+  delete: http.delete
 }
 
 export default httpService
