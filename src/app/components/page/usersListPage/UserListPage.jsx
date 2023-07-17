@@ -86,7 +86,7 @@ const UserListPage = () => {
       setSearchValue(target.value)
     }
     const searchedUsers = users.filter((user) => {
-      return user.name.toLowerCase().includes(searchValue)
+      return user.name?.toLowerCase().includes(searchValue)
     })
 
     const filteredUsers = selectedProf
