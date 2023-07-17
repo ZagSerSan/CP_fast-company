@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { useProfession } from '../../hooks/useProfession'
+import { useQualities } from '../../hooks/useQualities'
+import { useAuth } from '../../hooks/useAuth'
 // utils, css
 import './form.module.css'
-import professionsApi from '../../api/fake.api/professions.api'
-import qualitiesApi from '../../api/fake.api/qualities.api'
 import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
 // components
@@ -12,45 +14,23 @@ import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
 import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
   // значение полей формы
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    email: 'user@example.com',
+    password: 'Alex1234',
     profession: '',
     sex: 'male',
     qualities: [],
     licence: false
   })
-
-  // all api qualities state
   const history = useHistory()
-  const [qualities, setQualities] = useState([])
-
-  useEffect(() => {
-    qualitiesApi.fetchAll().then((data) => {
-      const qualitiesList = Object.keys(data).map((qualitieName) => ({
-        label: data[qualitieName].name,
-        value: data[qualitieName]._id
-      }))
-      setQualities(qualitiesList)
-    })
-
-    professionsApi.fetchAll().then((data) => {
-      const professionsList = Object.keys(data).map((professionName) => ({
-        label: data[professionName].name,
-        value: data[professionName]._id
-      }))
-      setProfession(professionsList)
-    })
-  }, [])
-
-  // for SelectField
-  const [professions, setProfession] = useState()
+  const {signUp} = useAuth()
+  const {qualities} = useQualities()
+  const {professions} = useProfession()
 
   // handleChange => onChange в дочерних компонентах (полях)
   const handleChange = (fieldData) => {
@@ -60,43 +40,21 @@ const RegisterForm = () => {
     }))
   }
 
-  // действие кнопки отправить если формы валидны
-  const getProfessionById = (id) => {
-    for (const prof of professions) {
-      if (prof.value === id) {
-        return { _id: prof.value, name: prof.label }
-      }
-    }
-  }
-  const getQualities = (elements) => {
-    const qualitiesArray = []
-    for (const elem of elements) {
-      for (const quality in qualities) {
-        if (elem.value === qualities[quality].value) {
-          qualitiesArray.push({
-            _id: qualities[quality].value,
-            name: qualities[quality].label,
-            color: qualities[quality].color
-          })
-        }
-      }
-    }
-    return qualitiesArray
-  }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-
     const ifValid = validate()
     if (!ifValid) return
 
-    // действие кнопки отправить если формы валидны
-    const { profession, qualities } = data
-    console.log({
-      ...data,
-      professions: getProfessionById(profession),
-      qualities: getQualities(qualities)
-    })
-    history.push('/Users')
+    try {
+      await signUp(data)
+      console.log({
+        ...data,
+        qualities: data.qualities.map(q => q.value)
+      })
+      history.push('/main')
+    } catch (error) {
+      setErrors(error)
+    }
   }
 
   useEffect(() => {
@@ -117,7 +75,7 @@ const RegisterForm = () => {
         <TextField
           label="Login/mail:"
           name="email"
-          value={data.mail}
+          value={data.email}
           onChange={handleChange}
           errors={errors}
         />
