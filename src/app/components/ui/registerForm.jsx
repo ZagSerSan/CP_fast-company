@@ -20,6 +20,7 @@ const RegisterForm = () => {
   const [errors, setErrors] = useState({})
   // значение полей формы
   const [data, setData] = useState({
+    name: '',
     email: 'user@example.com',
     password: 'Alex1234',
     profession: '',
@@ -76,6 +77,13 @@ const RegisterForm = () => {
           label="Login/mail:"
           name="email"
           value={data.email}
+          onChange={handleChange}
+          errors={errors}
+        />
+        <TextField
+          label="Name:"
+          name="name"
+          value={data.name}
           onChange={handleChange}
           errors={errors}
         />
