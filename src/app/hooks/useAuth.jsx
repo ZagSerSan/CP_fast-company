@@ -34,6 +34,7 @@ const AuthProvider = ({children}) => {
       const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
       setTokens(data)
       await createUser({_id: data.localId, email, ...rest})
+      toast.info('Registration is successful!')
       console.log(data)
     } catch (error) {
       errorCatcher(error)
