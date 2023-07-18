@@ -4,24 +4,26 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import userService from '../service/users.service'
 import localStorageService from '../service/localStorage.service'
+import { randomInt } from '../utils/randomInt'
 
 export const httpAuth = axios.create({
   baseURL: 'https://identitytoolkit.googleapis.com/v1/',
   params: {
     key: process.env.REACT_APP_FIREBASE_KEY
   }
-
 })
 const AuthContext = React.createContext()
 export const useAuth = () => {
   return useContext(AuthContext)
 }
 
+// AuthProvider
 const AuthProvider = ({children}) => {
   const [currentUser, setCurrentUser] = useState({})
   const [error, setError] = useState(null)
   const { setTokens } = localStorageService
 
+  // signIn
   async function signIn({email, password}) {
     const url = 'accounts:signInWithPassword'
     try {
@@ -35,12 +37,10 @@ const AuthProvider = ({children}) => {
       toast.error(error.message)
     }
   }
-  function randomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-  }
+
+  // signUp
   async function signUp({email, password, ...rest}) {
     const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
-
     try {
       const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
       setTokens(data)
@@ -65,6 +65,8 @@ const AuthProvider = ({children}) => {
       }
     }
   }
+
+  // createUser
   async function createUser(data) {
     try {
       const {content} = await userService.create(data)
@@ -74,12 +76,8 @@ const AuthProvider = ({children}) => {
       errorCatcher(error)
     }
   }
-  useEffect(() => {
-    if (error !== null) {
-      toast.error(error)
-      setError(null)
-    }
-  }, [error])
+
+  // вспомогательные функции
   const errorCatcher = (error) => {
     const { message } = error.response.data
     setError(message)
@@ -93,6 +91,12 @@ const AuthProvider = ({children}) => {
     }
   }
   useEffect(() => {
+    if (error !== null) {
+      toast.error(error)
+      setError(null)
+    }
+  }, [error])
+  useEffect(() => {
     if (localStorageService.getAccessToken()) {
       getUserData()
     }
@@ -105,6 +109,7 @@ const AuthProvider = ({children}) => {
   )
 }
 
+// ------------------------
 AuthProvider.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),

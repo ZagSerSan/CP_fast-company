@@ -9,6 +9,15 @@ const http = axios.create({
   baseURL: configFile.apiEndPoint
 })
 
+const transformData = (data) => {
+  return data && !data._id
+    ? Object.keys(data).map(key => ({
+      ...data[key]
+    }))
+    : data
+}
+
+// перехват запроса
 http.interceptors.request.use(
   async function (config) {
     if (configFile.isFirebase) {
@@ -35,13 +44,8 @@ http.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-const transformData = (data) => {
-  return data && !data._id
-    ? Object.keys(data).map(key => ({
-      ...data[key]
-    }))
-    : data
-}
+
+// перехват ответа сервера
 http.interceptors.response.use((res) => {
   if (configFile.isFirebase) {
     res.data = {content: transformData(res.data)}
@@ -49,18 +53,24 @@ http.interceptors.response.use((res) => {
   return res
 },
 function (error) {
-  // условие для отлавливания ожидаемой ошибки (см коды статусов http)
+  // условие для отлавливания ожидаемой ошибки, со стороны клиента, запроса. (см коды статусов http)
   const expectedErrors = 
   error.response &&
   error.response.status >= 400 &&
   error.response.status < 500
+  // expectedErrors = 401, 404, ...
+  // условие для отлавливания НЕожидаемой ошибки (см коды статусов http)
+  // если ошибка не от клиента (нет подключения к серверу или он упал)
   if (!expectedErrors) {
+    // если expectedErrors НЕ = 401, 404, ...
+    // то ловим и показываем неожидаемые ошибки
     console.log('error :>> ', error)
-    // неожидаемые ошибки
-    toast.error('Something was wrong. Try it later.')
+    toast.error(error.message + '. http.service -> line: 68')
   }
   return Promise.reject(error)
 })
+
+// ------------------------
 
 const httpService = {
   get: http.get,
