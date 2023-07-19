@@ -39,7 +39,7 @@ const loginForm = () => {
     // действие кнопки отправить если формы валидны
     try {
       await signIn(data)
-      history.push('/main')
+      history.push('/users')
     } catch (error) {
       toast.error(error)
     }

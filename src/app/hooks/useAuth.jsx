@@ -34,7 +34,7 @@ const AuthProvider = ({children}) => {
       console.log(data)
     } catch (error) {
       console.log(error)
-      toast.error(error.message)
+      toast.error(error.response.data.error.message)
     }
   }
 
