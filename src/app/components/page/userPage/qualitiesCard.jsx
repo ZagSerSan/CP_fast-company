@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useQualities } from '../../../hooks/useQualities'
 
-const QualitiesCard = ({ qualities }) => {
+const QualitiesCard = ({ qualitiesIds }) => {
+  const {getQuality} = useQualities()
+  const QualitiesList = getQuality(qualitiesIds)
+
   return (
     <div className="card mb-3">
       <div className="card-body d-flex flex-column justify-content-center text-center">
@@ -9,7 +13,7 @@ const QualitiesCard = ({ qualities }) => {
           <span>Qualities</span>
         </h5>
         <div className="card-text">
-          {qualities.map((item) => (
+          {QualitiesList.map((item) => (
             <h4
               key={item._id}
               className={'badge bg-' + item.color}
@@ -25,7 +29,7 @@ const QualitiesCard = ({ qualities }) => {
 }
 
 QualitiesCard.propTypes = {
-  qualities: PropTypes.array
+  qualitiesIds: PropTypes.array
 }
 
 export default QualitiesCard

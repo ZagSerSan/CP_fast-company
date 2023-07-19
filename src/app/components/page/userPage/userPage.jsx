@@ -4,35 +4,41 @@ import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.css'
 import './userPage.css'
 // components
-import apiUsers from '../../../api/fake.api/user.api'
 import IconSVG from '../../common/iconSVG'
 import CommentsList from './commentsList'
 import UserCard from './userCard'
 import QualitiesCard from './qualitiesCard'
 import MeetingsCard from './meetingsCard'
+// new api (firebase)
+import { useUsers } from '../../../hooks/useUsers'
+// import apiUsers from '../../../api/fake.api/user.api'
 
 const UserPage = ({ userId }) => {
-  const [selectedUser, setSelectedUser] = useState()
-  useEffect(() => {
-    apiUsers.getUserById(userId).then((data) => setSelectedUser({ ...data }))
+  const [selectedUser, setSelectedUser] = useState(null)
+  const { users } = useUsers()
+
+  useEffect(() => {  
+    setSelectedUser(users.find(user => user._id === userId))
+    // apiUsers.getUserById(userId).then((data) => setSelectedUser({ ...data }))
+    // console.log(selectedUser)
   }, [])
 
   return (
-    <div className="container">
+    <div className='container'>
       {selectedUser ? (
-        <div className="row gutters-sm mt-2">
-          <div className="col-md-4 mb-3">
+        <div className='row gutters-sm mt-2'>
+          <div className='col-md-4 mb-3'>
             <UserCard
               name={selectedUser.name}
               profession={selectedUser.profession.name}
               rate={selectedUser.rate}
               userId={userId}
             />
-            <QualitiesCard qualities={selectedUser.qualities} />
+            <QualitiesCard qualitiesIds={selectedUser.qualities} />
             <MeetingsCard meetings={selectedUser.completedMeetings} />
           </div>
 
-          <div className="col-md-8">
+          <div className='col-md-8'>
             <CommentsList {...{ userId }} />
           </div>
         </div>

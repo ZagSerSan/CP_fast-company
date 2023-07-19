@@ -35,6 +35,16 @@ const UserProvider = ({children}) => {
       errorCatcher(error)
     }
   }
+  async function getUser() {
+    try {
+      const {content} = await userService.getUserById()
+      console.log(content)
+      return content
+    } catch (error) {
+      console.log(error)
+      // errorCatcher(error)
+    }
+  }
   const errorCatcher = (error) => {
     const {message} = error.response.data
     setError(message)
