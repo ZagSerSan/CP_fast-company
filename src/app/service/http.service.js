@@ -38,6 +38,10 @@ http.interceptors.request.use(
           expiresIn: data.expires_in
         })
       }
+      const idToken = localStorageService.getAccessToken()
+      if (idToken) {
+        config.params = {...config.params, auth: idToken}
+      }
     }
     return config
   }, function (error) {

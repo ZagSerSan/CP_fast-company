@@ -47,7 +47,10 @@ const RegisterForm = () => {
     if (!ifValid) return
 
     try {
-      await signUp(data)
+      await signUp({
+        ...data,
+        qualities: data.qualities.map(q => q.value)
+      })
       console.log({
         ...data,
         qualities: data.qualities.map(q => q.value)

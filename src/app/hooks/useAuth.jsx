@@ -66,7 +66,7 @@ const AuthProvider = ({children}) => {
     }
   }
 
-  // createUser
+  // вспомогательные функции
   async function createUser(data) {
     try {
       const {content} = await userService.create(data)
@@ -76,8 +76,6 @@ const AuthProvider = ({children}) => {
       errorCatcher(error)
     }
   }
-
-  // вспомогательные функции
   const errorCatcher = (error) => {
     const { message } = error.response.data
     setError(message)
