@@ -22,13 +22,20 @@ export function getTokenExpirensData() {
 export function getUserId() {
   return localStorage.getItem(LOCAL_ID)
 }
+export function removeAuthData() {
+  localStorage.removeItem(ID_TOKEN)
+  localStorage.removeItem(REFRESH_TOKEN)
+  localStorage.removeItem(EXPIRES_IN)
+  localStorage.removeItem(LOCAL_ID)
+}
 
 const localStorageService = {
   setTokens,
   getAccessToken,
   getRefreshToken,
   getTokenExpirensData,
-  getUserId
+  getUserId,
+  removeAuthData
 }
 
 export default localStorageService

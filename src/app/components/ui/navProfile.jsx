@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 const NavProfile = () => {
   const {currentUser} = useAuth()
   const [isOpen, setIsOpen] = useState(false)
+  const {logOut} = useAuth()
+  
   const toggleMenu = () => {
     setIsOpen(prev => !prev)
   }
@@ -26,7 +28,8 @@ const NavProfile = () => {
       </div>
       <div className={`w-100 dropdown-menu` + (isOpen ? ' show' : '')}>
         <Link to={`/users/${currentUser._id}`} className='dropdown-item'>Profile</Link>
-        <Link to='loguot' className='dropdown-item'>Log Out</Link>
+        {/* <Link to='/login' className='dropdown-item'>Log Out</Link> */}
+        <button onClick={logOut} className='dropdown-item'>Log Out</button>
       </div>
     </div>
   )

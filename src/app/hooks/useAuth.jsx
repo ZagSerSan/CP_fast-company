@@ -27,6 +27,13 @@ const AuthProvider = ({children}) => {
   const history = useHistory()
   const { setTokens } = localStorageService
 
+  // log out
+  function logOut() {
+    localStorageService.removeAuthData()
+    setCurrentUser(null)
+    history.push('/login')
+  }
+
   // signIn
   async function signIn({email, password}) {
     const url = 'accounts:signInWithPassword'
@@ -38,7 +45,7 @@ const AuthProvider = ({children}) => {
       history.push(
         history.location.state
           ? history.location.state.from.pathname
-          : '/'
+          : '/users'
       )
       toast.info('Logging is successful!')
       console.log(data)
@@ -115,7 +122,7 @@ const AuthProvider = ({children}) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{signUp, signIn, currentUser}}>
+    <AuthContext.Provider value={{logOut, signUp, signIn, currentUser}}>
       {!isLoading ? children : <IconSVG id='loader'/>}
     </AuthContext.Provider>
   )
