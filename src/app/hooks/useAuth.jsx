@@ -19,7 +19,7 @@ export const useAuth = () => {
 
 // AuthProvider
 const AuthProvider = ({children}) => {
-  const [currentUser, setCurrentUser] = useState({})
+  const [currentUser, setCurrentUser] = useState()
   const [error, setError] = useState(null)
   const { setTokens } = localStorageService
 
