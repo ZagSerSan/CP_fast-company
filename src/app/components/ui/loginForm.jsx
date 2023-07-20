@@ -1,7 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom/cjs/react-router-dom'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 // utils
 import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
@@ -39,7 +38,6 @@ const loginForm = () => {
     // действие кнопки отправить если формы валидны
     try {
       await signIn(data)
-      history.push('/users')
     } catch (error) {
       toast.error(error)
     }

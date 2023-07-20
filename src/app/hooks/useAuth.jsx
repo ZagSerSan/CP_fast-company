@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import userService from '../service/users.service'
 import localStorageService from '../service/localStorage.service'
 import { randomInt } from '../utils/randomInt'
+import IconSVG from '../components/common/iconSVG'
 
 export const httpAuth = axios.create({
   baseURL: 'https://identitytoolkit.googleapis.com/v1/',
@@ -32,8 +33,13 @@ const AuthProvider = ({children}) => {
     try {
       const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
       setTokens(data)
-      getUserData()
-      history.push('/users')
+      await getUserData()
+      // переадресация
+      history.push(
+        history.location.state
+          ? history.location.state.from.pathname
+          : '/'
+      )
       toast.info('Logging is successful!')
       console.log(data)
     } catch (error) {
@@ -110,7 +116,7 @@ const AuthProvider = ({children}) => {
 
   return (
     <AuthContext.Provider value={{signUp, signIn, currentUser}}>
-      {!isLoading ? children : 'Loading...'}
+      {!isLoading ? children : <IconSVG id='loader'/>}
     </AuthContext.Provider>
   )
 }
