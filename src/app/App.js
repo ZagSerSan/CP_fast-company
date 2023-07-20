@@ -11,6 +11,7 @@ import { ProfessionProvider } from './hooks/useProfession'
 import { QualitiesProvider } from './hooks/useQualities'
 import { Redirect } from 'react-router-dom/cjs/react-router-dom.min'
 import AuthProvider from './hooks/useAuth'
+import ProtectedRoute from './components/common/protectedRoute'
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
             <Switch>
               <Route path="/" exact component={Main} />
               <Route path="/login/:type?" component={Login} />
-              <Route path="/users/:userId?/:edit?" component={Users} />
+              <ProtectedRoute path="/users/:userId?/:edit?" component={Users} />
               <Redirect to='/'/>
             </Switch>
           </QualitiesProvider>
