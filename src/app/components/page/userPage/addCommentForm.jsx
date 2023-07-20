@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import userApi from '../../../api/fake.api/user.api'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
 import { toast } from 'react-toastify'
-// import SelectField from '../../common/form/selectField'
 
 const AddCommentForm = ({ userId, onSubmit }) => {
-  const [users, setUsers] = useState()
   const [errors, setErrors] = useState({})
   const [isBlured, setIsBlured] = useState(false)
-  const initialState = {
-    pageId: userId,
-    userId: '',
-    content: ''
-  }
-  const [commentData, setCommentData] = useState(initialState)
-  useEffect(() => {
-    userApi.fetchAll().then((data) => setUsers(data))
-  }, [])
+  const [commentData, setCommentData] = useState({content: ''})
 
   const handleChange = ({ target }) => {
     setCommentData((prev) => ({
@@ -35,7 +24,7 @@ const AddCommentForm = ({ userId, onSubmit }) => {
       return setIsBlured(true)
     }
     onSubmit(commentData)
-    setCommentData(initialState)
+    setCommentData({content: ''})
     setIsBlured(false)
   }
 
@@ -46,47 +35,13 @@ const AddCommentForm = ({ userId, onSubmit }) => {
   const validate = () => {
     const errors = validator(commentData, validatorConfig)
     setErrors(errors)
-
     return Object.keys(errors).length === 0
   }
 
   return (
     <form>
       <div className="form-group mb-3">
-        {/* <SelectField
-          name="userId"
-          label="New comment:"
-          defaultOption="Выберите пользователя..."
-          value={commentData.userId}
-          id='new-comment-input-1'
-          professions={users}
-          error={errors.name}
-          onChange={handleChange}
-        /> */}
-        <label htmlFor="new-comment-input-1">New comment</label>
-        <select
-          className={
-            'form-select' +
-            (!isBlured ? '' : errors.userId ? ' is-invalid' : ' is-valid')
-          }
-          name="userId"
-          onChange={handleChange}
-          id="new-comment-input-1"
-          value={commentData.userId}
-        >
-          <option disabled value="">
-            Выберите пользователя
-          </option>
-          {users &&
-            users.map((user) => (
-              <option value={user._id} key={user._id}>
-                {user.name}
-              </option>
-            ))}
-        </select>
-      </div>
-      <div className="form-group mb-3">
-        <label htmlFor="new-comment-textarea-1">Сообщение</label>
+        <label htmlFor="new-comment-textarea-1">New comment</label>
         <textarea
           name="content"
           className={

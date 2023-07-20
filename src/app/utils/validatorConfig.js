@@ -50,11 +50,6 @@ export const validatorConfig = {
       message: 'The license agreement is required!'
     }
   },
-  userId: {
-    isRequired: {
-      message: 'User is required!'
-    }
-  },
   content: {
     isRequired: {
       message: 'content is required!'

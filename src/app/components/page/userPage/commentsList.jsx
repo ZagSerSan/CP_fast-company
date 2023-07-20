@@ -5,9 +5,12 @@ import './commentsList.css'
 import commentsApi from '../../../api/fake.api/comments.api'
 import Comment from './comment'
 import AddCommentForm from './addCommentForm'
+import { useComments } from '../../../hooks/useComments'
 
 const CommentsList = ({ userId }) => {
   const [thisUserComments, setThisUserComments] = useState([])
+  const { createComment } = useComments()
+
   useEffect(() => {
     commentsApi
       .fetchCommentsForUser(userId)
@@ -25,9 +28,10 @@ const CommentsList = ({ userId }) => {
       )
   }
   const addComment = (commentData) => {
-    commentsApi
-      .add(commentData)
-      .then((data) => setThisUserComments((prev) => [...prev, data]))
+    createComment(commentData)
+    // commentsApi
+    //   .add(commentData)
+    //   .then((data) => setThisUserComments((prev) => [...prev, data]))
   }
 
   const sortedComments = orderBy(thisUserComments, ['created_at'], ['desc'])
