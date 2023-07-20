@@ -66,6 +66,9 @@ const AuthProvider = ({children}) => {
         email,
         rate: randomInt(1, 5),
         completedMeetings: randomInt(0, 200),
+        avatar: `https://avatars.dicebear.com/api/avataaars/${
+          (Math.random() + 1).toString(36).substring(7)
+        }.svg`,
         ...rest
       })
       console.log(data)
