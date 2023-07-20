@@ -11,6 +11,7 @@ import QualitiesCard from './qualitiesCard'
 import MeetingsCard from './meetingsCard'
 // new api (firebase)
 import { useUsers } from '../../../hooks/useUsers'
+import CommentsProvider from '../../../hooks/useComments'
 
 const UserPage = ({ userId }) => {
   const { getUserById } = useUsers()
@@ -27,7 +28,9 @@ const UserPage = ({ userId }) => {
           </div>
 
           <div className='col-md-8'>
-            <CommentsList {...{ userId }} />
+            <CommentsProvider>
+              <CommentsList {...{ userId }} />
+            </CommentsProvider>
           </div>
         </div>
       ) : (
