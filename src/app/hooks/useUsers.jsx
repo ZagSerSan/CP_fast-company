@@ -35,13 +35,17 @@ const UserProvider = ({children}) => {
       errorCatcher(error)
     }
   }
+  function getUserById(userId) {
+    return users.find(user => user._id === userId)
+  }
+
   const errorCatcher = (error) => {
     const {message} = error.response.data
     setError(message)
   }
 
   return (
-    <UserContext.Provider value={{users}}>
+    <UserContext.Provider value={{users, getUserById}}>
       {!isLoading ? children : <IconSVG id='loader'/>}
     </UserContext.Provider>
   )

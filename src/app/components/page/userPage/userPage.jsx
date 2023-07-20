@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 // css
 import 'bootstrap/dist/css/bootstrap.css'
@@ -14,26 +14,15 @@ import { useUsers } from '../../../hooks/useUsers'
 // import apiUsers from '../../../api/fake.api/user.api'
 
 const UserPage = ({ userId }) => {
-  const [selectedUser, setSelectedUser] = useState(null)
-  const { users } = useUsers()
-
-  useEffect(() => {  
-    setSelectedUser(users.find(user => user._id === userId))
-    // apiUsers.getUserById(userId).then((data) => setSelectedUser({ ...data }))
-    // console.log(selectedUser)
-  }, [])
+  const { getUserById } = useUsers()
+  const selectedUser = getUserById(userId)
 
   return (
     <div className='container'>
       {selectedUser ? (
         <div className='row gutters-sm mt-2'>
           <div className='col-md-4 mb-3'>
-            <UserCard
-              name={selectedUser.name}
-              profession={selectedUser.profession.name}
-              rate={selectedUser.rate}
-              userId={userId}
-            />
+            <UserCard user={selectedUser}/>
             <QualitiesCard qualitiesIds={selectedUser.qualities} />
             <MeetingsCard meetings={selectedUser.completedMeetings} />
           </div>
