@@ -9,8 +9,7 @@ const UsersTable = ({
   users,
   sortSettings,
   setSortSettings,
-  toggleBookMark,
-  handleDelete
+  toggleBookMark
 }) => {
   const [thState, setThState] = useState({
     name: { name: 'Имя', path: 'name' },
@@ -30,18 +29,6 @@ const UsersTable = ({
       path: 'bookmark',
       component: (user) => (
         <Bookmark user={user} toggleBookMark={toggleBookMark} />
-      )
-    },
-    delete: {
-      name: '',
-      path: '',
-      component: (user) => (
-        <button
-          onClick={() => handleDelete(user._id)}
-          className="btn btn-danger"
-        >
-          delete
-        </button>
       )
     }
   })
@@ -65,8 +52,7 @@ UsersTable.propTypes = {
   users: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
   setSortSettings: PropTypes.func.isRequired,
-  toggleBookMark: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired
+  toggleBookMark: PropTypes.func.isRequired
 }
 
 export default UsersTable
