@@ -2,10 +2,10 @@ import React from 'react'
 import './nav.css'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
+import NavProfile from './navProfile'
 
 const Nav = () => {
   const {currentUser} = useAuth()
-  console.log(currentUser)
 
   return (
     <nav className="navbar bg-light mb-2">
@@ -27,7 +27,7 @@ const Nav = () => {
         </ul>
         <div className="d-flex">
           {currentUser
-          ? <h4>User</h4>
+          ? <NavProfile />
           : <li className="nav-item">
               <Link className="nav-link" to="/Login">
                 Login
