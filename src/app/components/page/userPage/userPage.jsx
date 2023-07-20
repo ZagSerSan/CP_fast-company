@@ -11,7 +11,6 @@ import QualitiesCard from './qualitiesCard'
 import MeetingsCard from './meetingsCard'
 // new api (firebase)
 import { useUsers } from '../../../hooks/useUsers'
-// import apiUsers from '../../../api/fake.api/user.api'
 
 const UserPage = ({ userId }) => {
   const { getUserById } = useUsers()

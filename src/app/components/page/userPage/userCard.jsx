@@ -1,18 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../../hooks/useAuth'
 
 const UserCard = ({ user }) => {
+  const { currentUser } = useAuth()
+
   return (
     <div className="card mb-3">
       <div className="card-body">
-        <Link
-          to={`${user.userId}/edit`}
-          className="position-absolute top-0 end-0 btn btn-light btn-sm"
-          style={{ zIndex: '1' }}
-        >
-          <i className="bi bi-gear"></i>
-        </Link>
+        {user._id === currentUser._id &&
+          <Link
+            to={`${user.userId}/edit`}
+            className="position-absolute top-0 end-0 btn btn-light btn-sm"
+            style={{ zIndex: '1' }}
+          >
+            <i className="bi bi-gear"></i>
+          </Link>
+        }
         <div className="d-flex flex-column align-items-center text-center position-relative">
           <img
             src={user.avatar}

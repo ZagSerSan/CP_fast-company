@@ -12,9 +12,11 @@ import Pagination from '../../common/pagination'
 import GroupList from '../../common/groupList'
 import UsersTable from '../../ui/usersTable'
 import IconSVG from '../../common/iconSVG'
+import { useAuth } from '../../../hooks/useAuth'
 
 const UserListPage = () => {
-  const {users} = useUsers()
+  const { users } = useUsers()
+  const { currentUser } = useAuth()
   const {isLoading: professionsLoading, professions} = useProfession()
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
@@ -72,11 +74,17 @@ const UserListPage = () => {
       return user.name?.toLowerCase().includes(searchValue)
     })
 
-    const filteredUsers = selectedProf
-      ? users.filter((user) => user.profession._id === selectedProf._id)
-      : searchValue
-      ? searchedUsers
-      : users
+    const filterUsers = (data) => {
+      const filteredUsers = selectedProf
+        ? data.filter((user) => user.profession._id === selectedProf._id)
+        : searchValue
+        ? searchedUsers
+        : data
+      return filteredUsers.filter(u => u._id !== currentUser._id)
+    }
+    
+    const filteredUsers = filterUsers(users)
+
     // для изменения страниц
     const count = selectedProf
       ? filteredUsers.length
