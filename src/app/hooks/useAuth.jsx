@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { toast } from 'react-toastify'
@@ -21,6 +22,8 @@ export const useAuth = () => {
 const AuthProvider = ({children}) => {
   const [currentUser, setCurrentUser] = useState()
   const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const history = useHistory()
   const { setTokens } = localStorageService
 
   // signIn
@@ -30,6 +33,7 @@ const AuthProvider = ({children}) => {
       const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
       setTokens(data)
       getUserData()
+      history.push('/users')
       toast.info('Logging is successful!')
       console.log(data)
     } catch (error) {
@@ -86,6 +90,8 @@ const AuthProvider = ({children}) => {
       setCurrentUser(content)
     } catch (error) {
       setError(error.response.data)
+    } finally {
+      setIsLoading(false)
     }
   }
   useEffect(() => {
@@ -97,12 +103,14 @@ const AuthProvider = ({children}) => {
   useEffect(() => {
     if (localStorageService.getAccessToken()) {
       getUserData()
+    } else {
+      setIsLoading(false)
     }
   }, [])
 
   return (
     <AuthContext.Provider value={{signUp, signIn, currentUser}}>
-      {children}
+      {!isLoading ? children : 'Loading...'}
     </AuthContext.Provider>
   )
 }
