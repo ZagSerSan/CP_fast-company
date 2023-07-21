@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { useParams } from 'react-router-dom'
 import { useAuth } from './useAuth'
 import { nanoid } from 'nanoid'
-import сommentService from '../service/comment.service'
+import CommentService from '../service/comment.service'
 import { toast } from 'react-toastify'
 
 const CommentsContext = React.createContext()
@@ -31,7 +31,7 @@ export const CommentsProvider = ({ children }) => {
       created_at: Date.now()
     }
     try {
-      const { content } = await сommentService.createComment(comment)
+      const { content } = await CommentService.createComment(comment)
       setComments(prev => [...prev, content])
     } catch (error) {
       errorCatcher(error)
@@ -39,7 +39,7 @@ export const CommentsProvider = ({ children }) => {
   }
   async function getComments() {
     try {
-      const { content } = await сommentService.getComments(userId)
+      const { content } = await CommentService.getComments(userId)
       setComments(content)
     } catch (error) {
       errorCatcher(error)
@@ -49,7 +49,7 @@ export const CommentsProvider = ({ children }) => {
   }
   async function removeComment(commentId) {
     try {
-      const { content } = await сommentService.deleteComment(commentId)
+      const { content } = await CommentService.deleteComment(commentId)
       console.log(content)
       setComments(prevState => prevState.filter(c => c._id !== commentId))
     } catch (error) {
