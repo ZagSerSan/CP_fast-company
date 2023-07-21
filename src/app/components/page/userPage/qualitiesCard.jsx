@@ -16,7 +16,7 @@ const QualitiesCard = ({ qualitiesIds }) => {
           {QualitiesList.map((item) => (
             <h4
               key={item._id}
-              className={'badge bg-' + item.color}
+              className={'badge bg-' + item?.color}
               style={{ fontSize: '16px', margin: '5px 5px 10px 0' }}
             >
               {item.name}

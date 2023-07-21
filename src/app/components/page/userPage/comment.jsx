@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getDateFormat } from '../../../utils/formatDate'
 import { useUsers } from '../../../hooks/useUsers'
+import { useAuth } from '../../../hooks/useAuth'
 
 const Comment = ({ commentUserId, comment, onDelete }) => {
   // получение пользователей написавших комментарии на текущей странице
   const { getUserById } = useUsers()
+  const { currentUser } = useAuth()
   const commentedUser = getUserById(commentUserId)
 
   return (
@@ -29,12 +31,14 @@ const Comment = ({ commentUserId, comment, onDelete }) => {
                       {getDateFormat(comment.created_at)}
                     </span>
                   </p>
-                  <button
-                    onClick={() => onDelete(comment._id)}
-                    className="btn btn-sm text-primary d-flex align-items-center"
-                  >
-                    <i className="bi bi-x-lg"></i>
-                  </button>
+                  {currentUser._id === comment.userId && (
+                    <button
+                      onClick={() => onDelete(comment._id)}
+                      className="btn btn-sm text-primary d-flex align-items-center"
+                    >
+                      <i className="bi bi-x-lg"></i>
+                    </button>
+                  )}
                 </div>
                 <p className="small mb-0">{comment.content}</p>
               </div>

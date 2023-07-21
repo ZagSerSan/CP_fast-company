@@ -51,7 +51,7 @@ export const CommentsProvider = ({ children }) => {
     try {
       const { content } = await сommentService.deleteComment(commentId)
       console.log(content)
-      setComments(prevState => prevState.filter(c => c._id !== commentId ))
+      setComments(prevState => prevState.filter(c => c._id !== commentId))
     } catch (error) {
       errorCatcher(error)
     } finally {
