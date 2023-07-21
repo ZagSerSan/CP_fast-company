@@ -11,7 +11,7 @@ const UserCard = ({ user }) => {
       <div className="card-body">
         {user._id === currentUser._id &&
           <Link
-            to={`${user.userId}/edit`}
+            to={`${currentUser._id}/edit`}
             className="position-absolute top-0 end-0 btn btn-light btn-sm"
             style={{ zIndex: '1' }}
           >

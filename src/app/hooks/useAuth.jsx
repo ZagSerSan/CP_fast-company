@@ -34,6 +34,23 @@ const AuthProvider = ({children}) => {
     history.push('/login')
   }
 
+  // updateUser
+  async function updateUser(newUserData) {
+    const url = `accounts:update?key=${process.env.REACT_APP_FIREBASE_KEY}`
+    const idToken = localStorageService.getAccessToken()
+    try {
+      const { content } = await userService.updateUser(newUserData)
+      // Обновление email для входа
+      const { data } = await httpAuth.post(url, {idToken, email: newUserData.email, returnSecureToken: true})
+      console.log('data :>> ', data)
+      console.log('content :>> ', content)
+      history.replace(`/Users/${currentUser._id}`)
+      return content
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // signIn
   async function signIn({email, password}) {
     const url = 'accounts:signInWithPassword'
@@ -125,7 +142,7 @@ const AuthProvider = ({children}) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{logOut, signUp, signIn, currentUser}}>
+    <AuthContext.Provider value={{logOut, signUp, signIn, currentUser, updateUser}}>
       {!isLoading ? children : <IconSVG id='loader'/>}
     </AuthContext.Provider>
   )

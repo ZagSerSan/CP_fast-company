@@ -9,7 +9,6 @@ const MultiSelectField = ({
   label,
   defaultValue
 }) => {
-  console.log(defaultValue)
   const qualitiesArray =
     !Array.isArray(qualities) && typeof qualities === 'object'
       ? Object.values(qualities)
@@ -19,10 +18,10 @@ const MultiSelectField = ({
     Array.isArray(defaultValue)
       ? defaultValue.map(item => ({label: item.name, value: item._id}))
       : defaultValue
-  console.log(defaultQualities)
 
   const handleChange = (value) => {
-    onChange({ name, value })
+    const newData = value.map(item => item.value)
+    onChange({ name, value: newData })
   }
 
   return (
