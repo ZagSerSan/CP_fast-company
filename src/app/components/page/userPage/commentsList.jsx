@@ -7,23 +7,13 @@ import Comment from './comment'
 import AddCommentForm from './addCommentForm'
 
 const CommentsList = () => {
-  const { createComment, comments } = useComments()
+  const { createComment, comments, removeComment } = useComments()
 
-  const deleteComment = (commentId) => {
-    console.log('func "deleteComment" is not doing now...')
-    // commentsApi
-    //   .remove(commentId)
-    //   .then(
-    //     setThisUserComments((prev) =>
-    //       prev.filter((item) => item._id !== commentId)
-    //     )
-    //   )
-  }
   const addComment = (commentData) => {
     createComment(commentData)
-    // commentsApi
-    //   .add(commentData)
-    //   .then((data) => setThisUserComments((prev) => [...prev, data]))
+  }
+  const deleteComment = (commentId) => {
+    removeComment(commentId)
   }
 
   const sortedComments = orderBy(comments, ['created_at'], ['desc'])

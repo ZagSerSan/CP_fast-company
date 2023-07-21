@@ -12,7 +12,7 @@ export const useComments = () => {
 }
 
 export const CommentsProvider = ({ children }) => {
-  const [isLoading, setLoading] = useState(true)
+  // const [isLoading, setLoading] = useState(true)
   const [comments, setComments] = useState([])
   const [error, setError] = useState(null)
   const { userId } = useParams()
@@ -44,7 +44,18 @@ export const CommentsProvider = ({ children }) => {
     } catch (error) {
       errorCatcher(error)
     } finally {
-      setLoading(false)
+      // setLoading(false)
+    }
+  }
+  async function removeComment(commentId) {
+    try {
+      const { content } = await сommentService.deleteComment(commentId)
+      console.log(content)
+      setComments(prevState => prevState.filter(c => c._id !== commentId ))
+    } catch (error) {
+      errorCatcher(error)
+    } finally {
+      // setLoading(false)
     }
   }
   // обработка/показ ошибки пользователю
@@ -61,7 +72,7 @@ export const CommentsProvider = ({ children }) => {
   
   return (
     <CommentsContext.Provider
-      value={{comments, createComment}}
+      value={{comments, createComment, removeComment}}
     >
       {children}
     </CommentsContext.Provider>
