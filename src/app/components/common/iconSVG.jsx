@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { RotatingTriangles } from 'react-loader-spinner'
 import style from './loader.module.css'
 
-const IconSVG = ({ id }) => {
+const IconSVG = ({ id, log }) => {
   switch (id) {
     case 'sort-ascending':
       return (
@@ -44,6 +44,9 @@ const IconSVG = ({ id }) => {
         </svg>
       )
     case 'loader':
+      if (log) {
+        console.log('IconLogger:', log)
+      }
       return (
         <RotatingTriangles
           visible={true}
@@ -60,7 +63,8 @@ const IconSVG = ({ id }) => {
 }
 
 IconSVG.propTypes = {
-  id: PropTypes.string
+  id: PropTypes.string,
+  log: PropTypes.array
 }
 
 export default IconSVG

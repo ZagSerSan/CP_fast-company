@@ -5,11 +5,14 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import PropTypes from 'prop-types'
 // utils, css
 import './userEdit.module.css'
-import userApi from '../../../api/fake.api/user.api'
-import professionsApi from '../../../api/fake.api/professions.api'
-import qualitiesApi from '../../../api/fake.api/qualities.api'
+// import userApi from '../../../api/fake.api/user.api'
+// import professionsApi from '../../../api/fake.api/professions.api'
+// import qualitiesApi from '../../../api/fake.api/qualities.api'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
+import { useQualities } from '../../../hooks/useQualities'
+import { useProfession } from '../../../hooks/useProfession'
+import { useAuth } from '../../../hooks/useAuth'
 // components
 import TextField from '../../common/form/textField'
 import SelectField from '../../common/form/selectField'
@@ -17,47 +20,48 @@ import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
 import IconSVG from '../../common/iconSVG'
 
+
 const UserEdit = ({ userId }) => {
   let history = useHistory()
-  // состояние ошибок для валидации форм + validate()
+  const { qualities, getQuality } = useQualities()
+  const { professions } = useProfession()
+  const { currentUser } = useAuth()
+  const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
-  // значение полей формы
-  const [data, setData] = useState()
 
-  // all api qualities state
-  const [qualities, setQualities] = useState([])
-  // for SelectField
-  const [professions, setProfessions] = useState()
+  // const defaultQualities = getQuality(currentUser.qualities)
+  // console.log(defaultQualities)
+  // const log = [qualities]
 
-  useEffect(() => {
-    userApi.getUserById(userId).then((data) => {
-      const qualitiesList = data.qualities.map((qualitie) => ({
-        label: qualitie.name,
-        value: qualitie._id
-      }))
-      setData({
-        ...data,
-        profession: data.profession._id,
-        qualities: qualitiesList
-      })
-    })
-    qualitiesApi.fetchAll().then((data) => {
-      const qualitiesList = Object.keys(data).map((qualitieName) => ({
-        label: data[qualitieName].name,
-        value: data[qualitieName]._id,
-        color: data[qualitieName].color
-      }))
-      setQualities(qualitiesList)
-    })
+  // useEffect(() => {
+  //   userApi.getUserById(userId).then((data) => {
+  //     const qualitiesList = data.qualities.map((qualitie) => ({
+  //       label: qualitie.name,
+  //       value: qualitie._id
+  //     }))
+  //     setData({
+  //       ...data,
+  //       profession: data.profession._id,
+  //       qualities: qualitiesList
+  //     })
+  //   })
+  //   qualitiesApi.fetchAll().then((data) => {
+  //     const qualitiesList = Object.keys(data).map((qualitieName) => ({
+  //       label: data[qualitieName].name,
+  //       value: data[qualitieName]._id,
+  //       color: data[qualitieName].color
+  //     }))
+  //     setQualities(qualitiesList)
+  //   })
 
-    professionsApi.fetchAll().then((data) => {
-      const professionsList = Object.keys(data).map((professionName) => ({
-        label: data[professionName].name,
-        value: data[professionName]._id
-      }))
-      setProfessions(professionsList)
-    })
-  }, [])
+  //   professionsApi.fetchAll().then((data) => {
+  //     const professionsList = Object.keys(data).map((professionName) => ({
+  //       label: data[professionName].name,
+  //       value: data[professionName]._id
+  //     }))
+  //     setProfessions(professionsList)
+  //   })
+  // }, [])
 
   // handleChange => onChange в дочерних компонентах (полях)
   const handleChange = (fieldData) => {
@@ -167,7 +171,7 @@ const UserEdit = ({ userId }) => {
               <MultiSelectField
                 name="qualities"
                 label="Change your qualities:"
-                defaultValue={data.qualities}
+                defaultValue={getQuality(currentUser.qualities)}
                 qualities={qualities}
                 onChange={handleChange}
               />
@@ -189,7 +193,7 @@ const UserEdit = ({ userId }) => {
             </form>
           </div>
         ) : (
-          <IconSVG id="loader" />
+          <IconSVG id="loader" log={log} />
         )}
       </div>
     </div>
