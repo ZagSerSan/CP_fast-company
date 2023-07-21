@@ -12,14 +12,14 @@ export const useComments = () => {
 }
 
 export const CommentsProvider = ({ children }) => {
-  // const [isLoading, setLoading] = useState(true)
+  const [isLoading, setLoading] = useState(true)
   const [comments, setComments] = useState([])
   const [error, setError] = useState(null)
   const { userId } = useParams()
   const { currentUser } = useAuth()
 
   useEffect(() => {
-    setComments(null)
+    getComments()
   }, [])
   
   const createComment = async (data) => {
@@ -33,10 +33,20 @@ export const CommentsProvider = ({ children }) => {
     console.log(comment)
     try {
       const { content } = await сommentService.createComment(comment)
-      console.log(content)
       return content
     } catch (error) {
       errorCatcher(error)
+    }
+  }
+  async function getComments() {
+    try {
+      const { content } = await сommentService.getComments(userId)
+      console.log(content)
+      setComments(content)
+    } catch (error) {
+      errorCatcher(error)
+    } finally {
+      setLoading(false)
     }
   }
   // обработка/показ ошибки пользователю
