@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { orderBy } from 'lodash'
+import { useComments } from '../../../hooks/useComments'
 import './commentsList.css'
-import commentsApi from '../../../api/fake.api/comments.api'
 import Comment from './comment'
 import AddCommentForm from './addCommentForm'
-import { useComments } from '../../../hooks/useComments'
 
-const CommentsList = ({ userId }) => {
-  const [thisUserComments, setThisUserComments] = useState([])
-  const { createComment } = useComments()
+const CommentsList = () => {
+  const { createComment, comments } = useComments()
 
-  useEffect(() => {
-    commentsApi
-      .fetchCommentsForUser(userId)
-      .then((data) => setThisUserComments(data))
-  }, [])
-
-  // DALETE and ADD func
   const deleteComment = (commentId) => {
-    commentsApi
-      .remove(commentId)
-      .then(
-        setThisUserComments((prev) =>
-          prev.filter((item) => item._id !== commentId)
-        )
-      )
+    console.log('func "deleteComment" is not doing now...')
+    // commentsApi
+    //   .remove(commentId)
+    //   .then(
+    //     setThisUserComments((prev) =>
+    //       prev.filter((item) => item._id !== commentId)
+    //     )
+    //   )
   }
   const addComment = (commentData) => {
     createComment(commentData)
@@ -34,14 +26,14 @@ const CommentsList = ({ userId }) => {
     //   .then((data) => setThisUserComments((prev) => [...prev, data]))
   }
 
-  const sortedComments = orderBy(thisUserComments, ['created_at'], ['desc'])
+  const sortedComments = orderBy(comments, ['created_at'], ['desc'])
 
   return (
     <>
       <div className="card mb-2">
         {' '}
         <div className="card-body ">
-          <AddCommentForm onSubmit={addComment} userId={userId} />
+          <AddCommentForm onSubmit={addComment} />
         </div>
       </div>
 

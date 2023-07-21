@@ -1,15 +1,12 @@
-/* eslint-disableX */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import userApi from '../../../api/fake.api/user.api'
 import { getDateFormat } from '../../../utils/formatDate'
+import { useUsers } from '../../../hooks/useUsers'
 
 const Comment = ({ commentUserId, comment, onDelete }) => {
   // получение пользователей написавших комментарии на текущей странице
-  const [commentedUser, setCommentedUser] = useState()
-  useEffect(() => {
-    userApi.getUserById(commentUserId).then((user) => setCommentedUser(user))
-  }, [])
+  const { getUserById } = useUsers()
+  const commentedUser = getUserById(commentUserId)
 
   return (
     <div className="bg-light card-body  mb-3">
@@ -17,11 +14,7 @@ const Comment = ({ commentUserId, comment, onDelete }) => {
         <div className="col">
           <div className="d-flex flex-start ">
             <img
-              src={`https://avatars.dicebear.com/api/avataaars/${(
-                Math.random() + 1
-              )
-                .toString(36)
-                .substring(7)}.svg`}
+              src={commentedUser.avatar}
               className="rounded-circle shadow-1-strong me-3"
               alt="avatar"
               width="65"

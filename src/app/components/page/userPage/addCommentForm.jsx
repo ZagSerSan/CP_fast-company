@@ -4,7 +4,7 @@ import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
 import { toast } from 'react-toastify'
 
-const AddCommentForm = ({ userId, onSubmit }) => {
+const AddCommentForm = ({ onSubmit }) => {
   const [errors, setErrors] = useState({})
   const [isBlured, setIsBlured] = useState(false)
   const [commentData, setCommentData] = useState({content: ''})
@@ -61,7 +61,6 @@ const AddCommentForm = ({ userId, onSubmit }) => {
 }
 
 AddCommentForm.propTypes = {
-  userId: PropTypes.string.isRequired,
   onSubmit: PropTypes.func
 }
 
