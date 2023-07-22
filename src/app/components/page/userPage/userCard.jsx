@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
+import { useProfession } from '../../../hooks/useProfession'
 
 const UserCard = ({ user }) => {
   const { currentUser } = useAuth()
+  const { getProfession } = useProfession()
+  const userProfession = getProfession(user.profession)
 
   return (
     <div className="card mb-3">
@@ -28,7 +31,7 @@ const UserCard = ({ user }) => {
           />
           <div className="mt-3">
             <h4>{user.name}</h4>
-            <p className="text-secondary mb-1">{user.profession}</p>
+            <p className="text-secondary mb-1">{userProfession.name}</p>
             <div className="text-muted">
               <i
                 className="bi bi-caret-down-fill text-primary"
