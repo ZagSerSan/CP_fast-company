@@ -15,13 +15,17 @@ import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
 import IconSVG from '../../common/iconSVG'
 
-const UserEdit = ({ userId }) => {
+const UserEdit = ({ userId, edit }) => {
   const history = useHistory()
   const { qualities, getQuality } = useQualities()
   const { professions } = useProfession()
   const { currentUser, updateUser } = useAuth()
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
+
+  if (edit && userId !== currentUser._id) {
+    history.replace(`/users/${currentUser._id}/edit`)
+  }
 
   const handleChange = (fieldData) => {
     setData((prevState) => ({
@@ -120,7 +124,8 @@ const UserEdit = ({ userId }) => {
 }
 
 UserEdit.propTypes = {
-  userId: PropTypes.string
+  userId: PropTypes.string,
+  edit: PropTypes.string
 }
 
 export default UserEdit
