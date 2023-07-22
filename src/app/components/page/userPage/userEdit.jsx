@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 // utils, css
 import './userEdit.module.css'
@@ -23,9 +23,11 @@ const UserEdit = ({ userId, edit }) => {
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
 
-  if (edit && userId !== currentUser._id) {
-    history.replace(`/users/${currentUser._id}/edit`)
-  }
+  useEffect(() => {
+    if (edit && userId !== currentUser._id) {
+      history.replace(`/users/${currentUser._id}/edit`)
+    }
+  }, [])
 
   const handleChange = (fieldData) => {
     setData((prevState) => ({

@@ -26,7 +26,8 @@ ProtectedRoute.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
-  ])
+  ]),
+  computedMatch: PropTypes.object
 }
 
 export default ProtectedRoute
