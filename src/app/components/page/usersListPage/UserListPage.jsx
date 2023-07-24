@@ -25,6 +25,7 @@ const UserListPage = () => {
     order: 'asc'
   })
   const [searchValue, setSearchValue] = useState('')
+  const pageSize = 4
 
   // func for refresh all users
   // const refreshUsers = () => {
@@ -33,57 +34,78 @@ const UserListPage = () => {
   // }
   // toogle bookmark function
   const toggleBookMark = (userId) => {
-    // const newArray = users.map((item) => {
+    console.log('toggleBookMark not a func')
+    // const newArray = users.map(user => {
     //   return {
-    //     ...item,
-    //     bookmark: item._id === userId ? !item.bookmark : item.bookmark
+    //     ...user,
+    //     bookmark: user._id === userId ? !user.bookmark : user.bookmark
     //   }
     // })
     // setUsers(newArray)
     // setUsers((prevState) =>
-    //   prevState.map((item) => {
+    //   prevState.map((user) => {
     //     return {
-    //       ...item,
-    //       bookmark: item._id === userId ? !item.bookmark : item.bookmark
+    //       ...user,
+    //       bookmark: user._id === userId ? !user.bookmark : user.bookmark
     //     }
     //   })
     // )
     // change localStore
-    const users = JSON.parse(localStorage.getItem('users'))
-    const userIndex = users.findIndex((u) => u._id === userId)
-    users[userIndex] = {
-      ...users[userIndex],
-      bookmark: !users[userIndex].bookmark
-    }
-    localStorage.setItem('users', JSON.stringify(users))
+
+    // const users = JSON.parse(localStorage.getItem('users'))
+    // const userIndex = users.findIndex((u) => u._id === userId)
+    // users[userIndex] = {
+    //   ...users[userIndex],
+    //   bookmark: !users[userIndex].bookmark
+    // }
+    // localStorage.setItem('users', JSON.stringify(users))
+  }
+
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex)
+  }
+  // todo поиск юсера
+  const changeSearchValue = ({ target }) => {
+    setSelectedProf()
+    setSearchValue(target.value)
+  }
+
+  // функция фильтра профессий
+  const handleProfessionSelect = (item) => {
+    setSelectedProf(item._id)
+    setCurrentPage(1)
+    setSearchValue('')
+  }
+  // функция сброса (глобально)
+  const clearFilter = () => {
+    // обнуление: фильтра профессии,
+    setSelectedProf()
+    // масива users,
+    // refreshUsers()
+    // текущей страницы,
+    setCurrentPage(1)
+    // параметров сортировки
+    setSortSettings({ iter: 'name', order: 'asc' })
+    // поиск
+    setSearchValue('')
   }
 
   if (users) {
-    const pageSize = 4
-
-    const handlePageChange = (pageIndex) => {
-      setCurrentPage(pageIndex)
-    }
-
-    // todo поиск юсера
-    const changeSearchValue = ({ target }) => {
-      setSelectedProf()
-      setSearchValue(target.value)
-    }
     const searchedUsers = users.filter((user) => {
-      return user.name?.toLowerCase().includes(searchValue)
+      return user.name.toLowerCase().includes(searchValue)
     })
 
-    const filterUsers = (data) => {
-      const filteredUsers = selectedProf
-        ? data.filter((user) => user.profession._id === selectedProf._id)
-        : searchValue
-        ? searchedUsers
-        : data
-      return filteredUsers.filter(u => u._id !== currentUser._id)
-    }
-    
-    const filteredUsers = filterUsers(users)
+    //! эта функция вызывает бесконечный рендер!
+    // const filterUsers = (data) => {
+    //   const filteredUsers = selectedProf
+    //     ? data.filter((user) => user.profession._id === selectedProf._id)
+    //     : searchValue
+    //     ? searchedUsers
+    //     : data
+    //   return filteredUsers.filter(u => u._id !== currentUser._id)
+    // }
+    // const filteredUsers = filterUsers(users)
+    const filteredUsers = users
 
     // для изменения страниц
     const count = selectedProf
@@ -101,26 +123,6 @@ const UserListPage = () => {
     // изменение страницы при кол-ве польз = 0 на текущей
     if (userCrop.length === 0 && count !== 0) {
       setCurrentPage((prevState) => prevState - 1)
-    }
-
-    // функция фильтра профессий
-    const handleProfessionSelect = (item) => {
-      setSelectedProf(item)
-      setCurrentPage(1)
-      setSearchValue('')
-    }
-    // функция сброса (глобально)
-    const clearFilter = () => {
-      // обнуление: фильтра профессии,
-      setSelectedProf()
-      // масива users,
-      // refreshUsers()
-      // текущей страницы,
-      setCurrentPage(1)
-      // параметров сортировки
-      setSortSettings({ iter: 'name', order: 'asc' })
-      // поиск
-      setSearchValue('')
     }
 
     return (

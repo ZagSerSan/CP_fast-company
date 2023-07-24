@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import userService from '../service/users.service'
-import localStorageService from '../service/localStorage.service'
+import localStorageService, { setTokens } from '../service/localStorage.service'
 import { randomInt } from '../utils/randomInt'
 import IconSVG from '../components/common/iconSVG'
 
@@ -25,7 +25,6 @@ const AuthProvider = ({children}) => {
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
-  const { setTokens } = localStorageService
 
   // log out
   function logOut() {
@@ -52,7 +51,7 @@ const AuthProvider = ({children}) => {
   }
 
   // signIn
-  async function signIn({email, password}) {
+  async function signIn({ email, password }) {
     const url = 'accounts:signInWithPassword'
     try {
       const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
@@ -67,14 +66,28 @@ const AuthProvider = ({children}) => {
       toast.info('Logging is successful!')
       console.log(data)
     } catch (error) {
-      console.log(error)
-      toast.error(error.response.data.error.message)
+      errorCatcher(error)
+      const { code, message } = error.response.data.error
+      console.log(code, message)
+      if (code === 400) {
+        switch (message) {
+          case 'INVALID_PASSWORD':
+            throw new Error('Email или пароль введены некорректно')
+
+          default:
+            throw new Error(
+              'Слишком много попыток входа. Попробуйте позже'
+            )
+        }
+      }
+      console.log(message)
+      toast.error(message)
     }
   }
 
   // signUp
   async function signUp({email, password, ...rest}) {
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
+    const url = `accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
     try {
       const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
       setTokens(data)

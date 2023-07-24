@@ -18,16 +18,19 @@ function App() {
     <>
       <AuthProvider>
         <Nav />
-        <ProfessionProvider>
-          <QualitiesProvider>
+        <QualitiesProvider>
+          <ProfessionProvider>
             <Switch>
-              <Route path="/" exact component={Main} />
+              <ProtectedRoute
+                path="/users/:userId?/:edit?"
+                component={Users}
+              />
               <Route path="/login/:type?" component={Login} />
-              <ProtectedRoute path="/users/:userId?/:edit?" component={Users} />
+              <Route path="/" exact component={Main} />
               <Redirect to='/'/>
             </Switch>
-          </QualitiesProvider>
-        </ProfessionProvider>
+          </ProfessionProvider>
+        </QualitiesProvider>
       </AuthProvider>
       <ToastContainer />
     </>

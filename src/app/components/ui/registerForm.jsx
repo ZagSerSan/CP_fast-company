@@ -48,12 +48,12 @@ const RegisterForm = () => {
 
     try {
       await signUp({
-        ...data,
-        qualities: data.qualities.map(q => q.value)
+        ...data
+        // qualities: data.qualities.map(q => q.value)
       })
       console.log({
-        ...data,
-        qualities: data.qualities.map(q => q.value)
+        ...data
+        // qualities: data.qualities.map(q => q.value)
       })
       history.push('/main')
     } catch (error) {

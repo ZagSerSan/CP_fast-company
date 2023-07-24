@@ -20,9 +20,15 @@ const UserEdit = ({ userId, edit }) => {
   const { qualities, getQuality } = useQualities()
   const { professions } = useProfession()
   const { currentUser, updateUser } = useAuth()
+  const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
 
+  useEffect(() => {
+    if (qualities && professions && currentUser) {
+      setLoading(false)
+    }
+  }, [qualities, professions, currentUser])
   useEffect(() => {
     if (edit && userId !== currentUser._id) {
       history.replace(`/users/${currentUser._id}/edit`)
@@ -56,7 +62,7 @@ const UserEdit = ({ userId, edit }) => {
   return (
     <div className="container mt-4 mb-4">
       <div className="row">
-        {data ? (
+        {!isLoading ? (
           <div className="col-md-6 offset-md-3 shadow p-4">
             <form className="form" onSubmit={handleSubmit}>
               <TextField
