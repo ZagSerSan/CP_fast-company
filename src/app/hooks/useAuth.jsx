@@ -58,7 +58,7 @@ const AuthProvider = ({children}) => {
       const { content } = await userService.updateUser(newUserData)
       // Обновление email для входа
       const { data } = await httpAuth.post(url, {idToken, email: newUserData.email, returnSecureToken: true})
-      // console.log('data :>> ', data)
+      console.log('data :>> ', data)
       // console.log('content :>> ', content)
       // history.replace(`/Users/${currentUser._id}`)
       return content
