@@ -11,7 +11,7 @@ const Table = ({
   setThState
 }) => {
   return (
-    <table className="table" style={{ minWidth: '700px' }}>
+    <table className="table" style={{ minWidth: '720px' }}>
       <TableHeader
         {...{ sortSettings, setSortSettings, thState, setThState }}
       />

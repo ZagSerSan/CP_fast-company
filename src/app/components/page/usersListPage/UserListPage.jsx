@@ -16,7 +16,7 @@ import { useAuth } from '../../../hooks/useAuth'
 
 const UserListPage = () => {
   const { users } = useUsers()
-  const { currentUser } = useAuth()
+  const { currentUser, updateUser } = useAuth()
   const {isLoading: professionsLoading, professions} = useProfession()
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
@@ -34,31 +34,33 @@ const UserListPage = () => {
   // }
   // toogle bookmark function
   const toggleBookMark = (userId) => {
-    console.log('toggleBookMark not a func')
-    // const newArray = users.map(user => {
-    //   return {
-    //     ...user,
-    //     bookmark: user._id === userId ? !user.bookmark : user.bookmark
-    //   }
-    // })
-    // setUsers(newArray)
-    // setUsers((prevState) =>
-    //   prevState.map((user) => {
-    //     return {
-    //       ...user,
-    //       bookmark: user._id === userId ? !user.bookmark : user.bookmark
-    //     }
-    //   })
-    // )
-    // change localStore
-
-    // const users = JSON.parse(localStorage.getItem('users'))
-    // const userIndex = users.findIndex((u) => u._id === userId)
-    // users[userIndex] = {
-    //   ...users[userIndex],
-    //   bookmark: !users[userIndex].bookmark
-    // }
-    // localStorage.setItem('users', JSON.stringify(users))
+    // если есть bookmark вообще
+    if (currentUser.bookmark) {
+      // если есть такой пользователь в bookmark
+      const isContain = currentUser.bookmark.some(bookm => bookm === userId)
+      if (isContain) {
+        const newUserData = {
+          ...currentUser,
+          bookmark: currentUser.bookmark.filter(item => item !== userId)
+        }
+        console.log(newUserData)
+        updateUser(newUserData)
+      } else {
+        const newUserData = {
+          ...currentUser,
+          bookmark: [...currentUser.bookmark, userId]
+        }
+        console.log(newUserData)
+        updateUser(newUserData)
+      }
+    } else {
+      const newUserData = {
+        ...currentUser,
+        bookmark: [userId]
+      }
+      console.log(newUserData)
+      updateUser(newUserData)
+    }
   }
 
   const handlePageChange = (pageIndex) => {
@@ -91,28 +93,20 @@ const UserListPage = () => {
   }
 
   if (users) {
-    const searchedUsers = users.filter((user) => {
-      return user.name.toLowerCase().includes(searchValue)
-    })
-
-    //! эта функция вызывает бесконечный рендер!
-    // const filterUsers = (data) => {
-    //   const filteredUsers = selectedProf
-    //     ? data.filter((user) => user.profession._id === selectedProf._id)
-    //     : searchValue
-    //     ? searchedUsers
-    //     : data
-    //   return filteredUsers.filter(u => u._id !== currentUser._id)
-    // }
-    // const filteredUsers = filterUsers(users)
-    const filteredUsers = users
+    //! эта функция вызываЛА бесконечный рендер!
+    const filterUsers = (data) => {
+      const filteredUsers = selectedProf
+        ? data.filter(user => user.profession === selectedProf)
+        : searchValue
+        ? data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
+        : data
+      return filteredUsers.filter(u => u._id !== currentUser._id)
+    }
+    const filteredUsers = filterUsers(users)
 
     // для изменения страниц
-    const count = selectedProf
-      ? filteredUsers.length
-      : searchValue
-      ? searchedUsers.length
-      : users.length
+    const count = filteredUsers.length
+
     const sortedUsers = _.orderBy(
       filteredUsers,
       [sortSettings.iter],

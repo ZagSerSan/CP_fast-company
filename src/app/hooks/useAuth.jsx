@@ -26,6 +26,23 @@ const AuthProvider = ({children}) => {
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
 
+  // toggle bookmark
+  // async function toggleBookmark(newUsersData) {
+  //   const url = `accounts:update?key=${process.env.REACT_APP_FIREBASE_KEY}`
+  //   const idToken = localStorageService.getAccessToken()
+  //   try {
+  //     const { content } = await userService.updateUser(newUsersData)
+  //     // Обновление email для входа
+  //     const { data } = await httpAuth.post(url, {idToken, email: newUsersData.email, returnSecureToken: true})
+  //     console.log('data :>> ', data)
+  //     console.log('content :>> ', content)
+  //     history.replace(`/Users/${currentUser._id}`)
+  //     return content
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
   // log out
   function logOut() {
     localStorageService.removeAuthData()
@@ -41,9 +58,9 @@ const AuthProvider = ({children}) => {
       const { content } = await userService.updateUser(newUserData)
       // Обновление email для входа
       const { data } = await httpAuth.post(url, {idToken, email: newUserData.email, returnSecureToken: true})
-      console.log('data :>> ', data)
-      console.log('content :>> ', content)
-      history.replace(`/Users/${currentUser._id}`)
+      // console.log('data :>> ', data)
+      // console.log('content :>> ', content)
+      // history.replace(`/Users/${currentUser._id}`)
       return content
     } catch (error) {
       console.log(error)

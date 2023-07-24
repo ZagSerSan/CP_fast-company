@@ -46,6 +46,7 @@ const UserEdit = ({ userId, edit }) => {
     const ifValid = validate()
     if (!ifValid) return
     updateUser(data)
+    history.replace(`/Users/${currentUser._id}`)
   }
   const backWithoutSave = () => {
     history.replace(`/Users/${userId}`)
