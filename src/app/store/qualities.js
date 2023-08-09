@@ -1,13 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
+// import { createSlice } from '@reduxjs/toolkit'
 
-const qualitiesSlice = createSlice({
-  name: 'qualities',
-  initialState: {
-    entitites: null,
-    isLoading: true
-  }
-})
+// const qualitiesSlice = createSlice({
+//   name: 'qualities',
+//   initialState: {
+//     entitites: null,
+//     isLoading: true
+//   }
+// })
 
-const {reducer: qualitiesReducer} = qualitiesSlice
+// const {reducer: qualitiesReducer} = qualitiesSlice
 
-export default qualitiesReducer
+// export default qualitiesReducer
