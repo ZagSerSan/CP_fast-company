@@ -32,6 +32,8 @@ export const QualitiesProvider = ({ children }) => {
     const qualitiesArray = ids.map(id => {
       return qualities.find(q => q._id === id)
     })
+    // console.log(ids)
+    // console.log('qualitiesArray', qualitiesArray)
     return qualitiesArray
   }
   async function getQualitiesList() {

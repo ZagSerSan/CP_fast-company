@@ -29,6 +29,7 @@ export const ProfessionProvider = ({ children }) => {
     setError(message)
   }
   function getProfession(id) {
+    // console.log(id)
     return professions.find((prof) => prof._id === id)
   }
   async function getProfessionsList() {

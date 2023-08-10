@@ -5,7 +5,8 @@ import { useProfession } from '../../hooks/useProfession'
 const Profession = ({ id }) => {
   const { isLoading, getProfession } = useProfession()
   const prof = getProfession(id)
-  return <div>{!isLoading ? prof.name : 'loading...'}</div>
+  // console.log(prof)
+  return <span>{!isLoading ? prof.name : 'loading...'}</span>
 }
 
 Profession.propTypes = {
