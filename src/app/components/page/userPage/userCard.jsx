@@ -10,9 +10,6 @@ const UserCard = ({ user }) => {
   // const { getProfession } = useProfession()
   // const userProfession = getProfession(user.profession)
 
-  // console.log(user)
-  // console.log(userProfession)
-
   return (<>
     {user && (
       <div className="card mb-3">
@@ -37,7 +34,10 @@ const UserCard = ({ user }) => {
             <div className="mt-3">
               <h4>{user.name}</h4>
               <p className="text-secondary mb-1">
-                <Profession id={user.profession}/>
+              {user._id === currentUser._id
+                ? <Profession id={currentUser.profession}/>
+                : <Profession id={user.profession}/>
+              }
               </p>
               <div className="text-muted">
                 <i
