@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 // components
@@ -7,18 +8,18 @@ import Main from './layouts/main'
 import Login from './layouts/login'
 import Nav from '../app/components/ui/nav'
 import Users from './layouts/users'
+import ProtectedRoute from './components/common/protectedRoute'
+// utils
+import AuthProvider from './hooks/useAuth'
 import { ProfessionProvider } from './hooks/useProfession'
 import { QualitiesProvider } from './hooks/useQualities'
-import AuthProvider from './hooks/useAuth'
-import ProtectedRoute from './components/common/protectedRoute'
-// import { useDispatch } from 'react-redux'
-// import { loadQualitiesList } from './store/qualities'
+import { loadQualitiesList } from './store/qualities'
 
 function App() {
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(loadQualitiesList())
-  // }, [])
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(loadQualitiesList())
+  }, [])
 
   return (
     <>
