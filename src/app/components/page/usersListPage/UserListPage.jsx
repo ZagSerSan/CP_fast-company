@@ -1,23 +1,25 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import _ from 'lodash'
 import 'bootstrap/dist/css/bootstrap.css'
-// utils
-import { paginate } from '../../../utils/paginate'
-// hooks
-import { useUsers } from '../../../hooks/useUsers'
-import { useProfession } from '../../../hooks/useProfession'
 // components
 import SearchStatus from '../../ui/searchStatus'
 import Pagination from '../../common/pagination'
 import GroupList from '../../common/groupList'
 import UsersTable from '../../ui/usersTable'
 import IconSVG from '../../common/iconSVG'
+// utils, hooks
+import { paginate } from '../../../utils/paginate'
+import { useUsers } from '../../../hooks/useUsers'
 import { useAuth } from '../../../hooks/useAuth'
+import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
 
 const UserListPage = () => {
   const { users } = useUsers()
   const { currentUser, updateUser } = useAuth()
-  const {isLoading: professionsLoading, professions} = useProfession()
+  const professions = useSelector(getProfessions())
+  const isLoading = useSelector(getProfessionsLoadingStatus())
+
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({
@@ -123,7 +125,7 @@ const UserListPage = () => {
       <>
         <div className="main-table">
           <div className="filter">
-            {professions && !professionsLoading && (
+            {professions && !isLoading && (
               <div>
                 <GroupList
                   selectedProf={selectedProf}

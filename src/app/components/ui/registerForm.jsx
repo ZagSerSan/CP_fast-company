@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom/cjs/react-router-dom'
-// utils, css
-import { useHistory } from 'react-router-dom'
-import { useProfession } from '../../hooks/useProfession'
-import { useAuth } from '../../hooks/useAuth'
+import { useHistory, Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { getQualities } from '../../store/qualities'
-import './form.module.css'
-import { validator } from '../../utils/validator'
-import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
 import SelectField from '../common/form/selectField'
 import RadioField from '../common/form/radioField'
 import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
+// css, utils, hooks
+import './form.module.css'
+import { useAuth } from '../../hooks/useAuth'
+import { getQualities } from '../../store/qualities'
+import { validator } from '../../utils/validator'
+import { validatorConfig } from '../../utils/validatorConfig'
+import { getProfessions } from '../../store/professions'
 
 const RegisterForm = () => {
   // состояние ошибок для валидации форм + validate()
@@ -33,7 +32,7 @@ const RegisterForm = () => {
   const {signUp} = useAuth()
   const qualities = useSelector(getQualities())
 
-  const {professions} = useProfession()
+  const professions = useSelector(getProfessions())
 
   // handleChange => onChange в дочерних компонентах (полях)
   const handleChange = (fieldData) => {

@@ -51,8 +51,6 @@ export const loadQualitiesList = () => async (dispatch, getState) => {
 
 export const getQualities = () => (state) => state.qualities.entities
 export const getQualitiesLoadingStatus = () => (state) => state.qualities.isLoading
-
-// getQualitiesByIds
 export const getQualitiesByIds = (qualitiesIds) => createSelector(
   state => state.qualities.entities,
   (state) => qualitiesIds.map(qualId => state.find(qual => qual._id === qualId))

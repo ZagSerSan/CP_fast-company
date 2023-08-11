@@ -11,30 +11,29 @@ import Users from './layouts/users'
 import ProtectedRoute from './components/common/protectedRoute'
 // utils
 import AuthProvider from './hooks/useAuth'
-import { ProfessionProvider } from './hooks/useProfession'
 import { loadQualitiesList } from './store/qualities'
+import { loadProfessionsList } from './store/professions'
 
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(loadQualitiesList())
+    dispatch(loadProfessionsList())
   }, [])
 
   return (
     <>
       <AuthProvider>
         <Nav />
-          <ProfessionProvider>
-            <Switch>
-              <ProtectedRoute
-                path="/users/:userId?/:edit?"
-                component={Users}
-              />
-              <Route path="/login/:type?" component={Login} />
-              <Route path="/" exact component={Main} />
-              <Redirect to='/'/>
-            </Switch>
-          </ProfessionProvider>
+        <Switch>
+          <ProtectedRoute
+            path="/users/:userId?/:edit?"
+            component={Users}
+          />
+          <Route path="/login/:type?" component={Login} />
+          <Route path="/" exact component={Main} />
+          <Redirect to='/'/>
+        </Switch>
       </AuthProvider>
       <ToastContainer />
     </>

@@ -2,13 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../../hooks/useAuth'
-// import { useProfession } from '../../../hooks/useProfession'
 import Profession from '../../ui/profession'
 
 const UserCard = ({ user }) => {
   const { currentUser } = useAuth()
-  // const { getProfession } = useProfession()
-  // const userProfession = getProfession(user.profession)
 
   return (<>
     {user && (

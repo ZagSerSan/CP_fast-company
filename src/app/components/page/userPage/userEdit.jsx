@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import './userEdit.module.css'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
-import { useProfession } from '../../../hooks/useProfession'
 import { useAuth } from '../../../hooks/useAuth'
 // components
 import TextField from '../../common/form/textField'
@@ -15,13 +14,13 @@ import MultiSelectField from '../../common/form/multiSelectField'
 import IconSVG from '../../common/iconSVG'
 import { useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
+import { getProfessions } from '../../../store/professions'
 
 const UserEdit = ({ userId, edit }) => {
   const history = useHistory()
   const qualities = useSelector(getQualities())
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
-
-  const { professions } = useProfession()
+  const professions = useSelector(getProfessions())
   const { currentUser, updateUser } = useAuth()
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
