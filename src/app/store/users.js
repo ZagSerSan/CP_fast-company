@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import userService from '../service/users.service'
 
 const usersSlice = createSlice({
@@ -37,10 +37,10 @@ export const loadUsersList = () => async (dispatch) => {
 }
 
 export const getUsers = () => (state) => state.users.entities
-export const getUsersLoadingStatus = () => (state) => state.users.isLoading
-// export const getUsersByIds = (usersIds) => createSelector(
-//   state => state.users.entities,
-//   (state) => usersIds.map(qualId => state.find(qual => qual._id === qualId))
-// )
+// export const getUsersLoadingStatus = () => (state) => state.users.isLoading
+export const getUserById = (userId) => createSelector(
+  state => state.users.entities,
+  (state) => state.find(user => user._id === userId)
+)
 
 export default usersReducer

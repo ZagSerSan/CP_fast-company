@@ -10,16 +10,15 @@ import UsersTable from '../../ui/usersTable'
 import IconSVG from '../../common/iconSVG'
 // utils, hooks
 import { paginate } from '../../../utils/paginate'
-import { useUsers } from '../../../hooks/useUsers'
 import { useAuth } from '../../../hooks/useAuth'
 import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
+import { getUsers } from '../../../store/users'
 
 const UserListPage = () => {
-  const { users } = useUsers()
+  const users = useSelector(getUsers())
   const { currentUser, updateUser } = useAuth()
   const professions = useSelector(getProfessions())
   const isLoading = useSelector(getProfessionsLoadingStatus())
-
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({

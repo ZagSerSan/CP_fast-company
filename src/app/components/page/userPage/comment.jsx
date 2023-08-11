@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getDateFormat } from '../../../utils/formatDate'
-import { useUsers } from '../../../hooks/useUsers'
 import { useAuth } from '../../../hooks/useAuth'
+import { useSelector } from 'react-redux'
+import { getUserById } from '../../../store/users'
 
 const Comment = ({ commentUserId, comment, onDelete }) => {
   // получение пользователей написавших комментарии на текущей странице
-  const { getUserById } = useUsers()
   const { currentUser } = useAuth()
-  const commentedUser = getUserById(commentUserId)
+  const commentedUser = useSelector(getUserById(commentUserId))
 
   return (
     <div className="bg-light card-body  mb-3">

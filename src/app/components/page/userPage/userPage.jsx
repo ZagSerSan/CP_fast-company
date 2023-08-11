@@ -1,21 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// css
-import 'bootstrap/dist/css/bootstrap.css'
-import './userPage.css'
 // components
 import IconSVG from '../../common/iconSVG'
 import CommentsList from './commentsList'
 import UserCard from './userCard'
 import QualitiesCard from './qualitiesCard'
 import MeetingsCard from './meetingsCard'
-// new api (firebase)
-import { useUsers } from '../../../hooks/useUsers'
+// css, api (firebase), utils
+import 'bootstrap/dist/css/bootstrap.css'
+import './userPage.css'
 import CommentsProvider from '../../../hooks/useComments'
+import { useSelector } from 'react-redux'
+import { getUserById } from '../../../store/users'
 
 const UserPage = ({ userId }) => {
-  const { getUserById } = useUsers()
-  const selectedUser = getUserById(userId)
+  const selectedUser = useSelector(getUserById(userId))
 
   return (
     <div className='container'>
