@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.css'
-import { useSelector } from 'react-redux'
-import { getQualitiesLoadingStatus, getQualitiesByIds } from '../../store/qualities'
+import { useDispatch, useSelector } from 'react-redux'
+import { getQualitiesLoadingStatus, getQualitiesByIds, loadQualitiesList } from '../../store/qualities'
 
 const Qualitie = ({ qualityIds }) => {
+  const dispatch = useDispatch()
   const userQualities = useSelector(getQualitiesByIds(qualityIds))
   const isLoading = useSelector(getQualitiesLoadingStatus())
+
+  useEffect(() => {
+    dispatch(loadQualitiesList())
+  }, [])
 
   return (
     <>
