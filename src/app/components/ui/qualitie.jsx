@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import 'bootstrap/dist/css/bootstrap.css'
-import { useQualities } from '../../hooks/useQualities'
+import { useSelector } from 'react-redux'
+import { getQualitiesLoadingStatus, getQualitiesByIds } from '../../store/qualities'
 
 const Qualitie = ({ qualityIds }) => {
-  const { isLoading, getQuality } = useQualities()
-  const qualities = getQuality(qualityIds)
-  // console.log(qualities)
+  const userQualities = useSelector(getQualitiesByIds(qualityIds))
+  const isLoading = useSelector(getQualitiesLoadingStatus())
 
   return (
     <>
       {!isLoading ? (
-        qualities.map(quality => (
+        userQualities.map(quality => (
           <span
             key={quality._id}
             className={'badge bg-' + quality.color + ' m-1'}
@@ -24,7 +24,9 @@ const Qualitie = ({ qualityIds }) => {
     </>
   )
 }
+
 Qualitie.propTypes = {
   qualityIds: PropTypes.array
 }
+
 export default Qualitie

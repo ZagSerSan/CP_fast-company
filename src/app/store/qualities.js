@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import qualityService from '../service/qualities.service'
 
 const qualitiesSlice = createSlice({
   name: 'qualities',
   initialState: {
-    entitites: null,
+    entities: null,
     isLoading: true,
     error: null
   },
@@ -13,7 +13,7 @@ const qualitiesSlice = createSlice({
       state.isLoading = true
     },
     qualitiesReceved: (state, action) => {
-      state.entitites = action.payload
+      state.entities = action.payload
       state.isLoading = false
     },
     qualitiesRequestFiled: (state, action) => {
@@ -35,5 +35,14 @@ export const loadQualitiesList = () => async (dispatch) => {
     dispatch(qualitiesRequestFiled(error.message))
   }
 }
+
+export const getQualities = () => (state) => state.qualities.entities
+export const getQualitiesLoadingStatus = () => (state) => state.qualities.isLoading
+
+// getQualitiesByIds
+export const getQualitiesByIds = (qualitiesIds) => createSelector(
+  state => state.qualities.entities,
+  (state) => qualitiesIds.map(qualId => state.find(qual => qual._id === qualId))
+)
 
 export default qualitiesReducer

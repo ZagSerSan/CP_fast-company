@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import './userEdit.module.css'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
-import { useQualities } from '../../../hooks/useQualities'
 import { useProfession } from '../../../hooks/useProfession'
 import { useAuth } from '../../../hooks/useAuth'
 // components
@@ -14,21 +13,19 @@ import SelectField from '../../common/form/selectField'
 import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
 import IconSVG from '../../common/iconSVG'
+import { useSelector } from 'react-redux'
+import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
 
 const UserEdit = ({ userId, edit }) => {
   const history = useHistory()
-  const { qualities, getQuality } = useQualities()
+  const qualities = useSelector(getQualities())
+  const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
+
   const { professions } = useProfession()
   const { currentUser, updateUser } = useAuth()
-  const [isLoading, setLoading] = useState(true)
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
 
-  useEffect(() => {
-    if (qualities && professions && currentUser) {
-      setLoading(false)
-    }
-  }, [qualities, professions, currentUser])
   useEffect(() => {
     if (edit && userId !== currentUser._id) {
       history.replace(`/users/${currentUser._id}/edit`)
@@ -60,10 +57,17 @@ const UserEdit = ({ userId, edit }) => {
     return Object.keys(errors).length === 0
   }
 
+  function getQuality(ids) {
+    const qualitiesArray = ids.map(id => {
+      return qualities.find(q => q._id === id)
+    })
+    return qualitiesArray
+  }
+
   return (
     <div className="container mt-4 mb-4">
       <div className="row">
-        {!isLoading ? (
+        {!qualitiesLoading ? (
           <div className="col-md-6 offset-md-3 shadow p-4">
             <form className="form" onSubmit={handleSubmit}>
               <TextField

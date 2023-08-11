@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom'
+// utils, css
 import { useHistory } from 'react-router-dom'
 import { useProfession } from '../../hooks/useProfession'
-import { useQualities } from '../../hooks/useQualities'
 import { useAuth } from '../../hooks/useAuth'
-// utils, css
+import { useSelector } from 'react-redux'
+import { getQualities } from '../../store/qualities'
 import './form.module.css'
 import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
@@ -30,7 +31,8 @@ const RegisterForm = () => {
   })
   const history = useHistory()
   const {signUp} = useAuth()
-  const {qualities} = useQualities()
+  const qualities = useSelector(getQualities())
+
   const {professions} = useProfession()
 
   // handleChange => onChange в дочерних компонентах (полях)

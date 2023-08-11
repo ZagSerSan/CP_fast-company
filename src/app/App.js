@@ -12,7 +12,6 @@ import ProtectedRoute from './components/common/protectedRoute'
 // utils
 import AuthProvider from './hooks/useAuth'
 import { ProfessionProvider } from './hooks/useProfession'
-import { QualitiesProvider } from './hooks/useQualities'
 import { loadQualitiesList } from './store/qualities'
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
     <>
       <AuthProvider>
         <Nav />
-        <QualitiesProvider>
           <ProfessionProvider>
             <Switch>
               <ProtectedRoute
@@ -37,7 +35,6 @@ function App() {
               <Redirect to='/'/>
             </Switch>
           </ProfessionProvider>
-        </QualitiesProvider>
       </AuthProvider>
       <ToastContainer />
     </>

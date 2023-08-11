@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useQualities } from '../../../hooks/useQualities'
+import { useSelector } from 'react-redux'
+import { getQualitiesLoadingStatus, getQualitiesByIds } from '../../../store/qualities'
 
 const QualitiesCard = ({ qualitiesIds }) => {
-  const { isLoading, getQuality } = useQualities()
+  const userQualities = useSelector(getQualitiesByIds(qualitiesIds))
+  const isLoading = useSelector(getQualitiesLoadingStatus())
 
   return (<>
       <div className="card mb-3">
@@ -13,7 +15,7 @@ const QualitiesCard = ({ qualitiesIds }) => {
           </h5>
           <div className="card-text">
             {!isLoading ? (
-              getQuality(qualitiesIds).map((item) => (
+              userQualities.map((item) => (
                 <h4
                   key={item._id}
                   className={'badge bg-' + item?.color}
