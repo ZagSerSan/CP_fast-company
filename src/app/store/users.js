@@ -1,12 +1,16 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { createAction, createSelector, createSlice } from '@reduxjs/toolkit'
 import userService from '../service/users.service'
+import authService from '../service/auth.services'
+import localStorageService from '../service/localStorage.service'
 
 const usersSlice = createSlice({
   name: 'users',
   initialState: {
     entities: null,
     isLoading: true,
-    error: null
+    error: null,
+    auth: null,
+    isLoggedIn: false
   },
   reducers: {
     usersRequested: (state) => {
@@ -19,12 +23,31 @@ const usersSlice = createSlice({
     usersRequestFiled: (state, action) => {
       state.error = action.payload 
       state.isLoading = false
+    },
+    authRequestSuccess: (state, action) => {
+      state.auth = {...action.payload, isLoggedIn: true}
+    },
+    authRequestFiled: (state, action) => {
+      state.error = action.payload
     }
   }
 })
 
 const { reducer: usersReducer, actions } = usersSlice
-const { usersRequested, usersReceved, usersRequestFiled } = actions
+const { usersRequested, usersReceved, usersRequestFiled, authRequestSuccess, authRequestFiled } = actions
+
+const authRequested = createAction('users/authRequested')
+
+export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
+  dispatch(authRequested())
+  try {
+    const data = await authService.register({email, password})
+    localStorageService.setTokens(data)
+    dispatch(authRequestSuccess({userId: data.localId}))
+  } catch (error) {
+    dispatch(authRequestFiled(error.message))
+  }
+}
 
 export const loadUsersList = () => async (dispatch) => {
   dispatch(usersRequested())
@@ -37,7 +60,6 @@ export const loadUsersList = () => async (dispatch) => {
 }
 
 export const getUsers = () => (state) => state.users.entities
-// export const getUsersLoadingStatus = () => (state) => state.users.isLoading
 export const getUserById = (userId) => createSelector(
   state => state.users.entities,
   (state) => state.find(user => user._id === userId)

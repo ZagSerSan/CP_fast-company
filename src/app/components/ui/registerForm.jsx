@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 // components
 import TextField from '../common/form/textField'
 import SelectField from '../common/form/selectField'
@@ -9,13 +9,16 @@ import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
 // css, utils, hooks
 import './form.module.css'
-import { useAuth } from '../../hooks/useAuth'
+// import { useAuth } from '../../hooks/useAuth'
 import { getQualities } from '../../store/qualities'
 import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
 import { getProfessions } from '../../store/professions'
+import { signUp } from '../../store/users'
 
 const RegisterForm = () => {
+  const dispatch = useDispatch()
+
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
   // значение полей формы
@@ -28,10 +31,10 @@ const RegisterForm = () => {
     qualities: [],
     licence: false
   })
-  const history = useHistory()
-  const {signUp} = useAuth()
-  const qualities = useSelector(getQualities())
+  // const history = useHistory()
+  // const {signUp} = useAuth()
 
+  const qualities = useSelector(getQualities())
   const professions = useSelector(getProfessions())
 
   // handleChange => onChange в дочерних компонентах (полях)
@@ -41,25 +44,26 @@ const RegisterForm = () => {
       [fieldData.name]: fieldData.value
     }))
   }
-
-  const handleSubmit = async (e) => {
+  
+  // функция была 'async'
+  const handleSubmit = (e) => {
     e.preventDefault()
     const ifValid = validate()
     if (!ifValid) return
 
-    try {
-      await signUp({
-        ...data
-        // qualities: data.qualities.map(q => q.value)
-      })
-      console.log({
-        ...data
-        // qualities: data.qualities.map(q => q.value)
-      })
-      history.push('/main')
-    } catch (error) {
-      setErrors(error)
-    }
+    dispatch(signUp({
+      ...data
+      // qualities: data.qualities.map(q => q.value)
+    }))
+      // signUp({
+      //   ...data
+      //   // qualities: data.qualities.map(q => q.value)
+      // })
+      // console.log({
+      //   ...data
+      //   // qualities: data.qualities.map(q => q.value)
+      // })
+      // // history.push('/main')
   }
 
   useEffect(() => {
