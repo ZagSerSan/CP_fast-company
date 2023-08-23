@@ -3,7 +3,7 @@ import userService from '../service/users.service'
 import authService from '../service/auth.services'
 import localStorageService from '../service/localStorage.service'
 import { randomInt } from '../utils/randomInt'
-// import { useHistory } from 'react-router-dom'
+import history from '../utils/history'
 
 const usersSlice = createSlice({
   name: 'users',
@@ -55,8 +55,6 @@ const authRequested = createAction('users/authRequested')
 const userCreateRequested = createAction('users/userCreateRequested')
 const createUserFailed = createAction('users/createUserFailed')
 
-// const history = useHistory()
-
 // Sign Up
 export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
   dispatch(authRequested())
@@ -74,7 +72,7 @@ export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
       }.svg`,
       ...rest
     }))
-    // history.push('/users')
+    history.push('/users')
   } catch (error) {
     dispatch(authRequestFiled(error.message))
   }
