@@ -5,7 +5,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import userService from '../service/users.service'
 import localStorageService, { setTokens } from '../service/localStorage.service'
-import { randomInt } from '../utils/randomInt'
+// import { randomInt } from '../utils/randomInt'
 import IconSVG from '../components/common/iconSVG'
 
 export const httpAuth = axios.create({
@@ -75,11 +75,12 @@ const AuthProvider = ({children}) => {
       setTokens(data)
       await getUserData()
       // переадресация
-      history.push(
-        history.location.state
-          ? history.location.state.from.pathname
-          : '/users'
-      )
+      history.push('/users')
+      // history.push(
+      //   history.location.state
+      //     ? history.location.state.from.pathname
+      //     : '/users'
+      // )
       toast.info('Logging is successful!')
       console.log(data)
     } catch (error) {
@@ -103,46 +104,46 @@ const AuthProvider = ({children}) => {
   }
 
   // signUp
-  async function signUp({email, password, ...rest}) {
-    const url = `accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
-    try {
-      const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
-      setTokens(data)
-      await createUser({
-        _id: data.localId,
-        email,
-        rate: randomInt(1, 5),
-        completedMeetings: randomInt(0, 200),
-        avatar: `https://avatars.dicebear.com/api/avataaars/${
-          (Math.random() + 1).toString(36).substring(7)
-        }.svg`,
-        ...rest
-      })
-      console.log(data)
-    } catch (error) {
-      errorCatcher(error)
-      const {code, message} = error.response.data.error
-      if (code === 400) {
-        if (message === 'EMAIL_EXISTS') {
-          const errorObject = {
-            email: 'Пользователь с таким email уже существует.'
-          }
-          throw errorObject
-        }
-      }
-    }
-  }
+  // async function signUp({email, password, ...rest}) {
+  //   const url = `accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
+  //   try {
+  //     const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
+  //     setTokens(data)
+  //     await createUser({
+  //       _id: data.localId,
+  //       email,
+  //       rate: randomInt(1, 5),
+  //       completedMeetings: randomInt(0, 200),
+  //       avatar: `https://avatars.dicebear.com/api/avataaars/${
+  //         (Math.random() + 1).toString(36).substring(7)
+  //       }.svg`,
+  //       ...rest
+  //     })
+  //     console.log(data)
+  //   } catch (error) {
+  //     errorCatcher(error)
+  //     const {code, message} = error.response.data.error
+  //     if (code === 400) {
+  //       if (message === 'EMAIL_EXISTS') {
+  //         const errorObject = {
+  //           email: 'Пользователь с таким email уже существует.'
+  //         }
+  //         throw errorObject
+  //       }
+  //     }
+  //   }
+  // }
 
   // вспомогательные функции
-  async function createUser(data) {
-    try {
-      const {content} = await userService.create(data)
-      console.log(content)
-      setCurrentUser(content)
-    } catch (error) {
-      errorCatcher(error)
-    }
-  }
+  // async function createUser(data) {
+  //   try {
+  //     const {content} = await userService.create(data)
+  //     console.log(content)
+  //     setCurrentUser(content)
+  //   } catch (error) {
+  //     errorCatcher(error)
+  //   }
+  // }
   const errorCatcher = (error) => {
     const { message } = error.response.data
     setError(message)
@@ -172,7 +173,7 @@ const AuthProvider = ({children}) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{logOut, signUp, signIn, currentUser, updateUser}}>
+    <AuthContext.Provider value={{logOut, signIn, currentUser, updateUser}}>
       {!isLoading ? children : <IconSVG id='loader'/>}
     </AuthContext.Provider>
   )

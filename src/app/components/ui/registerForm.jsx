@@ -77,77 +77,83 @@ const RegisterForm = () => {
   // блокировка кнопки
   const isValid = Object.keys(errors).length === 0
 
+  console.log(professions)
+
   return (
     <>
-      <h2>Registration</h2>
-      <form className="form" onSubmit={handleSubmit}>
-        <TextField
-          label="Login/mail:"
-          name="email"
-          value={data.email}
-          onChange={handleChange}
-          errors={errors}
-        />
-        <TextField
-          label="Name:"
-          name="name"
-          value={data.name}
-          onChange={handleChange}
-          errors={errors}
-        />
-        <TextField
-          label="Password:"
-          name="password"
-          value={data.password}
-          type="password"
-          onChange={handleChange}
-          errors={errors}
-        />
-        <SelectField
-          name="profession"
-          label="Your profession:"
-          defaultOption="Choose your profession..."
-          value={data.profession}
-          professions={professions}
-          error={errors.profession}
-          onChange={handleChange}
-        />
-        <RadioField
-          options={[
-            { name: 'Male', value: 'male' },
-            { name: 'Female', value: 'female' },
-            { name: 'Other', value: 'other' }
-          ]}
-          value={data.sex}
-          name="sex"
-          onChange={handleChange}
-        />
-        <MultiSelectField
-          name="qualities"
-          label="Choose your qualities:"
-          defaultValue={data.qualities}
-          qualities={qualities}
-          onChange={handleChange}
-        />
-        <CheckBoxField
-          value={data.licence}
-          onChange={handleChange}
-          name="licence"
-          error={errors.licence}
-        >
-          Confirm the <a href="">license agreement</a>.
-        </CheckBoxField>
-        <button
-          type="submit"
-          disabled={!isValid}
-          className="btn btn-primary w-100 mx-auto"
-        >
-          Register
-        </button>
-        <p className="mt-2">
-          If you have account, please <Link to="/Login">Sign in</Link>
-        </p>
-      </form>
+    {professions && (
+      <>
+        <h2>Registration</h2>
+        <form className="form" onSubmit={handleSubmit}>
+          <TextField
+            label="Login/mail:"
+            name="email"
+            value={data.email}
+            onChange={handleChange}
+            errors={errors}
+          />
+          <TextField
+            label="Name:"
+            name="name"
+            value={data.name}
+            onChange={handleChange}
+            errors={errors}
+          />
+          <TextField
+            label="Password:"
+            name="password"
+            value={data.password}
+            type="password"
+            onChange={handleChange}
+            errors={errors}
+          />
+          <SelectField
+            name="profession"
+            label="Your profession:"
+            defaultOption="Choose your profession..."
+            value={data.profession}
+            professions={professions}
+            error={errors.profession}
+            onChange={handleChange}
+          />
+          <RadioField
+            options={[
+              { name: 'Male', value: 'male' },
+              { name: 'Female', value: 'female' },
+              { name: 'Other', value: 'other' }
+            ]}
+            value={data.sex}
+            name="sex"
+            onChange={handleChange}
+          />
+          <MultiSelectField
+            name="qualities"
+            label="Choose your qualities:"
+            defaultValue={data.qualities}
+            qualities={qualities}
+            onChange={handleChange}
+          />
+          <CheckBoxField
+            value={data.licence}
+            onChange={handleChange}
+            name="licence"
+            error={errors.licence}
+          >
+            Confirm the <a href="">license agreement</a>.
+          </CheckBoxField>
+          <button
+            type="submit"
+            disabled={!isValid}
+            className="btn btn-primary w-100 mx-auto"
+          >
+            Register
+          </button>
+          <p className="mt-2">
+            If you have account, please <Link to="/Login">Sign in</Link>
+          </p>
+        </form>
+        </>
+    )}
     </>
   )
 }
