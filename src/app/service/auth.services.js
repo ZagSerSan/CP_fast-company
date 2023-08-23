@@ -16,6 +16,15 @@ const authService = {
       returnSecureToken: true
     })
     return data
+  },
+  login: async (email, password) => {
+    const url = 'accounts:signInWithPassword'
+    const { data } = await httpAuth.post(url, {
+      email,
+      password,
+      returnSecureToken: true
+    })
+    return data
   }
 }
 

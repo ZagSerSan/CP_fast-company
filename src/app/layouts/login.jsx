@@ -7,7 +7,6 @@ import './login.css'
 
 const Login = () => {
   const { type } = useParams()
-  console.log(type)
   // const [formType, setFormType] = useState(type === 'register' ? type : 'Login')
 
   return (

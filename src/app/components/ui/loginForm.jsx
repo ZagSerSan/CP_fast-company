@@ -7,8 +7,10 @@ import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
 import CheckBoxField from '../common/form/checkBoxField'
-import { useAuth } from '../../hooks/useAuth'
-import { toast } from 'react-toastify'
+// import { useAuth } from '../../hooks/useAuth'
+// import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { login } from '../../store/users'
 
 const loginForm = () => {
   // состояние ошибок для валидации форм + validate()
@@ -21,7 +23,8 @@ const loginForm = () => {
   })
   const history = useHistory()
   const { email, password } = data
-  const { signIn } = useAuth()
+  // const { signIn } = useAuth()
+  const dispatch = useDispatch()
 
   const handleChange = (fieldData) => {
     setData((prevState) => ({
@@ -32,15 +35,19 @@ const loginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     validate()
     const ifValid = validate()
     if (!ifValid) return
+
     // действие кнопки отправить если формы валидны
-    try {
-      await signIn(data)
-    } catch (error) {
-      toast.error(error)
-    }
+    const redirect = history.location.state
+      ? history.location.state.from.pathname
+      : '/users'
+    dispatch(login({payload: data, redirect}))
+
+      // await signIn(data)
+
   }
 
   useEffect(() => {
