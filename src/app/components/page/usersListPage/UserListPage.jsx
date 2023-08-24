@@ -12,17 +12,20 @@ import IconSVG from '../../common/iconSVG'
 import { paginate } from '../../../utils/paginate'
 import { useAuth } from '../../../hooks/useAuth'
 import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
-import { getUsers } from '../../../store/users'
+import { getCurrentUserId, getUsers } from '../../../store/users'
 
 const UserListPage = () => {
   const users = useSelector(getUsers())
   const { currentUser, updateUser } = useAuth()
+
+  const currentUserId = useSelector(getCurrentUserId())
+
   const professions = useSelector(getProfessions())
   const isLoading = useSelector(getProfessionsLoadingStatus())
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedProf, setSelectedProf] = useState()
   const [sortSettings, setSortSettings] = useState({
-    iter: 'name',
+    iter: 'name', 
     order: 'asc'
   })
   const [searchValue, setSearchValue] = useState('')
@@ -102,11 +105,10 @@ const UserListPage = () => {
         : searchValue
         ? data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
         : data
-      console.log('currentUser', currentUser)
-      setTimeout(() => {
-        console.log('currentUser', currentUser)
-      }, 2000);
-      return filteredUsers.filter(u => u._id !== currentUser._id)
+
+      console.log(currentUserId)
+      return filteredUsers.filter(u => u._id !== currentUserId)
+      // return filteredUsers.filter(u => u._id !== currentUser._id)
     }
     const filteredUsers = filterUsers(users)
 
