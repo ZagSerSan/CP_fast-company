@@ -45,9 +45,7 @@ const loginForm = () => {
       ? history.location.state.from.pathname
       : '/users'
     dispatch(login({payload: data, redirect}))
-
       // await signIn(data)
-
   }
 
   useEffect(() => {

@@ -93,6 +93,7 @@ const UserListPage = () => {
     setSearchValue('')
   }
 
+  console.log(users)
   if (users) {
     //! эта функция вызываЛА бесконечный рендер!
     const filterUsers = (data) => {
@@ -101,6 +102,10 @@ const UserListPage = () => {
         : searchValue
         ? data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
         : data
+      console.log('currentUser', currentUser)
+      setTimeout(() => {
+        console.log('currentUser', currentUser)
+      }, 2000);
       return filteredUsers.filter(u => u._id !== currentUser._id)
     }
     const filteredUsers = filterUsers(users)

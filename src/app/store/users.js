@@ -27,7 +27,8 @@ const usersSlice = createSlice({
       state.isLoading = false
     },
     authRequestSuccess: (state, action) => {
-      state.auth = {...action.payload, isLoggedIn: true}
+      state.auth = action.payload
+      state.isLoggedIn = true
     },
     authRequestFiled: (state, action) => {
       state.error = action.payload
@@ -58,7 +59,6 @@ const createUserFailed = createAction('users/createUserFailed')
 // login
 export const login = ({payload, redirect}) => async (dispatch) => {
   const {email, password} = payload
-  console.log(email, password)
   dispatch(authRequested())
   try {
     const data = await authService.login(email, password)
@@ -109,7 +109,6 @@ export const loadUsersList = () => async (dispatch) => {
   dispatch(usersRequested())
   try {
     const { content } = await userService.get()
-    console.log('content', content)
     dispatch(usersReceved(content))
   } catch (error) {
     dispatch(usersRequestFiled(error.message))
@@ -121,5 +120,6 @@ export const getUserById = (userId) => createSelector(
   state => state.users.entities,
   (state) => state.find(user => user._id === userId)
 )
+export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
 
 export default usersReducer
