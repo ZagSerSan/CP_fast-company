@@ -47,14 +47,12 @@ const UserListPage = () => {
           ...currentUser,
           bookmark: currentUser.bookmark.filter(item => item !== userId)
         }
-        console.log(newUserData)
         updateUser(newUserData)
       } else {
         const newUserData = {
           ...currentUser,
           bookmark: [...currentUser.bookmark, userId]
         }
-        console.log(newUserData)
         updateUser(newUserData)
       }
     } else {
@@ -62,7 +60,6 @@ const UserListPage = () => {
         ...currentUser,
         bookmark: [userId]
       }
-      console.log(newUserData)
       updateUser(newUserData)
     }
   }
@@ -96,7 +93,6 @@ const UserListPage = () => {
     setSearchValue('')
   }
 
-  console.log(users)
   if (users) {
     //! эта функция вызываЛА бесконечный рендер!
     const filterUsers = (data) => {
@@ -106,7 +102,6 @@ const UserListPage = () => {
         ? data.filter(user => user.name.toLowerCase().includes(searchValue.toLowerCase()))
         : data
 
-      console.log(currentUserId)
       return filteredUsers.filter(u => u._id !== currentUserId)
       // return filteredUsers.filter(u => u._id !== currentUser._id)
     }

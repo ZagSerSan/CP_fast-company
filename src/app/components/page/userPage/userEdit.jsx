@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
 import { getProfessions } from '../../../store/professions'
 
-const UserEdit = ({ userId, edit }) => {
+const UserEdit = ({ currentUserId, edit }) => {
   const history = useHistory()
   const qualities = useSelector(getQualities())
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
@@ -26,7 +26,7 @@ const UserEdit = ({ userId, edit }) => {
   const [errors, setErrors] = useState({})
 
   useEffect(() => {
-    if (edit && userId !== currentUser._id) {
+    if (edit && currentUserId !== currentUser._id) {
       history.replace(`/users/${currentUser._id}/edit`)
     }
   }, [])
@@ -45,7 +45,7 @@ const UserEdit = ({ userId, edit }) => {
     history.replace(`/Users/${currentUser._id}`)
   }
   const backWithoutSave = () => {
-    history.replace(`/Users/${userId}`)
+    history.replace(`/Users/${currentUserId}`)
   }
   useEffect(() => {
     validate()
@@ -136,7 +136,7 @@ const UserEdit = ({ userId, edit }) => {
 }
 
 UserEdit.propTypes = {
-  userId: PropTypes.string,
+  currentUserId: PropTypes.string,
   edit: PropTypes.string
 }
 
