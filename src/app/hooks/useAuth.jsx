@@ -5,7 +5,6 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import userService from '../service/users.service'
 import localStorageService, { setTokens } from '../service/localStorage.service'
-// import { randomInt } from '../utils/randomInt'
 import IconSVG from '../components/common/iconSVG'
 
 export const httpAuth = axios.create({

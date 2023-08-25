@@ -1,20 +1,22 @@
 import React, { useState } from 'react'
-import { useAuth } from '../../hooks/useAuth'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { getCurrentUserData } from '../../store/users'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCurrentUserData, logOut } from '../../store/users'
 import IconSVG from '../common/iconSVG'
 
 const NavProfile = () => {
-  const currentUser = useSelector(getCurrentUserData())
-  const {logOut} = useAuth()
-
-  if (!currentUser) return <IconSVG id={'loader'}/>
-  
   const [isOpen, setIsOpen] = useState(false)
+  const currentUser = useSelector(getCurrentUserData())
+  const dispatch = useDispatch()
+
+  const logoutUser = () => {
+    dispatch(logOut())
+  }
   const toggleMenu = () => {
     setIsOpen(prev => !prev)
   }
+
+  if (!currentUser) return <IconSVG id={'loader'}/>
 
   return (
     <div className="dropdown" onClick={toggleMenu}>
@@ -29,7 +31,7 @@ const NavProfile = () => {
       </div>
       <div className={`w-100 dropdown-menu` + (isOpen ? ' show' : '')}>
         <Link to={`/users/${currentUser._id}`} className='dropdown-item'>Profile</Link>
-        <button onClick={logOut} className='dropdown-item'>Log Out</button>
+        <button onClick={logoutUser} className='dropdown-item'>Log Out</button>
       </div>
     </div>
   )
