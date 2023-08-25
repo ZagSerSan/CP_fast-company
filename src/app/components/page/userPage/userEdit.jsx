@@ -15,13 +15,19 @@ import IconSVG from '../../common/iconSVG'
 import { useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
 import { getProfessions } from '../../../store/professions'
+import { getCurrentUserData } from '../../../store/users'
 
 const UserEdit = ({ currentUserId, edit }) => {
   const history = useHistory()
   const qualities = useSelector(getQualities())
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
   const professions = useSelector(getProfessions())
-  const { currentUser, updateUser } = useAuth()
+
+  // todo 
+  const { updateUser } = useAuth()
+  const currentUser = useSelector(getCurrentUserData())
+  // const updateUser = useSelector(updateUserData())
+
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
 
