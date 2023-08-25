@@ -16,7 +16,7 @@ const AppLoader = ({ children }) => {
     if (isLoggedIn) {
       dispatch(loadUsersList())
     }
-  }, [])
+  }, [isLoggedIn])
 
   if (usersStatusLoading) return <IconSVG id='loader'/>
   return children 

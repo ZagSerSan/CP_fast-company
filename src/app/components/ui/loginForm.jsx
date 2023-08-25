@@ -7,7 +7,6 @@ import { validatorConfig } from '../../utils/validatorConfig'
 // components
 import TextField from '../common/form/textField'
 import CheckBoxField from '../common/form/checkBoxField'
-// import { useAuth } from '../../hooks/useAuth'
 // import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { login } from '../../store/users'
@@ -23,7 +22,6 @@ const loginForm = () => {
   })
   const history = useHistory()
   const { email, password } = data
-  // const { signIn } = useAuth()
   const dispatch = useDispatch()
 
   const handleChange = (fieldData) => {

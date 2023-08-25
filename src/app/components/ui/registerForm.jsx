@@ -9,7 +9,6 @@ import MultiSelectField from '../common/form/multiSelectField'
 import CheckBoxField from '../common/form/checkBoxField'
 // css, utils, hooks
 import './form.module.css'
-// import { useAuth } from '../../hooks/useAuth'
 import { getQualities } from '../../store/qualities'
 import { validator } from '../../utils/validator'
 import { validatorConfig } from '../../utils/validatorConfig'
@@ -32,7 +31,6 @@ const RegisterForm = () => {
     licence: false
   })
   // const history = useHistory()
-  // const {signUp} = useAuth()
 
   const qualities = useSelector(getQualities())
   const professions = useSelector(getProfessions())

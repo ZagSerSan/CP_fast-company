@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getDateFormat } from '../../../utils/formatDate'
-import { useAuth } from '../../../hooks/useAuth'
 import { useSelector } from 'react-redux'
-import { getUserById } from '../../../store/users'
+import { getCurrentUserId, getUserById } from '../../../store/users'
 
 const Comment = ({ commentUserId, comment, onDelete }) => {
   // получение пользователей написавших комментарии на текущей странице
-  const { currentUser } = useAuth()
+  const currentUserId = useSelector(getCurrentUserId())
   const commentedUser = useSelector(getUserById(commentUserId))
 
   return (
@@ -31,7 +30,7 @@ const Comment = ({ commentUserId, comment, onDelete }) => {
                       {getDateFormat(comment.created_at)}
                     </span>
                   </p>
-                  {currentUser._id === comment.userId && (
+                  {currentUserId === comment.userId && (
                     <button
                       onClick={() => onDelete(comment._id)}
                       className="btn btn-sm text-primary d-flex align-items-center"

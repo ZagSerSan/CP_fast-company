@@ -52,7 +52,7 @@ UsersTable.propTypes = {
   users: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   sortSettings: PropTypes.object.isRequired,
   setSortSettings: PropTypes.func.isRequired,
-  toggleBookMark: PropTypes.func.isRequired
+  toggleBookMark: PropTypes.func
 }
 
 export default UsersTable

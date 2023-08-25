@@ -23,6 +23,6 @@ const Bookmark = ({ user, toggleBookMark }) => {
 }
 Bookmark.propTypes = {
   user: PropTypes.object.isRequired,
-  toggleBookMark: PropTypes.func.isRequired
+  toggleBookMark: PropTypes.func
 }
 export default Bookmark

@@ -105,7 +105,7 @@ export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
     dispatch(authRequestFiled(error.message))
   }
 }
-// todo
+
 function createUser(payload) {
   return async function (dispatch) {
     dispatch(userCreateRequested())
@@ -129,13 +129,22 @@ export const loadUsersList = () => async (dispatch) => {
 }
 
 export const getUsers = () => (state) => state.users.entities
+export const getCurrentUserData = () => createSelector(
+  state => state.users,
+  (state) => {
+    return state.entities
+      ? state.entities.find(user => user._id === state.auth?.userId)
+      : null
+  }
+)
 export const getUserById = (userId) => createSelector(
   state => state.users.entities,
   (state) => state.find(user => user._id === userId)
 )
+export const updateUserData = () => (state) => state.users.isLoggedIn
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
 export const getDataStatus = () => (state) => state.users.dataLoaded
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading
-export const getCurrentUserId = () => (state) => state.users.auth.userId
+export const getCurrentUserId = () => (state) => state.users.auth?.userId
 
 export default usersReducer

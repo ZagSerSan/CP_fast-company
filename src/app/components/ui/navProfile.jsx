@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
-import { Link } from 'react-router-dom/cjs/react-router-dom.min'
+import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { getCurrentUserData } from '../../store/users'
+import IconSVG from '../common/iconSVG'
 
 const NavProfile = () => {
-  const {currentUser} = useAuth()
-  const [isOpen, setIsOpen] = useState(false)
+  const currentUser = useSelector(getCurrentUserData())
   const {logOut} = useAuth()
+
+  if (!currentUser) return <IconSVG id={'loader'}/>
   
+  const [isOpen, setIsOpen] = useState(false)
   const toggleMenu = () => {
     setIsOpen(prev => !prev)
   }

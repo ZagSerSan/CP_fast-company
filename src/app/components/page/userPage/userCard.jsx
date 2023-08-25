@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../../hooks/useAuth'
 import Profession from '../../ui/profession'
+import { useSelector } from 'react-redux'
+import { getCurrentUserData } from '../../../store/users'
 
 const UserCard = ({ user }) => {
-  const { currentUser } = useAuth()
+  const currentUser = useSelector(getCurrentUserData())
 
   return (<>
     {user && (
@@ -31,10 +32,10 @@ const UserCard = ({ user }) => {
             <div className="mt-3">
               <h4>{user.name}</h4>
               <p className="text-secondary mb-1">
-              {user._id === currentUser._id
-                ? <Profession id={currentUser.profession}/>
-                : <Profession id={user.profession}/>
-              }
+              <Profession id={user._id === currentUser._id
+                ? currentUser.profession
+                : user.profession
+              }/>
               </p>
               <div className="text-muted">
                 <i

@@ -10,14 +10,12 @@ import UsersTable from '../../ui/usersTable'
 import IconSVG from '../../common/iconSVG'
 // utils, hooks
 import { paginate } from '../../../utils/paginate'
-import { useAuth } from '../../../hooks/useAuth'
 import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions'
 import { getCurrentUserId, getUsers } from '../../../store/users'
 
 const UserListPage = () => {
   const users = useSelector(getUsers())
-  const { currentUser, updateUser } = useAuth()
-
+  // const currentUser = useSelector(getCurrentUserData())
   const currentUserId = useSelector(getCurrentUserId())
 
   const professions = useSelector(getProfessions())
@@ -37,32 +35,32 @@ const UserListPage = () => {
     // console.log('"refreshUsers" not a func')
   // }
   // toogle bookmark function
-  const toggleBookMark = (userId) => {
-    // если есть bookmark вообще
-    if (currentUser.bookmark) {
-      // если есть такой пользователь в bookmark
-      const isContain = currentUser.bookmark.some(bookm => bookm === userId)
-      if (isContain) {
-        const newUserData = {
-          ...currentUser,
-          bookmark: currentUser.bookmark.filter(item => item !== userId)
-        }
-        updateUser(newUserData)
-      } else {
-        const newUserData = {
-          ...currentUser,
-          bookmark: [...currentUser.bookmark, userId]
-        }
-        updateUser(newUserData)
-      }
-    } else {
-      const newUserData = {
-        ...currentUser,
-        bookmark: [userId]
-      }
-      updateUser(newUserData)
-    }
-  }
+  // const toggleBookMark = (userId) => {
+  //   // если есть bookmark вообще
+  //   if (currentUser.bookmark) {
+  //     // если есть такой пользователь в bookmark
+  //     const isContain = currentUser.bookmark.some(bookm => bookm === userId)
+  //     if (isContain) {
+  //       const newUserData = {
+  //         ...currentUser,
+  //         bookmark: currentUser.bookmark.filter(item => item !== userId)
+  //       }
+  //       updateUser(newUserData)
+  //     } else {
+  //       const newUserData = {
+  //         ...currentUser,
+  //         bookmark: [...currentUser.bookmark, userId]
+  //       }
+  //       updateUser(newUserData)
+  //     }
+  //   } else {
+  //     const newUserData = {
+  //       ...currentUser,
+  //       bookmark: [userId]
+  //     }
+  //     updateUser(newUserData)
+  //   }
+  // }
 
   const handlePageChange = (pageIndex) => {
     setCurrentPage(pageIndex)
@@ -157,7 +155,7 @@ const UserListPage = () => {
                 users={userCrop}
                 sortSettings={sortSettings}
                 setSortSettings={setSortSettings}
-                toggleBookMark={toggleBookMark}
+                // toggleBookMark={toggleBookMark}
               />
             )}
             <Pagination
