@@ -5,28 +5,25 @@ import PropTypes from 'prop-types'
 import './userEdit.module.css'
 import { validator } from '../../../utils/validator'
 import { validatorConfig } from '../../../utils/validatorConfig'
-import { useAuth } from '../../../hooks/useAuth'
 // components
 import TextField from '../../common/form/textField'
 import SelectField from '../../common/form/selectField'
 import RadioField from '../../common/form/radioField'
 import MultiSelectField from '../../common/form/multiSelectField'
 import IconSVG from '../../common/iconSVG'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getQualities, getQualitiesLoadingStatus } from '../../../store/qualities'
 import { getProfessions } from '../../../store/professions'
-import { getCurrentUserData } from '../../../store/users'
+import { getCurrentUserData, updateUser } from '../../../store/users'
 
 const UserEdit = ({ currentUserId, edit }) => {
   const history = useHistory()
   const qualities = useSelector(getQualities())
   const qualitiesLoading = useSelector(getQualitiesLoadingStatus())
   const professions = useSelector(getProfessions())
+  const dispatch = useDispatch()
 
-  // todo 
-  const { updateUser } = useAuth()
   const currentUser = useSelector(getCurrentUserData())
-  // const updateUser = useSelector(updateUserData())
 
   const [data, setData] = useState(currentUser)
   const [errors, setErrors] = useState({})
@@ -43,16 +40,19 @@ const UserEdit = ({ currentUserId, edit }) => {
       [fieldData.name]: fieldData.value
     }))
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const ifValid = validate()
     if (!ifValid) return
-    updateUser(data)
+    dispatch(updateUser(data))
     history.replace(`/Users/${currentUser._id}`)
   }
+
   const backWithoutSave = () => {
     history.replace(`/Users/${currentUserId}`)
   }
+
   useEffect(() => {
     validate()
   }, [data])

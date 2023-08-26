@@ -57,6 +57,13 @@ const usersSlice = createSlice({
       state.isLoggedIn = false
       state.auth = null
       state.dataLoaded = false
+    },
+    userUpdated: (state, action) => {
+      state.entities = state.entities.map(user => {
+        return user._id === action.payload._id 
+          ? action.payload
+          : user
+      })
     }
   }
 })
@@ -69,12 +76,28 @@ const {
   authRequestSuccess,
   authRequestFiled,
   userCreated,
-  userLoggedOut
+  userLoggedOut,
+  userUpdated
 } = actions
 
 const authRequested = createAction('users/authRequested')
 const userCreateRequested = createAction('users/userCreateRequested')
 const createUserFailed = createAction('users/createUserFailed')
+
+// updateUser
+export const updateUser = (userData) => async (dispatch) => {
+  try {
+    const { content } = await userService.updateUser(userData)
+    dispatch(userUpdated(content))
+    // Обновление email для входа
+    const { data } = await authService.updateEmail(userData.email)
+    console.log('data :>> ', data)
+    // history.replace(`/Users/${currentUser._id}`)
+    return content
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // login
 export const login = ({payload, redirect}) => async (dispatch) => {

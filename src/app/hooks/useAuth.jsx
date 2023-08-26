@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import userService from '../service/users.service'
-import localStorageService, { setTokens } from '../service/localStorage.service'
+import localStorageService from '../service/localStorage.service'
 import IconSVG from '../components/common/iconSVG'
 
 export const httpAuth = axios.create({
@@ -23,7 +23,7 @@ const AuthProvider = ({children}) => {
   const [currentUser, setCurrentUser] = useState()
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const history = useHistory()
+  // const history = useHistory()
 
   // toggle bookmark
   // async function toggleBookmark(newUsersData) {
@@ -43,64 +43,64 @@ const AuthProvider = ({children}) => {
   // }
 
   // log out
-  function logOut() {
-    localStorageService.removeAuthData()
-    setCurrentUser(null)
-    history.push('/login')
-  }
+  // function logOut() {
+  //   localStorageService.removeAuthData()
+  //   setCurrentUser(null)
+  //   history.push('/login')
+  // }
 
   // updateUser
-  async function updateUser(newUserData) {
-    const url = `accounts:update?key=${process.env.REACT_APP_FIREBASE_KEY}`
-    const idToken = localStorageService.getAccessToken()
-    try {
-      const { content } = await userService.updateUser(newUserData)
-      // Обновление email для входа
-      const { data } = await httpAuth.post(url, {idToken, email: newUserData.email, returnSecureToken: true})
-      console.log('data :>> ', data)
-      // console.log('content :>> ', content)
-      // history.replace(`/Users/${currentUser._id}`)
-      return content
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // async function updateUser(newUserData) {
+  //   const url = `accounts:update?key=${process.env.REACT_APP_FIREBASE_KEY}`
+  //   const idToken = localStorageService.getAccessToken()
+  //   try {
+  //     const { content } = await userService.updateUser(newUserData)
+  //     // Обновление email для входа
+  //     const { data } = await httpAuth.post(url, {idToken, email: newUserData.email, returnSecureToken: true})
+  //     console.log('data :>> ', data)
+  //     // console.log('content :>> ', content)
+  //     // history.replace(`/Users/${currentUser._id}`)
+  //     return content
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   // signIn
-  async function signIn({ email, password }) {
-    const url = 'accounts:signInWithPassword'
-    try {
-      const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
-      setTokens(data)
-      await getUserData()
-      // переадресация
-      history.push('/users')
-      // history.push(
-      //   history.location.state
-      //     ? history.location.state.from.pathname
-      //     : '/users'
-      // )
-      toast.info('Logging is successful!')
-      console.log(data)
-    } catch (error) {
-      errorCatcher(error)
-      const { code, message } = error.response.data.error
-      console.log(code, message)
-      if (code === 400) {
-        switch (message) {
-          case 'INVALID_PASSWORD':
-            throw new Error('Email или пароль введены некорректно')
+  // async function signIn({ email, password }) {
+  //   const url = 'accounts:signInWithPassword'
+  //   try {
+  //     const {data} = await httpAuth.post(url, {email, password, returnSecureToken: true})
+  //     setTokens(data)
+  //     await getUserData()
+  //     // переадресация
+  //     history.push('/users')
+  //     // history.push(
+  //     //   history.location.state
+  //     //     ? history.location.state.from.pathname
+  //     //     : '/users'
+  //     // )
+  //     toast.info('Logging is successful!')
+  //     console.log(data)
+  //   } catch (error) {
+  //     errorCatcher(error)
+  //     const { code, message } = error.response.data.error
+  //     console.log(code, message)
+  //     if (code === 400) {
+  //       switch (message) {
+  //         case 'INVALID_PASSWORD':
+  //           throw new Error('Email или пароль введены некорректно')
 
-          default:
-            throw new Error(
-              'Слишком много попыток входа. Попробуйте позже'
-            )
-        }
-      }
-      console.log(message)
-      toast.error(message)
-    }
-  }
+  //         default:
+  //           throw new Error(
+  //             'Слишком много попыток входа. Попробуйте позже'
+  //           )
+  //       }
+  //     }
+  //     console.log(message)
+  //     toast.error(message)
+  //   }
+  // }
 
   // signUp
   // async function signUp({email, password, ...rest}) {
@@ -143,10 +143,10 @@ const AuthProvider = ({children}) => {
   //     errorCatcher(error)
   //   }
   // }
-  const errorCatcher = (error) => {
-    const { message } = error.response.data
-    setError(message)
-  }
+  // const errorCatcher = (error) => {
+  //   const { message } = error.response.data
+  //   setError(message)
+  // }
   const getUserData = async () => {
     try {
       const { content } = await userService.getCurrentUser()
@@ -172,7 +172,7 @@ const AuthProvider = ({children}) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{logOut, signIn, currentUser, updateUser}}>
+    <AuthContext.Provider value={{currentUser}}>
       {!isLoading ? children : <IconSVG id='loader'/>}
     </AuthContext.Provider>
   )
