@@ -4,6 +4,7 @@ import authService from '../service/auth.services'
 import localStorageService from '../service/localStorage.service'
 import { randomInt } from '../utils/randomInt'
 import history from '../utils/history'
+import { toast } from 'react-toastify'
 
 const initialState = localStorageService.getAccessToken()
   ? {
@@ -44,7 +45,8 @@ const usersSlice = createSlice({
       state.isLoggedIn = true
     },
     authRequestFiled: (state, action) => {
-      state.error = action.payload
+      state.error = action.payload.response.data.error.message
+      toast.error(state.error)
     },
     userCreated: (state, action) => {
       if (!Array.isArray(state.entities)) {
@@ -109,7 +111,7 @@ export const login = ({payload, redirect}) => async (dispatch) => {
     localStorageService.setTokens(data)
     history.push(redirect)
   } catch (error) {
-    dispatch(authRequestFiled(error.message))
+    dispatch(authRequestFiled(error))
   }
 }
 
@@ -132,7 +134,7 @@ export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
     }))
     history.push('/users')
   } catch (error) {
-    dispatch(authRequestFiled(error.message))
+    dispatch(authRequestFiled(error))
   }
 }
 
