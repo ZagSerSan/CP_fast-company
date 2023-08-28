@@ -46,8 +46,7 @@ const { commentsRequested, commentsReceved, commentsRequestFiled, commentCreated
 
 export const removeComment = (commentId) => async (dispatch) => {
   try {
-    const { content } = await CommentService.deleteComment(commentId)
-    console.log(content)
+    await CommentService.deleteComment(commentId)
     dispatch(commentDeleted(commentId))
   } catch (error) {
     dispatch(commentDeleteFiled(error.response.data.error))
@@ -63,8 +62,7 @@ export const createComment = (data, userId, currentUserId) => async (dispatch) =
     created_at: Date.now()
   }
   try {
-    const { content } = await CommentService.createComment(comment)
-    console.log('content', content)
+    await CommentService.createComment(comment)
     dispatch(commentCreated(comment))
   } catch (error) {
     dispatch(commentCreateFiled(error.response.data.error))

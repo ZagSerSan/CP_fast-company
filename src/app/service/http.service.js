@@ -3,7 +3,6 @@ import { toast } from 'react-toastify'
 import configFile from '../config.json'
 import localStorageService from './localStorage.service'
 import authService from './auth.services'
-// import { httpAuth } from '../hooks/useAuth'
 
 // "apiEndPoint": "http://localhost:4000/api/v1/"
 const http = axios.create({
