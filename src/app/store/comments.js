@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import CommentService from '../service/comment.service'
+import { nanoid } from 'nanoid'
+import { toast } from 'react-toastify'
 
 const commentsSlice = createSlice({
   name: 'comments',
@@ -19,20 +21,55 @@ const commentsSlice = createSlice({
     commentsRequestFiled: (state, action) => {
       state.error = action.payload 
       state.isLoading = false
+    },
+    commentCreated: (state, action) => {
+      state.entities = [...state.entities, action.payload]
+      toast.success('Комментарий добавлен')
+    },
+    commentCreateFiled: (state, action) => {
+      state.error = action.payload
+      toast.error(state.error)
+    },
+    commentDeleted: (state, action) => {
+      state.entities = state.entities.filter(comment => comment._id !== action.payload) 
+      toast.success('Комментарий удалён')
+    },
+    commentDeleteFiled: (state, action) => {
+      state.error = action.payload
+      toast.error(state.error)
     }
   }
 })
 
 const { reducer: commentsReducer, actions } = commentsSlice
-const { commentsRequested, commentsReceved, commentsRequestFiled } = actions
+const { commentsRequested, commentsReceved, commentsRequestFiled, commentCreated, commentDeleted, commentDeleteFiled, commentCreateFiled } = actions
 
-// function isOutdated(date) {
-//   if ((Date.now() - date) > (10 * 60 * 100)) {
-//     return true
-//   } else {
-//     return false
-//   }
-// }
+export const removeComment = (commentId) => async (dispatch) => {
+  try {
+    const { content } = await CommentService.deleteComment(commentId)
+    console.log(content)
+    dispatch(commentDeleted(commentId))
+  } catch (error) {
+    dispatch(commentDeleteFiled(error.response.data.error))
+  }
+}
+
+export const createComment = (data, userId, currentUserId) => async (dispatch) => {
+  const comment = {
+    ...data,
+    _id: nanoid(),
+    pageId: userId,
+    userId: currentUserId,
+    created_at: Date.now()
+  }
+  try {
+    const { content } = await CommentService.createComment(comment)
+    console.log('content', content)
+    dispatch(commentCreated(comment))
+  } catch (error) {
+    dispatch(commentCreateFiled(error.response.data.error))
+  }
+}
 
 export const loadCommentsList = (userId) => async (dispatch) => {
   dispatch(commentsRequested())

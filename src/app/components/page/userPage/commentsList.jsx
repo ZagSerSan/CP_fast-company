@@ -1,29 +1,32 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { orderBy } from 'lodash'
-import { useComments } from '../../../hooks/useComments'
+// css
 import './commentsList.css'
+// components
 import Comment from './comment'
-import AddCommentForm from './addCommentForm'
-import { useDispatch, useSelector } from 'react-redux'
-import { getComments, getCommentsLoadingStatus, loadCommentsList } from '../../../store/comments'
 import IconSVG from '../../common/iconSVG'
+import AddCommentForm from './addCommentForm'
+// redux
+import { useDispatch, useSelector } from 'react-redux'
+import { createComment, getComments, getCommentsLoadingStatus, loadCommentsList, removeComment } from '../../../store/comments'
+import { getCurrentUserId } from '../../../store/users'
 
 const CommentsList = ({ userId }) => {
   const dispatch = useDispatch()
   const isLoading = useSelector(getCommentsLoadingStatus())
   const comments = useSelector(getComments())
+  const currentUserId = useSelector(getCurrentUserId())
+
   useEffect(() => {
     dispatch(loadCommentsList(userId))
   }, [userId])
 
-  const { createComment, removeComment } = useComments()
-
   const addComment = (commentData) => {
-    createComment(commentData)
+    dispatch(createComment(commentData, userId, currentUserId))
   }
   const deleteComment = (commentId) => {
-    removeComment(commentId)
+    dispatch(removeComment(commentId))
   }
 
   const sortedComments = orderBy(comments, ['created_at'], ['desc'])
