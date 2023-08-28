@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { orderBy } from 'lodash'
 import { useComments } from '../../../hooks/useComments'
 import './commentsList.css'
 import Comment from './comment'
 import AddCommentForm from './addCommentForm'
+import { useDispatch, useSelector } from 'react-redux'
+import { getComments, getCommentsLoadingStatus, loadCommentsList } from '../../../store/comments'
+import IconSVG from '../../common/iconSVG'
 
-const CommentsList = () => {
-  const { createComment, comments, removeComment } = useComments()
+const CommentsList = ({ userId }) => {
+  const dispatch = useDispatch()
+  const isLoading = useSelector(getCommentsLoadingStatus())
+  const comments = useSelector(getComments())
+  useEffect(() => {
+    dispatch(loadCommentsList(userId))
+  }, [userId])
+
+  const { createComment, removeComment } = useComments()
 
   const addComment = (commentData) => {
     createComment(commentData)
@@ -32,14 +42,17 @@ const CommentsList = () => {
           <div className="card-body ">
             <h2>Comments</h2>
             <hr />
-            {sortedComments.map((comment) => (
-              <Comment
-                key={comment._id}
-                commentUserId={comment.userId}
-                comment={comment}
-                onDelete={deleteComment}
-              />
-            ))}
+            {!isLoading
+              ? sortedComments.map((comment) => (
+                <Comment
+                    key={comment._id}
+                    commentUserId={comment.userId}
+                    comment={comment}
+                    onDelete={deleteComment}
+                  />
+                ))
+              : <IconSVG id='loader'/>
+            }
           </div>
         </div>
       ) : null}
@@ -48,7 +61,7 @@ const CommentsList = () => {
 }
 
 CommentsList.propTypes = {
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string
 }
 
 export default CommentsList
