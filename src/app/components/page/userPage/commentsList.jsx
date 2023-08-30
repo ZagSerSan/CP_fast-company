@@ -1,19 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { orderBy } from 'lodash'
-import { useComments } from '../../../hooks/useComments'
+// css
 import './commentsList.css'
+// components
 import Comment from './comment'
+import IconSVG from '../../common/iconSVG'
 import AddCommentForm from './addCommentForm'
+// redux
+import { useDispatch, useSelector } from 'react-redux'
+import { createComment, getComments, getCommentsLoadingStatus, loadCommentsList, removeComment } from '../../../store/comments'
+import { getCurrentUserId } from '../../../store/users'
 
-const CommentsList = () => {
-  const { createComment, comments, removeComment } = useComments()
+const CommentsList = ({ userId }) => {
+  const dispatch = useDispatch()
+  const isLoading = useSelector(getCommentsLoadingStatus())
+  const comments = useSelector(getComments())
+  const currentUserId = useSelector(getCurrentUserId())
+
+  useEffect(() => {
+    dispatch(loadCommentsList(userId))
+  }, [userId])
 
   const addComment = (commentData) => {
-    createComment(commentData)
+    dispatch(createComment(commentData, userId, currentUserId))
   }
   const deleteComment = (commentId) => {
-    removeComment(commentId)
+    dispatch(removeComment(commentId))
   }
 
   const sortedComments = orderBy(comments, ['created_at'], ['desc'])
@@ -32,14 +45,17 @@ const CommentsList = () => {
           <div className="card-body ">
             <h2>Comments</h2>
             <hr />
-            {sortedComments.map((comment) => (
-              <Comment
-                key={comment._id}
-                commentUserId={comment.userId}
-                comment={comment}
-                onDelete={deleteComment}
-              />
-            ))}
+            {!isLoading
+              ? sortedComments.map((comment) => (
+                <Comment
+                    key={comment._id}
+                    commentUserId={comment.userId}
+                    comment={comment}
+                    onDelete={deleteComment}
+                  />
+                ))
+              : <IconSVG id='loader'/>
+            }
           </div>
         </div>
       ) : null}
@@ -48,7 +64,7 @@ const CommentsList = () => {
 }
 
 CommentsList.propTypes = {
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string
 }
 
 export default CommentsList

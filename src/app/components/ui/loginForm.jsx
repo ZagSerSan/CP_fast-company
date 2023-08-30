@@ -8,10 +8,12 @@ import { validatorConfig } from '../../utils/validatorConfig'
 import TextField from '../common/form/textField'
 import CheckBoxField from '../common/form/checkBoxField'
 // import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
-import { login } from '../../store/users'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAuthErrors, login } from '../../store/users'
 
 const loginForm = () => {
+  // ошибка из users.js - redux
+  const loginError = useSelector(getAuthErrors())
   // состояние ошибок для валидации форм + validate()
   const [errors, setErrors] = useState({})
   // значение полей формы
@@ -76,6 +78,7 @@ const loginForm = () => {
           onChange={handleChange}
           errors={errors}
         />
+        {loginError && <p className='text-danger'>{loginError}</p>}
         <CheckBoxField
           value={data.stayOn}
           onChange={handleChange}

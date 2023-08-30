@@ -9,14 +9,12 @@ import Nav from '../app/components/ui/nav'
 import Users from './layouts/users'
 import ProtectedRoute from './components/common/protectedRoute'
 // utils
-import AuthProvider from './hooks/useAuth'
 import AppLoader from './components/ui/hoc/appLoader'
 
 function App() {
   return (
     <>
       <AppLoader>
-        <AuthProvider>
           <Nav />
           <Switch>
             <ProtectedRoute
@@ -27,7 +25,6 @@ function App() {
             <Route path="/" exact component={Main} />
             <Redirect to='/'/>
           </Switch>
-        </AuthProvider>
       </AppLoader>
       <ToastContainer />
     </>

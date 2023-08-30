@@ -4,6 +4,7 @@ import authService from '../service/auth.services'
 import localStorageService from '../service/localStorage.service'
 import { randomInt } from '../utils/randomInt'
 import history from '../utils/history'
+import { generateAuthError } from '../utils/generateAuthError'
 import { toast } from 'react-toastify'
 
 const initialState = localStorageService.getAccessToken()
@@ -40,6 +41,9 @@ const usersSlice = createSlice({
       state.error = action.payload 
       state.isLoading = false
     },
+    authRequest: (state) => {
+      state.error = null
+    },
     authRequestSuccess: (state, action) => {
       state.auth = action.payload
       state.isLoggedIn = true
@@ -66,6 +70,14 @@ const usersSlice = createSlice({
           ? action.payload
           : user
       })
+      toast.success('Данные обновлены.')
+    },
+    userUpdateFiled: (state, action) => {
+      console.log(action.payload)
+      if (action.payload === 'ERR_BAD_REQUEST') {
+        state.error = 'Ошибка запроса к серверу.'
+      }
+      toast.error(state.error)
     }
   }
 })
@@ -79,7 +91,8 @@ const {
   authRequestFiled,
   userCreated,
   userLoggedOut,
-  userUpdated
+  userUpdated,
+  userUpdateFiled
 } = actions
 
 const authRequested = createAction('users/authRequested')
@@ -98,6 +111,7 @@ export const updateUser = (userData) => async (dispatch) => {
     return content
   } catch (error) {
     console.log(error)
+    dispatch(userUpdateFiled(error.code))
   }
 }
 
@@ -111,7 +125,7 @@ export const login = ({payload, redirect}) => async (dispatch) => {
     localStorageService.setTokens(data)
     history.push(redirect)
   } catch (error) {
-    dispatch(authRequestFiled(error))
+    dispatch(authRequestFiled(error.message))
   }
 }
 
@@ -188,5 +202,6 @@ export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
 export const getDataStatus = () => (state) => state.users.dataLoaded
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading
 export const getCurrentUserId = () => (state) => state.users.auth?.userId
+export const getAuthErrors = () => (state) => state.users.error
 
 export default usersReducer
