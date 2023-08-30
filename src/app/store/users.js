@@ -4,7 +4,7 @@ import authService from '../service/auth.services'
 import localStorageService from '../service/localStorage.service'
 import { randomInt } from '../utils/randomInt'
 import history from '../utils/history'
-import { generateAuthError } from '../utils/generateAuthError'
+// import { generateAuthError } from '../utils/generateAuthError'
 import { toast } from 'react-toastify'
 
 const initialState = localStorageService.getAccessToken()
