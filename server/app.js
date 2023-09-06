@@ -4,8 +4,8 @@ const config = require('config')
 const chalk = require('chalk')
 
 const app = express()
-const PORT = 8080
+const PORT = config.get('port') ?? 8080
 
-app.listen(8080, () => {
-  console.log(chalk.blue('Server has been started on port '))
+app.listen(PORT, () => {
+  console.log(chalk.blue(`Server has been started on port ${PORT}`))
 })
