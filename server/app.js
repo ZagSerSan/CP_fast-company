@@ -18,6 +18,7 @@ app.use(express.urlencoded({extended: false}))
 async function start() {
 
   try {
+    console.log(chalk.green('MongoDB connected.'))
     await mongoose.connect(config.get('mongoUri'))
     app.listen(PORT, () => {
       console.log(chalk.blue(`Server has been started on port ${PORT}...`))
