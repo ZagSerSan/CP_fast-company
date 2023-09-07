@@ -6,6 +6,12 @@ const chalk = require('chalk')
 const app = express()
 const PORT = config.get('port') ?? 8080
 
+if (process.env.NODE_ENV === 'production') {
+  console.log('production')
+} else {
+  console.log('development')
+}
+
 app.listen(PORT, () => {
-  console.log(chalk.blue(`Server has been started on port ${PORT}`))
+  console.log(chalk.blue(`Server has been started on port ${PORT}...`))
 })
