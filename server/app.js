@@ -15,6 +15,18 @@ app.use(express.urlencoded({extended: false}))
 //   console.log('development')
 // }
 
-app.listen(PORT, () => {
-  console.log(chalk.blue(`Server has been started on port ${PORT}...`))
-})
+async function start() {
+
+  try {
+    await mongoose.connect(config.get('mongoUri'))
+    app.listen(PORT, () => {
+      console.log(chalk.blue(`Server has been started on port ${PORT}...`))
+    })
+  } catch (error) {
+    console.log(chalk.red(error.message))
+    // при ошибке выйти из программы
+    process.exit(1)
+  }
+}
+
+start()
