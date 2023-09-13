@@ -5,7 +5,7 @@ const schema = new Schema({
 	email: {type: String, required: true, unique: true},
 	password: {type: String},
 	completedMeetings: Number,
-	image: {type: string},
+	image: {type: String},
 	rate: Number,
 	sex: {type: String, enum: ['male', 'female', 'other']},
 	profession: {type: Schema.Types.ObjectId, ref: 'Profession'},

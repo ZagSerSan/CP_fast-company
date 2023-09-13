@@ -3,7 +3,7 @@ const router = express.Router({mergeParams: true})
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const { generateUserData } = require('../utils/helpers')
-const { TokenService } = require('../services/token.service')
+const TokenService = require('../services/token.service')
 
 //todo что нужно сделать в signUp
 // 1. получить data из запроза, req: (email, password, ...)
@@ -29,18 +29,24 @@ router.post('/signUp', async (req, res) => {
 
     // если предыдущий if не выполнился, знач всё нормально и продолжаем процесс регистрации
     // 3. шифровка пароля (пароль, число-сложность шифрования)
-    const hashedPassword = bcrypt.hash(password, 12)
+    const hashedPassword = await bcrypt.hash(password, 12)
     // 4
-    const newUser = User.create({
+    const newUser = await User.create({
       ...generateUserData(),
       ...req.body,
       password: hashedPassword
     })
     // 5
     const tokens = TokenService.generate({ _id: newUser._id })
+    // подождать пока сохраним токен для пользователя
+    await TokenService.save(newUser._id, tokens.refreshToken)
     res.status(201).send({...tokens, userId: newUser._id})
+
   } catch (e) {
-    
+    console.log(e)
+    res.status(500).json({
+      message: 'На сервере проихошла ошибка, попробуйте позже.'
+    })
   }
 })
 router.post('/signInWithPassword', async (req, res) => {
