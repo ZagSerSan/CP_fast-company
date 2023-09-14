@@ -67,9 +67,66 @@ router.post('/signUp', [
   }
 ])
 
-router.post('/signInWithPassword', async (req, res) => {
+//todo что нужно сделать в signInWithPassword
+// 1. validate
+// 2. найти пользователя
+// 3. сравнить шифрованный парол
+// 4. сделать токены
+// 5. return data
+router.post('/signInWithPassword', [
+  check('email', 'Email некорректный').normalizeEmail().isEmail(),
+  check('password', 'Пароль отсутствует').exists(),
+  async (req, res) => {
+    try {
+      const errors = validationResult(req) // 1
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          error: {
+            message: 'INVALID_DATA',
+            code: 400,
+            errors: errors.array()
+          }
+        })
+      }
+      const { email, password } = req.body 
+      const existUser = await User.findOne({ email }) // 2
 
-})
+      if (!existUser) {
+        // если пользователь найден, то отвечаем обратно клиенту и меняем статус на ошибку
+        return res.status(400).send({
+          error: {
+            message: 'EMAIL_NOT_FOUND',
+            code: 400
+          }
+        })
+      }
+
+      // 3
+      const isPasswordEqual = await bcrypt.compare(password, existUser.password)
+      if (!isPasswordEqual) {
+        return res.status(400).send({
+          error: {
+            message: 'INVALID_PASSWORD',
+            code: 400
+          }
+        })
+      }
+
+      // 4
+      const tokens = TokenService.generate({ _id: existUser._id })
+      TokenService.save(existUser._id, tokens.refreshToken)
+
+      res.status(200).send({ ...tokens, userId: existUser._id })
+
+    } catch (e) {
+      console.log(e)
+      res.status(500).json({
+        message: 'На сервере проихошла ошибка, попробуйте позже.',
+        errors: errors.array()
+      })
+    }
+  }
+])
 router.post('/token', async (req, res) => {
 
 })
