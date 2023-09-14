@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router({mergeParams: true})
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
+const chalk = require('chalk')
 const { check, validationResult } = require('express-validator')
 const { generateUserData } = require('../utils/helpers')
 const TokenService = require('../services/token.service')
@@ -114,7 +115,7 @@ router.post('/signInWithPassword', [
 
       // 4
       const tokens = TokenService.generate({ _id: existUser._id })
-      TokenService.save(existUser._id, tokens.refreshToken)
+      await TokenService.save(existUser._id, tokens.refreshToken)
 
       res.status(200).send({ ...tokens, userId: existUser._id })
 
@@ -127,8 +128,41 @@ router.post('/signInWithPassword', [
     }
   }
 ])
-router.post('/token', async (req, res) => {
 
+function isTokenInvalid(data, dbToken) {
+  return !data || !dbToken || data._id !== dbToken?.user?.toString()
+}
+
+// refresh tokens
+router.post('/token', async (req, res) => {
+  try {
+    const { refresh_token: refreshToken } = req.body
+    const data = TokenService.validateRefresh(refreshToken)
+    // получаем токен из базы
+    const dbToken = await TokenService.findToken(refreshToken)
+
+    // console.log(chalk.blue('refreshToken:'), refreshToken)
+    // console.log(chalk.blue('data:'), data)
+    // console.log(chalk.blue('dbToken:'), dbToken)
+    // res.status(200).send(dbToken)
+
+    if (isTokenInvalid(data, dbToken)) {
+      res.status(401).json({
+        message: 'Unauthorized'
+      })
+    }
+
+    const tokens = TokenService.generate({ _id: data._id })
+    await TokenService.save(data._id, tokens.refreshToken)
+
+    res.status(200).send({ ...tokens, userId: data._id })
+  } catch (e) {
+    console.log(chalk.red('error'), e)
+    res.status(500).json({
+      message: 'На сервере проихошла ошибка, попробуйте позже.',
+      errors: errors.array()
+    })
+  }
 })
 
 module.exports = router
