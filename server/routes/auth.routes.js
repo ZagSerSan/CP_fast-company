@@ -141,11 +141,6 @@ router.post('/token', async (req, res) => {
     // получаем токен из базы
     const dbToken = await TokenService.findToken(refreshToken)
 
-    // console.log(chalk.blue('refreshToken:'), refreshToken)
-    // console.log(chalk.blue('data:'), data)
-    // console.log(chalk.blue('dbToken:'), dbToken)
-    // res.status(200).send(dbToken)
-
     if (isTokenInvalid(data, dbToken)) {
       res.status(401).json({
         message: 'Unauthorized'
