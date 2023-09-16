@@ -3,12 +3,12 @@ const REFRESH_TOKEN = 'refreshToken'
 const EXPIRES_IN = 'expiresIn'
 const LOCAL_ID = 'localId'
 
-export function setTokens({localId, idToken, refreshToken, expiresIn = 3600}) {
+export function setTokens({userId, accessToken, refreshToken, expiresIn = 3600}) {
   const expiresDate = new Date().getTime() + (expiresIn * 1000)
-  localStorage.setItem(ID_TOKEN, idToken)
+  localStorage.setItem(ID_TOKEN, accessToken)
   localStorage.setItem(REFRESH_TOKEN, refreshToken)
   localStorage.setItem(EXPIRES_IN, expiresDate)
-  localStorage.setItem(LOCAL_ID, localId)
+  localStorage.setItem(LOCAL_ID, userId)
 }
 export function getAccessToken() {
   return localStorage.getItem(ID_TOKEN)

@@ -1,9 +1,10 @@
 import axios from 'axios'
 import localStorageService from './localStorage.service'
 // import userService from './users.service'
+import config from '../config.json'
 
 const httpAuth = axios.create({
-  baseURL: 'https://identitytoolkit.googleapis.com/v1/',
+  baseURL: config.apiEndPoint + 'auth/',
   params: {
     key: process.env.REACT_APP_FIREBASE_KEY
   }
@@ -12,7 +13,8 @@ const httpAuth = axios.create({
 
 const authService = {
   register: async ({email, password}) => {
-    const url = `accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
+    // const url = `accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
+    const url = 'signUp'
     const { data } = await httpAuth.post(url, {
       email,
       password,
@@ -21,7 +23,8 @@ const authService = {
     return data
   },
   login: async (email, password) => {
-    const url = 'accounts:signInWithPassword'
+    // const url = 'accounts:signInWithPassword'
+    const url = 'signInWithPassword'
     const { data } = await httpAuth.post(url, {
       email,
       password,
