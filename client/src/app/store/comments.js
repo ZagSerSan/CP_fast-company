@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import CommentService from '../service/comment.service'
-import { nanoid } from 'nanoid'
+// import { nanoid } from 'nanoid'
 import { toast } from 'react-toastify'
 
 const commentsSlice = createSlice({
@@ -53,17 +53,21 @@ export const removeComment = (commentId) => async (dispatch) => {
   }
 }
 
-export const createComment = (data, userId, currentUserId) => async (dispatch) => {
-  const comment = {
-    ...data,
-    _id: nanoid(),
-    pageId: userId,
-    userId: currentUserId,
-    created_at: Date.now()
-  }
+// export const createComment = (data, userId, currentUserId) => async (dispatch) => {
+  export const createComment = (payload) => async (dispatch) => {
+    // console.log('payload', payload)
+  // const comment = {
+  //   ...data,
+  //   _id: nanoid(),
+  //   pageId: userId,
+  //   userId: currentUserId,
+  //   created_at: Date.now()
+  // }
   try {
-    await CommentService.createComment(comment)
-    dispatch(commentCreated(comment))
+    // await CommentService.createComment(comment)
+    const { content } = await CommentService.createComment(payload)
+    // dispatch(commentCreated(comment))
+    dispatch(commentCreated(content))
   } catch (error) {
     dispatch(commentCreateFiled(error.response.data.error))
   }
