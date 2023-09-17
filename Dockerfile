@@ -10,11 +10,11 @@ COPY client /app/client
 
 RUN npm run build
 
-FROM node:alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY /server/package.json
+COPY server/package.json /app
 
 RUN npm install
 
