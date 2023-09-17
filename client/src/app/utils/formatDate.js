@@ -1,5 +1,6 @@
 export const getDateFormat = (date, separator = ' ') => {
-  date = new Date(Number(date))
+  // date = new Date(Number(date))
+  date = new Date(date)
   if (!(date instanceof Date)) {
     console.log('date instanceof Date :>> ', date instanceof Date)
     console.log('date :>> ', date)
