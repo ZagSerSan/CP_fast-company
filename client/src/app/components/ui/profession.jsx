@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux'
 import { getProfessionById, getProfessionsLoadingStatus } from '../../store/professions'
 
 const Profession = ({ id }) => {
-  const profession = useSelector(getProfessionById(id))
   const isLoading = useSelector(getProfessionsLoadingStatus())
+  const profession = useSelector(getProfessionById(id))
 
   return <span>{!isLoading ? profession.name : 'loading...'}</span>
 }

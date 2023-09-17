@@ -214,8 +214,11 @@ export const getUserById = (userId) => createSelector(
   state => state.users.entities,
   (state) => state.find(user => user._id === userId)
 )
+
+//!
 export const updateUserData = () => (state) => state.users.isLoggedIn
 export const getIsLoggedIn = () => (state) => state.users.isLoggedIn
+
 export const getDataStatus = () => (state) => state.users.dataLoaded
 export const getUsersLoadingStatus = () => (state) => state.users.isLoading
 export const getCurrentUserId = () => (state) => state.users.auth?.userId
