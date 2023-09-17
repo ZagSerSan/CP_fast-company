@@ -12,14 +12,10 @@ const httpAuth = axios.create({
 // const userEndpoint = 'user/'
 
 const authService = {
-  register: async ({email, password}) => {
+  register: async (payload) => {
     // const url = `accounts:signUp?key=${process.env.REACT_APP_FIREBASE_KEY}`
     const url = 'signUp'
-    const { data } = await httpAuth.post(url, {
-      email,
-      password,
-      returnSecureToken: true
-    })
+    const { data } = await httpAuth.post(url, payload)
     return data
   },
   login: async (email, password) => {

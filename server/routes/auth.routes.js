@@ -153,7 +153,7 @@ router.post('/token', async (req, res) => {
     console.log(chalk.red('error'), e)
     res.status(500).json({
       message: 'На сервере проихошла ошибка, попробуйте позже.',
-      errors: errors.array()
+      // errors: errors.array()
     })
   }
 })

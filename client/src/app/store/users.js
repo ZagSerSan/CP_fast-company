@@ -2,7 +2,7 @@ import { createAction, createSelector, createSlice } from '@reduxjs/toolkit'
 import userService from '../service/users.service'
 import authService from '../service/auth.services'
 import localStorageService from '../service/localStorage.service'
-import { randomInt } from '../utils/randomInt'
+// import { randomInt } from '../utils/randomInt'
 import history from '../utils/history'
 import { generateAuthError } from '../utils/generateAuthError'
 import { toast } from 'react-toastify'
@@ -88,24 +88,25 @@ const {
   usersRequestFiled,
   authRequestSuccess,
   authRequestFiled,
-  userCreated,
+  // userCreated,
   userLoggedOut,
   userUpdated,
   userUpdateFiled
 } = actions
 
 const authRequested = createAction('users/authRequested')
-const userCreateRequested = createAction('users/userCreateRequested')
-const createUserFailed = createAction('users/createUserFailed')
+// const userCreateRequested = createAction('users/userCreateRequested')
+// const createUserFailed = createAction('users/createUserFailed')
 
 // updateUser
 export const updateUser = (userData) => async (dispatch) => {
   try {
     const { content } = await userService.updateUser(userData)
     dispatch(userUpdated(content))
-    // Обновление email для входа
-    const { data } = await authService.updateEmail(userData.email)
-    console.log('data :>> ', data)
+    //! Обновление email для входа
+    // тут появилась ошибка после перехода из firebaze
+    // const { data } = await authService.updateEmail(userData.email)
+    // console.log('data :>> ', data)
     // history.replace(`/Users/${currentUser._id}`)
     return content
   } catch (error) {
@@ -135,27 +136,38 @@ export const login = ({payload, redirect}) => async (dispatch) => {
 }
 
 // Sign Up
-export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
+export const signUp = (payload) => async (dispatch) => {
   dispatch(authRequested())
   try {
-    const data = await authService.register({email, password})
+    const data = await authService.register(payload)
     localStorageService.setTokens(data)
-    dispatch(authRequestSuccess({userId: data.localId}))
-    dispatch(createUser({
-      _id: data.localId,
-      email,
-      rate: randomInt(1, 5),
-      completedMeetings: randomInt(0, 200),
-      avatar: `https://avatars.dicebear.com/api/avataaars/${
-        (Math.random() + 1).toString(36).substring(7)
-      }.svg`,
-      ...rest
-    }))
+    dispatch(authRequestSuccess({ userId: data.userId }))
     history.push('/users')
   } catch (error) {
     dispatch(authRequestFiled(error.message))
   }
 }
+// export const signUp = ({ email, password, ...rest }) => async (dispatch) => {
+//   dispatch(authRequested())
+//   try {
+//     const data = await authService.register({email, password})
+//     localStorageService.setTokens(data)
+//     dispatch(authRequestSuccess({userId: data.localId}))
+//     dispatch(createUser({
+//       _id: data.localId,
+//       email,
+//       rate: randomInt(1, 5),
+//       completedMeetings: randomInt(0, 200),
+//       avatar: `https://avatars.dicebear.com/api/avataaars/${
+//         (Math.random() + 1).toString(36).substring(7)
+//       }.svg`,
+//       ...rest
+//     }))
+//     history.push('/users')
+//   } catch (error) {
+//     dispatch(authRequestFiled(error.message))
+//   }
+// }
 
 // logOut
 export const logOut = () => (dispatch) => {
@@ -165,17 +177,17 @@ export const logOut = () => (dispatch) => {
 }
 
 // createUser
-function createUser(payload) {
-  return async function (dispatch) {
-    dispatch(userCreateRequested())
-    try {
-      const {content} = await userService.create(payload)
-      dispatch(userCreated(content))
-    } catch (error) {
-      dispatch(createUserFailed(error.message))
-    }
-  }
-} 
+// function createUser(payload) {
+//   return async function (dispatch) {
+//     dispatch(userCreateRequested())
+//     try {
+//       const {content} = await userService.create(payload)
+//       dispatch(userCreated(content))
+//     } catch (error) {
+//       dispatch(createUserFailed(error.message))
+//     }
+//   }
+// }
 
 // load Users entity
 export const loadUsersList = () => async (dispatch) => {

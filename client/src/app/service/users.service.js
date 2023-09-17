@@ -17,6 +17,7 @@ const userService = {
     return data
   },
   updateUser: async (updUserData) => {
+    console.log('put')
     const {data} = await httpService.put(userEndpoint + updUserData._id, updUserData)
     return data
   }

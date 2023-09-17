@@ -15,7 +15,7 @@ const Comment = ({ commentUserId, comment, onDelete }) => {
         <div className="col">
           <div className="d-flex flex-start ">
             <img
-              src={commentedUser.avatar}
+              src={commentedUser.image}
               className="rounded-circle shadow-1-strong me-3"
               alt="avatar"
               width="65"

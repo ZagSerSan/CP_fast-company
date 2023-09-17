@@ -23,7 +23,7 @@ const CommentsList = ({ userId }) => {
   }, [userId])
 
   const addComment = (commentData) => {
-    dispatch(createComment(commentData, userId, currentUserId))
+    dispatch(createComment({ ...commentData, pageId: userId, userId: currentUserId }))
   }
   const deleteComment = (commentId) => {
     dispatch(removeComment(commentId))

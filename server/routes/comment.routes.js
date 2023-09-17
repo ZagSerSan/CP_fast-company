@@ -1,5 +1,6 @@
 const express = require('express')
 const auth = require('../middleware/auth.middleware')
+const chalk = require('chalk')
 const Comment = require('../models/Comment')
 const router = express.Router({mergeParams: true})
 
@@ -30,7 +31,7 @@ router
       console.log(chalk.red('error'), e)
       res.status(500).json({
         message: 'На сервере проихошла ошибка, попробуйте позже.',
-        errors: errors.array()
+        // errors: errors.array()
       })
     }
   })
@@ -41,7 +42,7 @@ router.delete('/:commentId', auth, async (req, res) => {
     const removedComment = await Comment.findById(commentId)
 
     if (removedComment.userId.toString() === req.user._id) {
-      await removedComment.remove()
+      await removedComment.deleteOne()
       return res.send(null)
     } else {
       return res.status(401).json({message: 'Unauthorized'})
@@ -49,8 +50,8 @@ router.delete('/:commentId', auth, async (req, res) => {
   } catch (e) {
     console.log(chalk.red('error'), e)
     res.status(500).json({
-      message: 'На сервере проихошла ошибка, попробуйте позже.',
-      errors: errors.array()
+      message: 'На сервере проихошла ошибка, попробуйте позже.'
+      // errors: errors.array()
     })
   }
 })

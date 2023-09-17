@@ -23,7 +23,7 @@ const UserCard = ({ user }) => {
           }
           <div className="d-flex flex-column align-items-center text-center position-relative">
             <img
-              src={user.avatar}
+              src={user.image}
               className="rounded-circle shadow-1-strong me-3"
               alt="avatar"
               width="120"

@@ -4,9 +4,11 @@ const router = express.Router({mergeParams: true})
 const User = require('../models/User')
 const auth = require('../middleware/auth.middleware')
 
-router.patch('/:userId', auth, async (req, res) => {
+// было router.//!patch(...
+router.put('/:userId', auth, async (req, res) => {
   try {
     const { userId } = req.params    
+    console.log('userId', userId)
 
     if (userId === req.user._id) {
       const updatedUser = await User.findByIdAndUpdate(userId, req.body, {new: true})
