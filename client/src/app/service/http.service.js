@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import configFile from '../config.json'
-import localStorageService, { getAccessToken } from './localStorage.service'
+import localStorageService from './localStorage.service'
 import authService from './auth.services'
 
 // "apiEndPoint": "http://localhost:4000/api/v1/"
@@ -28,8 +28,8 @@ http.interceptors.request.use(
       const containSlash = /\/$/gi.test(config.url)
       config.url = (containSlash ? config.url.slice(0, -1) : config.url) + '.json'
 
-      const expiresData = localStorageService.getTokenExpirensData()
-      const refreshToken = localStorageService.getRefreshToken()
+      // const expiresData = localStorageService.getTokenExpirensData()
+      // const refreshToken = localStorageService.getRefreshToken()
 
       if (isExpired) {
         const data = await authService.refresh()
